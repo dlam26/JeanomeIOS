@@ -141,8 +141,8 @@
 				649ED3D9146A0BBA00E558EC /* TakePhotoViewController.h */,
 				649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */,
 				649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */,
-				649ED46C146A10D600E558EC /* AviarySDK */,
 				649ED3AF146A082A00E558EC /* Supporting Files */,
+				649ED46C146A10D600E558EC /* AviarySDK */,
 			);
 			path = JeanomeIOS;
 			sourceTree = "<group>";
@@ -277,10 +277,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				649ED3B3146A082A00E558EC /* InfoPlist.strings in Resources */,
-				649ED3DD146A0BBA00E558EC /* TakePhotoViewController.xib in Resources */,
 				649ED475146A10D600E558EC /* AviarySDK-Core.bundle in Resources */,
 				649ED476146A10D600E558EC /* AviarySDK-Plugins.bundle in Resources */,
 				649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */,
+				649ED3DD146A0BBA00E558EC /* TakePhotoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,10 +415,9 @@
 					"\"$(SRCROOT)/JeanomeIOS/AviarySDK\"",
 				);
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-all_load",
+					"-ObjC",
 				);
-				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -436,8 +435,8 @@
 					"\"$(SRCROOT)/JeanomeIOS/AviarySDK\"",
 				);
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -497,6 +496,7 @@
 				649ED3D3146A082B00E558EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		649ED3D4146A082B00E558EC /* Build configuration list for PBXNativeTarget "JeanomeIOSTests" */ = {
 			isa = XCConfigurationList;
@@ -505,6 +505,7 @@
 				649ED3D6146A082B00E558EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

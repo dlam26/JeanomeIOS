@@ -26,6 +26,13 @@
 
 @synthesize imageView, myToolbar, imgPicker;
 
+@synthesize pickedImage;
+
+- (void)dealloc {
+    
+    [super dealloc];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -73,7 +80,23 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"TakePhotoViewController.m:80   viewDidAppear()");
     
+    [super viewDidAppear:animated];
+    
+    if ([self pickedImage]) {
+        [self displayFeatherWithImage:[self pickedImage]];
+        [self setPickedImage:nil];
+    }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -83,26 +106,23 @@
 }
 
 
-
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSLog(@"TakePhotoViewController.m:93  didFinishPickingMediaWithInfo()");
-
-    [self dismissModalViewControllerAnimated:YES];
-
+    
+    // NSParameterAssert(image);
+    
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
 
+    [self setPickedImage:image];
+    
+    [self dismissModalViewControllerAnimated:YES];
+
+
+
     [self.imageView setImage:image];
-    
-    
-    
- //   AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
-    
-//    [featherController setDelegate:self];
-    
-//    [self presentModalViewController:featherController animated:NO];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -115,16 +135,39 @@
 }
 
 
+- (void)displayFeatherWithImage:(UIImage *)image
+{
+    NSLog(@"TakePhotoViewController.m:135   displayFeatherWithImage()");
+    
+    if (image) {
+        //
+        // Use the following two lines to include the meme tool if desired.
+        //
+        // NSArray *tools = [AFDefaultTools() arrayByAddingObject:kAFMeme];
+        // AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image andTools:tools] autorelease];
+        //
+        AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
+        [featherController setDelegate:self];
+        [self presentModalViewController:featherController animated:YES];
+    } else {
+        NSAssert(NO, @"AFFeatherController was passed a nil image");
+    }
+}
+
+
 #pragma mark - Aviary Mobile Feather SDK
 
 // TODO
+/*
 - (void)displayEditorForImage:(UIImage *)image
 {
+    NSLog(@"TakePhotoViewController.m:127   displayEditorForImage()!");
     
     AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
     [featherController setDelegate:self];
     [self presentModalViewController:featherController animated:YES];
 }
+ */
 
 - (void)feather:(AFFeatherController *)featherController finishedWithImage:(UIImage *)image
 {
@@ -138,6 +181,13 @@
     // Handle cancelation here
     
     NSLog(@"TakePhotoViewController.m:136   featherCancelled()");
+}
+
+#pragma mark - IBAction's
+
+-(IBAction)showAviary:(id)sender
+{
+    NSLog(@"TakePhotoViewController.m:142  showAviary()");
 }
 
 

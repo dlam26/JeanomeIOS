@@ -11,10 +11,11 @@
 
 @interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate> 
 {
-
     UIImageView *imageView;
     UIToolbar *myToolbar;
     UIImagePickerController *imgPicker;
+    
+    UIImage *pickedImage;
 }
 
 
@@ -22,5 +23,9 @@
 @property (nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property (nonatomic, retain) UIImagePickerController *imgPicker;
 
+@property (nonatomic, retain) UIImage *pickedImage;
+
+
+- (void)displayFeatherWithImage:(UIImage *)image;
 
 @end

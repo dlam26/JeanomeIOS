@@ -11,6 +11,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize navController = _navController;
 
 - (void)dealloc
 {
@@ -23,7 +24,21 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    UINavigationController *nc = [[[UINavigationController alloc] init] autorelease];
+    
+    //_navController.navigationBar.tintColor = [UIColor blueColor];
+    
+    TakePhotoViewController *tpvc = [[[TakePhotoViewController alloc] init] autorelease];
+    
+    tpvc.title = @"Jeanome™";
+    
+    [nc pushViewController:tpvc animated:YES];
+    
+    [self.window addSubview:nc.view];
     [self.window makeKeyAndVisible];
+    
+
     return YES;
 }
 

@@ -11,7 +11,8 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize navController = _navController;
+
+@synthesize nav;
 
 - (void)dealloc
 {
@@ -25,23 +26,17 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UINavigationController *nc = [[UINavigationController alloc] init];
-    
-    //_navController.navigationBar.tintColor = [UIColor blueColor];
-    
-    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] init];
-    
-    tpvc.title = @"Jeanome™";
-    
-    [nc pushViewController:tpvc animated:NO];
-    
-    [self.window addSubview:nc.view];
-    [self.window makeKeyAndVisible];
-/*    
-    [nc release];
-    [tpvc release];
-  */  
+    nav = [[UINavigationController alloc] init];
 
+    nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
+
+    JeanomeViewController *jc = [[JeanomeViewController alloc] init];
+
+    [nav pushViewController:jc animated:YES];
+    
+    [self.window addSubview:nav.view];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

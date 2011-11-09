@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "TakePhotoViewController.h"
+#import "JeanomeViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    
+    UINavigationController *nav;
+}
     
     
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) IBOutlet UINavigationController *navController;
+@property (strong, nonatomic) UINavigationController *nav;
 
 @end

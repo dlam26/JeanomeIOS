@@ -18,6 +18,15 @@
 		649ED3C3146A082B00E558EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AA146A082A00E558EC /* Foundation.framework */; };
 		649ED3CB146A082B00E558EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 649ED3C9146A082B00E558EC /* InfoPlist.strings */; };
 		649ED3CE146A082B00E558EC /* JeanomeIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED3CD146A082B00E558EC /* JeanomeIOSTests.m */; };
+		649ED3DC146A0BBA00E558EC /* TakePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */; };
+		649ED3DD146A0BBA00E558EC /* TakePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */; };
+		649ED474146A10D600E558EC /* libAviarySDK-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED470146A10D600E558EC /* libAviarySDK-universal.a */; };
+		649ED475146A10D600E558EC /* AviarySDK-Core.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 649ED472146A10D600E558EC /* AviarySDK-Core.bundle */; };
+		649ED476146A10D600E558EC /* AviarySDK-Plugins.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 649ED473146A10D600E558EC /* AviarySDK-Plugins.bundle */; };
+		649ED478146A111500E558EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED477146A111500E558EC /* QuartzCore.framework */; };
+		649ED47A146A112500E558EC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED479146A112500E558EC /* CoreText.framework */; };
+		649ED48E146A845F00E558EC /* JeanomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED48C146A845F00E558EC /* JeanomeViewController.m */; };
+		649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 649ED48D146A845F00E558EC /* JeanomeViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,18 +44,31 @@
 		649ED3A8146A082A00E558EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		649ED3AA146A082A00E558EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		649ED3AC146A082A00E558EC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		649ED3B0146A082A00E558EC /* JeanomeIOS-Info.plist */ = {isa = PBXFileReference; path = "JeanomeIOS-Info.plist"; sourceTree = "<group>"; };
+		649ED3B0146A082A00E558EC /* JeanomeIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JeanomeIOS-Info.plist"; sourceTree = "<group>"; };
 		649ED3B2146A082A00E558EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		649ED3B4146A082A00E558EC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		649ED3B6146A082A00E558EC /* JeanomeIOS-Prefix.pch */ = {isa = PBXFileReference; path = "JeanomeIOS-Prefix.pch"; sourceTree = "<group>"; };
-		649ED3B7146A082A00E558EC /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		649ED3B6146A082A00E558EC /* JeanomeIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JeanomeIOS-Prefix.pch"; sourceTree = "<group>"; };
+		649ED3B7146A082A00E558EC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		649ED3B8146A082A00E558EC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		649ED3BF146A082B00E558EC /* JeanomeIOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JeanomeIOSTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		649ED3C0146A082B00E558EC /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		649ED3C8146A082B00E558EC /* JeanomeIOSTests-Info.plist */ = {isa = PBXFileReference; path = "JeanomeIOSTests-Info.plist"; sourceTree = "<group>"; };
+		649ED3C8146A082B00E558EC /* JeanomeIOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JeanomeIOSTests-Info.plist"; sourceTree = "<group>"; };
 		649ED3CA146A082B00E558EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		649ED3CC146A082B00E558EC /* JeanomeIOSTests.h */ = {isa = PBXFileReference; path = JeanomeIOSTests.h; sourceTree = "<group>"; };
+		649ED3CC146A082B00E558EC /* JeanomeIOSTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JeanomeIOSTests.h; sourceTree = "<group>"; };
 		649ED3CD146A082B00E558EC /* JeanomeIOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JeanomeIOSTests.m; sourceTree = "<group>"; };
+		649ED3D9146A0BBA00E558EC /* TakePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakePhotoViewController.h; sourceTree = "<group>"; };
+		649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakePhotoViewController.m; sourceTree = "<group>"; };
+		649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TakePhotoViewController.xib; sourceTree = "<group>"; };
+		649ED46E146A10D600E558EC /* AFFeatherConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFeatherConstants.h; sourceTree = "<group>"; };
+		649ED46F146A10D600E558EC /* AFFeatherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFeatherController.h; sourceTree = "<group>"; };
+		649ED470146A10D600E558EC /* libAviarySDK-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libAviarySDK-universal.a"; sourceTree = "<group>"; };
+		649ED472146A10D600E558EC /* AviarySDK-Core.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "AviarySDK-Core.bundle"; sourceTree = "<group>"; };
+		649ED473146A10D600E558EC /* AviarySDK-Plugins.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "AviarySDK-Plugins.bundle"; sourceTree = "<group>"; };
+		649ED477146A111500E558EC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		649ED479146A112500E558EC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		649ED48B146A845F00E558EC /* JeanomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JeanomeViewController.h; sourceTree = "<group>"; };
+		649ED48C146A845F00E558EC /* JeanomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JeanomeViewController.m; sourceTree = "<group>"; };
+		649ED48D146A845F00E558EC /* JeanomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JeanomeViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +76,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				649ED3AD146A082A00E558EC /* CoreGraphics.framework in Frameworks */,
+				649ED47A146A112500E558EC /* CoreText.framework in Frameworks */,
 				649ED3A9146A082A00E558EC /* UIKit.framework in Frameworks */,
 				649ED3AB146A082A00E558EC /* Foundation.framework in Frameworks */,
-				649ED3AD146A082A00E558EC /* CoreGraphics.framework in Frameworks */,
+				649ED478146A111500E558EC /* QuartzCore.framework in Frameworks */,
+				649ED474146A10D600E558EC /* libAviarySDK-universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +101,8 @@
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
+				649ED479146A112500E558EC /* CoreText.framework */,
+				649ED477146A111500E558EC /* QuartzCore.framework */,
 				649ED3AE146A082A00E558EC /* JeanomeIOS */,
 				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
 				649ED3A7146A082A00E558EC /* Frameworks */,
@@ -108,6 +135,13 @@
 			children = (
 				649ED3B7146A082A00E558EC /* AppDelegate.h */,
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
+				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
+				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
+				649ED48D146A845F00E558EC /* JeanomeViewController.xib */,
+				649ED3D9146A0BBA00E558EC /* TakePhotoViewController.h */,
+				649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */,
+				649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */,
+				649ED46C146A10D600E558EC /* AviarySDK */,
 				649ED3AF146A082A00E558EC /* Supporting Files */,
 			);
 			path = JeanomeIOS;
@@ -141,6 +175,34 @@
 				649ED3C9146A082B00E558EC /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		649ED46C146A10D600E558EC /* AviarySDK */ = {
+			isa = PBXGroup;
+			children = (
+				649ED46D146A10D600E558EC /* Headers */,
+				649ED470146A10D600E558EC /* libAviarySDK-universal.a */,
+				649ED471146A10D600E558EC /* Resources */,
+			);
+			path = AviarySDK;
+			sourceTree = "<group>";
+		};
+		649ED46D146A10D600E558EC /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				649ED46E146A10D600E558EC /* AFFeatherConstants.h */,
+				649ED46F146A10D600E558EC /* AFFeatherController.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		649ED471146A10D600E558EC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				649ED472146A10D600E558EC /* AviarySDK-Core.bundle */,
+				649ED473146A10D600E558EC /* AviarySDK-Plugins.bundle */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +277,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				649ED3B3146A082A00E558EC /* InfoPlist.strings in Resources */,
+				649ED3DD146A0BBA00E558EC /* TakePhotoViewController.xib in Resources */,
+				649ED475146A10D600E558EC /* AviarySDK-Core.bundle in Resources */,
+				649ED476146A10D600E558EC /* AviarySDK-Plugins.bundle in Resources */,
+				649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +317,8 @@
 			files = (
 				649ED3B5146A082A00E558EC /* main.m in Sources */,
 				649ED3B9146A082A00E558EC /* AppDelegate.m in Sources */,
+				649ED3DC146A0BBA00E558EC /* TakePhotoViewController.m in Sources */,
+				649ED48E146A845F00E558EC /* JeanomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +409,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JeanomeIOS/JeanomeIOS-Prefix.pch";
 				INFOPLIST_FILE = "JeanomeIOS/JeanomeIOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/JeanomeIOS/AviarySDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -352,6 +430,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JeanomeIOS/JeanomeIOS-Prefix.pch";
 				INFOPLIST_FILE = "JeanomeIOS/JeanomeIOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/JeanomeIOS/AviarySDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

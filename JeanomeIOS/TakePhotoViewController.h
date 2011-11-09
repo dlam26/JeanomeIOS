@@ -14,12 +14,13 @@
 
     UIImageView *imageView;
     UIToolbar *myToolbar;
+    UIImagePickerController *imgPicker;
 }
 
 
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIToolbar *myToolbar;
+@property (nonatomic, retain) UIImagePickerController *imgPicker;
 
--(void)showCamera;
 
 @end

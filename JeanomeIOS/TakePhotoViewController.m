@@ -24,7 +24,7 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, myToolbar;
+@synthesize imageView, myToolbar, imgPicker;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,6 +44,7 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -53,7 +54,18 @@
 
     NSLog(@"TakePhotoViewController.m:54  viewDidLoad()");
     
-    [self showCamera];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) 
+    {
+        self.imgPicker = [[UIImagePickerController alloc] init];
+        self.imgPicker.allowsEditing = NO;
+        self.imgPicker.delegate = self;
+        self.imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        [self presentModalViewController:self.imgPicker animated:NO];
+
+        // [self presentViewController:imagePickerController animated:NO completion:NULL];
+        
+    }
 }
 
 - (void)viewDidUnload
@@ -62,7 +74,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     
-
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -71,49 +82,36 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)showCamera
-{
-    NSLog(@"TakePhotoViewController.m:74  showCamera()");
-    
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) 
-    {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        
-        imagePickerController.delegate = self;
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        
-        // [self presentViewController:imagePickerController animated:YES completion:NULL];
-        
-        [self presentModalViewController:imagePickerController animated:NO];
-        
-        [imagePickerController release];
-    }       
 
-}
 
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-//    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
     NSLog(@"TakePhotoViewController.m:93  didFinishPickingMediaWithInfo()");
 
-
-    /*
-    AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
-    
-    [featherController setDelegate:self];
-    
-    [self presentModalViewController:featherController animated:YES];
-    */
-    
     [self dismissModalViewControllerAnimated:YES];
+
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+
+    [self.imageView setImage:image];
+    
+    
+    
+ //   AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
+    
+//    [featherController setDelegate:self];
+    
+//    [self presentModalViewController:featherController animated:NO];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     NSLog(@"TakePhotoViewController.m:99  imagePickerControllerDidCancel()");
+
+    
+    [self dismissModalViewControllerAnimated:YES];
+    [[self navigationController] popViewControllerAnimated:NO];
 }
 
 
@@ -131,11 +129,15 @@
 - (void)feather:(AFFeatherController *)featherController finishedWithImage:(UIImage *)image
 {
     // Handle the result image here
+    
+    NSLog(@"TakePhotoViewController.m:129   finishedWithImage()");
 }
 
 - (void)featherCanceled:(AFFeatherController *)featherController
 {
     // Handle cancelation here
+    
+    NSLog(@"TakePhotoViewController.m:136   featherCancelled()");
 }
 
 

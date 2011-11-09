@@ -37,10 +37,10 @@
     
     [self.window addSubview:nc.view];
     [self.window makeKeyAndVisible];
-    
+/*    
     [nc release];
     [tpvc release];
-    
+  */  
 
     return YES;
 }

@@ -1,0 +1,425 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		649ED3A9146A082A00E558EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3A8146A082A00E558EC /* UIKit.framework */; };
+		649ED3AB146A082A00E558EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AA146A082A00E558EC /* Foundation.framework */; };
+		649ED3AD146A082A00E558EC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AC146A082A00E558EC /* CoreGraphics.framework */; };
+		649ED3B3146A082A00E558EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 649ED3B1146A082A00E558EC /* InfoPlist.strings */; };
+		649ED3B5146A082A00E558EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED3B4146A082A00E558EC /* main.m */; };
+		649ED3B9146A082A00E558EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED3B8146A082A00E558EC /* AppDelegate.m */; };
+		649ED3C1146A082B00E558EC /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3C0146A082B00E558EC /* SenTestingKit.framework */; };
+		649ED3C2146A082B00E558EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3A8146A082A00E558EC /* UIKit.framework */; };
+		649ED3C3146A082B00E558EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AA146A082A00E558EC /* Foundation.framework */; };
+		649ED3CB146A082B00E558EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 649ED3C9146A082B00E558EC /* InfoPlist.strings */; };
+		649ED3CE146A082B00E558EC /* JeanomeIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED3CD146A082B00E558EC /* JeanomeIOSTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		649ED3C4146A082B00E558EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 649ED39B146A082A00E558EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 649ED3A3146A082A00E558EC;
+			remoteInfo = JeanomeIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		649ED3A4146A082A00E558EC /* JeanomeIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JeanomeIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		649ED3A8146A082A00E558EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		649ED3AA146A082A00E558EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		649ED3AC146A082A00E558EC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		649ED3B0146A082A00E558EC /* JeanomeIOS-Info.plist */ = {isa = PBXFileReference; path = "JeanomeIOS-Info.plist"; sourceTree = "<group>"; };
+		649ED3B2146A082A00E558EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		649ED3B4146A082A00E558EC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		649ED3B6146A082A00E558EC /* JeanomeIOS-Prefix.pch */ = {isa = PBXFileReference; path = "JeanomeIOS-Prefix.pch"; sourceTree = "<group>"; };
+		649ED3B7146A082A00E558EC /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		649ED3B8146A082A00E558EC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		649ED3BF146A082B00E558EC /* JeanomeIOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JeanomeIOSTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		649ED3C0146A082B00E558EC /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		649ED3C8146A082B00E558EC /* JeanomeIOSTests-Info.plist */ = {isa = PBXFileReference; path = "JeanomeIOSTests-Info.plist"; sourceTree = "<group>"; };
+		649ED3CA146A082B00E558EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		649ED3CC146A082B00E558EC /* JeanomeIOSTests.h */ = {isa = PBXFileReference; path = JeanomeIOSTests.h; sourceTree = "<group>"; };
+		649ED3CD146A082B00E558EC /* JeanomeIOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JeanomeIOSTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		649ED3A1146A082A00E558EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649ED3A9146A082A00E558EC /* UIKit.framework in Frameworks */,
+				649ED3AB146A082A00E558EC /* Foundation.framework in Frameworks */,
+				649ED3AD146A082A00E558EC /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649ED3BB146A082B00E558EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649ED3C1146A082B00E558EC /* SenTestingKit.framework in Frameworks */,
+				649ED3C2146A082B00E558EC /* UIKit.framework in Frameworks */,
+				649ED3C3146A082B00E558EC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		649ED399146A082A00E558EC = {
+			isa = PBXGroup;
+			children = (
+				649ED3AE146A082A00E558EC /* JeanomeIOS */,
+				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
+				649ED3A7146A082A00E558EC /* Frameworks */,
+				649ED3A5146A082A00E558EC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		649ED3A5146A082A00E558EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				649ED3A4146A082A00E558EC /* JeanomeIOS.app */,
+				649ED3BF146A082B00E558EC /* JeanomeIOSTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		649ED3A7146A082A00E558EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				649ED3A8146A082A00E558EC /* UIKit.framework */,
+				649ED3AA146A082A00E558EC /* Foundation.framework */,
+				649ED3AC146A082A00E558EC /* CoreGraphics.framework */,
+				649ED3C0146A082B00E558EC /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		649ED3AE146A082A00E558EC /* JeanomeIOS */ = {
+			isa = PBXGroup;
+			children = (
+				649ED3B7146A082A00E558EC /* AppDelegate.h */,
+				649ED3B8146A082A00E558EC /* AppDelegate.m */,
+				649ED3AF146A082A00E558EC /* Supporting Files */,
+			);
+			path = JeanomeIOS;
+			sourceTree = "<group>";
+		};
+		649ED3AF146A082A00E558EC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				649ED3B0146A082A00E558EC /* JeanomeIOS-Info.plist */,
+				649ED3B1146A082A00E558EC /* InfoPlist.strings */,
+				649ED3B4146A082A00E558EC /* main.m */,
+				649ED3B6146A082A00E558EC /* JeanomeIOS-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		649ED3C6146A082B00E558EC /* JeanomeIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				649ED3CC146A082B00E558EC /* JeanomeIOSTests.h */,
+				649ED3CD146A082B00E558EC /* JeanomeIOSTests.m */,
+				649ED3C7146A082B00E558EC /* Supporting Files */,
+			);
+			path = JeanomeIOSTests;
+			sourceTree = "<group>";
+		};
+		649ED3C7146A082B00E558EC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				649ED3C8146A082B00E558EC /* JeanomeIOSTests-Info.plist */,
+				649ED3C9146A082B00E558EC /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		649ED3A3146A082A00E558EC /* JeanomeIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 649ED3D1146A082B00E558EC /* Build configuration list for PBXNativeTarget "JeanomeIOS" */;
+			buildPhases = (
+				649ED3A0146A082A00E558EC /* Sources */,
+				649ED3A1146A082A00E558EC /* Frameworks */,
+				649ED3A2146A082A00E558EC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JeanomeIOS;
+			productName = JeanomeIOS;
+			productReference = 649ED3A4146A082A00E558EC /* JeanomeIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		649ED3BE146A082B00E558EC /* JeanomeIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 649ED3D4146A082B00E558EC /* Build configuration list for PBXNativeTarget "JeanomeIOSTests" */;
+			buildPhases = (
+				649ED3BA146A082B00E558EC /* Sources */,
+				649ED3BB146A082B00E558EC /* Frameworks */,
+				649ED3BC146A082B00E558EC /* Resources */,
+				649ED3BD146A082B00E558EC /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				649ED3C5146A082B00E558EC /* PBXTargetDependency */,
+			);
+			name = JeanomeIOSTests;
+			productName = JeanomeIOSTests;
+			productReference = 649ED3BF146A082B00E558EC /* JeanomeIOSTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		649ED39B146A082A00E558EC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Home;
+			};
+			buildConfigurationList = 649ED39E146A082A00E558EC /* Build configuration list for PBXProject "JeanomeIOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 649ED399146A082A00E558EC;
+			productRefGroup = 649ED3A5146A082A00E558EC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				649ED3A3146A082A00E558EC /* JeanomeIOS */,
+				649ED3BE146A082B00E558EC /* JeanomeIOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		649ED3A2146A082A00E558EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649ED3B3146A082A00E558EC /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649ED3BC146A082B00E558EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649ED3CB146A082B00E558EC /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		649ED3BD146A082B00E558EC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		649ED3A0146A082A00E558EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649ED3B5146A082A00E558EC /* main.m in Sources */,
+				649ED3B9146A082A00E558EC /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649ED3BA146A082B00E558EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649ED3CE146A082B00E558EC /* JeanomeIOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		649ED3C5146A082B00E558EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 649ED3A3146A082A00E558EC /* JeanomeIOS */;
+			targetProxy = 649ED3C4146A082B00E558EC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		649ED3B1146A082A00E558EC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				649ED3B2146A082A00E558EC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		649ED3C9146A082B00E558EC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				649ED3CA146A082B00E558EC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		649ED3CF146A082B00E558EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		649ED3D0146A082B00E558EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		649ED3D2146A082B00E558EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JeanomeIOS/JeanomeIOS-Prefix.pch";
+				INFOPLIST_FILE = "JeanomeIOS/JeanomeIOS-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		649ED3D3146A082B00E558EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JeanomeIOS/JeanomeIOS-Prefix.pch";
+				INFOPLIST_FILE = "JeanomeIOS/JeanomeIOS-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		649ED3D5146A082B00E558EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JeanomeIOS.app/JeanomeIOS";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JeanomeIOS/JeanomeIOS-Prefix.pch";
+				INFOPLIST_FILE = "JeanomeIOSTests/JeanomeIOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		649ED3D6146A082B00E558EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JeanomeIOS.app/JeanomeIOS";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JeanomeIOS/JeanomeIOS-Prefix.pch";
+				INFOPLIST_FILE = "JeanomeIOSTests/JeanomeIOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		649ED39E146A082A00E558EC /* Build configuration list for PBXProject "JeanomeIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				649ED3CF146A082B00E558EC /* Debug */,
+				649ED3D0146A082B00E558EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		649ED3D1146A082B00E558EC /* Build configuration list for PBXNativeTarget "JeanomeIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				649ED3D2146A082B00E558EC /* Debug */,
+				649ED3D3146A082B00E558EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		649ED3D4146A082B00E558EC /* Build configuration list for PBXNativeTarget "JeanomeIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				649ED3D5146A082B00E558EC /* Debug */,
+				649ED3D6146A082B00E558EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 649ED39B146A082A00E558EC /* Project object */;
+}

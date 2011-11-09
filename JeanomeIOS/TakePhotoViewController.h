@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFFeatherController.h"
 
-@interface TakePhotoViewController : UIViewController
+@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate> 
+{
+
+    UIImageView *imageView;
+    UIToolbar *myToolbar;
+}
+
+
+@property (nonatomic, retain) IBOutlet UIImageView *imageView;
+@property (nonatomic, retain) IBOutlet UIToolbar *myToolbar;
+
+-(void)showCamera;
 
 @end

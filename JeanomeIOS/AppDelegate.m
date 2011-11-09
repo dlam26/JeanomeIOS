@@ -25,18 +25,21 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UINavigationController *nc = [[[UINavigationController alloc] init] autorelease];
+    UINavigationController *nc = [[UINavigationController alloc] init];
     
     //_navController.navigationBar.tintColor = [UIColor blueColor];
     
-    TakePhotoViewController *tpvc = [[[TakePhotoViewController alloc] init] autorelease];
+    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] init];
     
     tpvc.title = @"Jeanome™";
     
-    [nc pushViewController:tpvc animated:YES];
+    [nc pushViewController:tpvc animated:NO];
     
     [self.window addSubview:nc.view];
     [self.window makeKeyAndVisible];
+    
+    [nc release];
+    [tpvc release];
     
 
     return YES;

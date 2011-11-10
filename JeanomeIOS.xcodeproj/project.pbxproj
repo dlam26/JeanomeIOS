@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		647DFFD9146B4F9200E25B9C /* LoginWithFacebookNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFD7146B4F9200E25B9C /* LoginWithFacebookNormal@2x.png */; };
+		647DFFDA146B4F9200E25B9C /* LoginWithFacebookPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFD8146B4F9200E25B9C /* LoginWithFacebookPressed.png */; };
+		647DFFDD146B4FEF00E25B9C /* LoginWithFacebookNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFDC146B4FEF00E25B9C /* LoginWithFacebookNormal.png */; };
+		647DFFDF146B560600E25B9C /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFDE146B560600E25B9C /* TODO */; };
 		649ED3A9146A082A00E558EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3A8146A082A00E558EC /* UIKit.framework */; };
 		649ED3AB146A082A00E558EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AA146A082A00E558EC /* Foundation.framework */; };
 		649ED3AD146A082A00E558EC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AC146A082A00E558EC /* CoreGraphics.framework */; };
@@ -27,6 +31,10 @@
 		649ED47A146A112500E558EC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED479146A112500E558EC /* CoreText.framework */; };
 		649ED48E146A845F00E558EC /* JeanomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED48C146A845F00E558EC /* JeanomeViewController.m */; };
 		649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 649ED48D146A845F00E558EC /* JeanomeViewController.xib */; };
+		64A5F182146B39610051C718 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A5F180146B39600051C718 /* OverlayViewController.m */; };
+		64A5F183146B39610051C718 /* OverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F181146B39600051C718 /* OverlayViewController.xib */; };
+		64A5F187146B479D0051C718 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F186146B479D0051C718 /* logo.png */; };
+		64A5F189146B4D280051C718 /* babybluehappyface.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F188146B4D280051C718 /* babybluehappyface.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +48,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		647DFFD7146B4F9200E25B9C /* LoginWithFacebookNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LoginWithFacebookNormal@2x.png"; path = "../../../iphone/facebook-ios-sdk/sample/FBConnect.bundle/images/LoginWithFacebookNormal@2x.png"; sourceTree = "<group>"; };
+		647DFFD8146B4F9200E25B9C /* LoginWithFacebookPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginWithFacebookPressed.png; path = "../../../iphone/facebook-ios-sdk/sample/FBConnect.bundle/images/LoginWithFacebookPressed.png"; sourceTree = "<group>"; };
+		647DFFDC146B4FEF00E25B9C /* LoginWithFacebookNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginWithFacebookNormal.png; path = "../../../iphone/facebook-ios-sdk/sample/FBConnect.bundle/images/LoginWithFacebookNormal.png"; sourceTree = "<group>"; };
+		647DFFDE146B560600E25B9C /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		649ED3A4146A082A00E558EC /* JeanomeIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JeanomeIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		649ED3A8146A082A00E558EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		649ED3AA146A082A00E558EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -69,6 +81,12 @@
 		649ED48B146A845F00E558EC /* JeanomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JeanomeViewController.h; sourceTree = "<group>"; };
 		649ED48C146A845F00E558EC /* JeanomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JeanomeViewController.m; sourceTree = "<group>"; };
 		649ED48D146A845F00E558EC /* JeanomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JeanomeViewController.xib; sourceTree = "<group>"; };
+		64A5F17F146B39600051C718 /* OverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayViewController.h; sourceTree = "<group>"; };
+		64A5F180146B39600051C718 /* OverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayViewController.m; sourceTree = "<group>"; };
+		64A5F181146B39600051C718 /* OverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayViewController.xib; sourceTree = "<group>"; };
+		64A5F184146B43560051C718 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		64A5F186146B479D0051C718 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../Jeanome/static/images/logo.png; sourceTree = "<group>"; };
+		64A5F188146B4D280051C718 /* babybluehappyface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = babybluehappyface.png; path = ../../../Desktop/babybluehappyface.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +119,6 @@
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
-				649ED479146A112500E558EC /* CoreText.framework */,
-				649ED477146A111500E558EC /* QuartzCore.framework */,
 				649ED3AE146A082A00E558EC /* JeanomeIOS */,
 				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
 				649ED3A7146A082A00E558EC /* Frameworks */,
@@ -122,6 +138,8 @@
 		649ED3A7146A082A00E558EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				649ED479146A112500E558EC /* CoreText.framework */,
+				649ED477146A111500E558EC /* QuartzCore.framework */,
 				649ED3A8146A082A00E558EC /* UIKit.framework */,
 				649ED3AA146A082A00E558EC /* Foundation.framework */,
 				649ED3AC146A082A00E558EC /* CoreGraphics.framework */,
@@ -133,6 +151,7 @@
 		649ED3AE146A082A00E558EC /* JeanomeIOS */ = {
 			isa = PBXGroup;
 			children = (
+				64A5F184146B43560051C718 /* Constants.h */,
 				649ED3B7146A082A00E558EC /* AppDelegate.h */,
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
 				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
@@ -141,8 +160,13 @@
 				649ED3D9146A0BBA00E558EC /* TakePhotoViewController.h */,
 				649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */,
 				649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */,
+				64A5F17F146B39600051C718 /* OverlayViewController.h */,
+				64A5F180146B39600051C718 /* OverlayViewController.m */,
+				64A5F181146B39600051C718 /* OverlayViewController.xib */,
+				64A5F185146B477B0051C718 /* images */,
 				649ED3AF146A082A00E558EC /* Supporting Files */,
 				649ED46C146A10D600E558EC /* AviarySDK */,
+				647DFFDE146B560600E25B9C /* TODO */,
 			);
 			path = JeanomeIOS;
 			sourceTree = "<group>";
@@ -203,6 +227,18 @@
 				649ED473146A10D600E558EC /* AviarySDK-Plugins.bundle */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		64A5F185146B477B0051C718 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				647DFFDC146B4FEF00E25B9C /* LoginWithFacebookNormal.png */,
+				647DFFD7146B4F9200E25B9C /* LoginWithFacebookNormal@2x.png */,
+				647DFFD8146B4F9200E25B9C /* LoginWithFacebookPressed.png */,
+				64A5F188146B4D280051C718 /* babybluehappyface.png */,
+				64A5F186146B479D0051C718 /* logo.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +317,13 @@
 				649ED476146A10D600E558EC /* AviarySDK-Plugins.bundle in Resources */,
 				649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */,
 				649ED3DD146A0BBA00E558EC /* TakePhotoViewController.xib in Resources */,
+				64A5F183146B39610051C718 /* OverlayViewController.xib in Resources */,
+				64A5F187146B479D0051C718 /* logo.png in Resources */,
+				64A5F189146B4D280051C718 /* babybluehappyface.png in Resources */,
+				647DFFD9146B4F9200E25B9C /* LoginWithFacebookNormal@2x.png in Resources */,
+				647DFFDA146B4F9200E25B9C /* LoginWithFacebookPressed.png in Resources */,
+				647DFFDD146B4FEF00E25B9C /* LoginWithFacebookNormal.png in Resources */,
+				647DFFDF146B560600E25B9C /* TODO in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +362,7 @@
 				649ED3B9146A082A00E558EC /* AppDelegate.m in Sources */,
 				649ED3DC146A0BBA00E558EC /* TakePhotoViewController.m in Sources */,
 				649ED48E146A845F00E558EC /* JeanomeViewController.m in Sources */,
+				64A5F182146B39610051C718 /* OverlayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

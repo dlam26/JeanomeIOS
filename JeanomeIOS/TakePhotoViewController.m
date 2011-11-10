@@ -68,9 +68,11 @@
         self.imgPicker.delegate = self;
         self.imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
-        [self presentModalViewController:self.imgPicker animated:NO];
+        //self.imgPicker.showsCameraControls = NO;
+        
+        //[self presentModalViewController:self.imgPicker animated:NO];
 
-        // [self presentViewController:imagePickerController animated:NO completion:NULL];
+        [self presentViewController:imgPicker animated:NO completion:NULL];
         
     }
 }
@@ -84,8 +86,6 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"TakePhotoViewController.m:80   viewDidAppear()");
-    
     [super viewDidAppear:animated];
     
     if ([self pickedImage]) {
@@ -118,7 +118,7 @@
 
     [self setPickedImage:image];
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:NO];
 
 
 
@@ -174,6 +174,8 @@
     // Handle the result image here
     
     NSLog(@"TakePhotoViewController.m:129   finishedWithImage()");
+    
+    imageView.image = image;
 }
 
 - (void)featherCanceled:(AFFeatherController *)featherController
@@ -188,6 +190,8 @@
 -(IBAction)showAviary:(id)sender
 {
     NSLog(@"TakePhotoViewController.m:142  showAviary()");
+    
+    [self displayFeatherWithImage:[imageView image]];
 }
 
 

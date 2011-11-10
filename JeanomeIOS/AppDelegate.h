@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TakePhotoViewController.h"
 #import "JeanomeViewController.h"
+#import "Constants.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     

@@ -1,15 +1,14 @@
 //
-//  JeanomeViewController.m
+//  OverlayViewController.m
 //  JeanomeIOS
 //
 //  Created by David Lam on 11/9/11.
 //  Copyright (c) 2011 Home. All rights reserved.
 //
 
-#import "JeanomeViewController.h"
+#import "OverlayViewController.h"
 
-
-@implementation JeanomeViewController
+@implementation OverlayViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,20 +33,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    // self.title = JEANOME_TITLE;
-    
-    /*
-    #warning UIBarMetrics only in iOS 5.0
-     
-     // set a picture for the navbar title
-     
-     UIImage *logo = [UIImage imageNamed:@"logo.png"];
-     
-    [self.navigationController.navigationBar setBackgroundImage:logo forBarMetrics:UIBarMetricsDefault];
-    */
-     
-    // [self startTakingPhoto:nil];
 }
 
 - (void)viewDidUnload
@@ -61,15 +46,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
--(IBAction)startTakingPhoto:(id)sender
-{    
-    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] init];
-    
-    tpvc.title = @"How's it look?";
-    
-    [self.navigationController pushViewController:tpvc animated:YES];
 }
 
 @end

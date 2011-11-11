@@ -15,11 +15,12 @@
 @interface JeanomeViewController : UIViewController
 {
     IBOutlet UIButton *logoutButton;
+    IBOutlet UILabel *isSessionValidLabel;
 }
 
 
 
 -(IBAction)startTakingPhoto:(id)sender;
-
+-(void)updateIsSessionValid;
 
 @end

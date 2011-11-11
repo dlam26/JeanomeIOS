@@ -18,6 +18,8 @@
     if (self) {
         // Custom initialization
 
+        NSLog(@"JeanomeViewController.m:21   initWithNibName()");
+
     }
     return self;
 }
@@ -34,6 +36,8 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"JeanomeViewController.m:38   viewDidLoad()");
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
@@ -50,6 +54,10 @@
     */
      
     // [self startTakingPhoto:nil];
+    
+    
+    logoutButton.hidden = YES;
+    [self updateIsSessionValid];
 }
 
 - (void)viewDidUnload
@@ -57,6 +65,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -94,11 +112,11 @@
     
 
     if (![[delegate facebook] isSessionValid]) {
-        
         [[delegate facebook] authorize:nil];
-        
-        logoutButton.hidden = NO;
     }
+    
+    logoutButton.hidden = NO;    
+    [self updateIsSessionValid];
 }
 
 -(IBAction)facebookLogout:(id)sender
@@ -108,8 +126,21 @@
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     [[delegate facebook] logout:delegate];
+    [self updateIsSessionValid];
 }
 
 
+-(void)updateIsSessionValid
+{
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    BOOL isSessionValid = [[delegate facebook] isSessionValid];
+                           
+   //  NSLog(@"JeanomeViewController.m:118   updateIsSessionValid()!  %@", isSessionValid ? @"YES" : @"NO");
+
+    isSessionValidLabel.text = [NSString stringWithFormat:@"Is session valid: %@", isSessionValid ? @"YES" : @"NO"];
+    
+    logoutButton.hidden = !isSessionValid;
+}
 
 @end

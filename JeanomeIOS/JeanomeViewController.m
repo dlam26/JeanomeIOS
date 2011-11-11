@@ -8,14 +8,16 @@
 
 #import "JeanomeViewController.h"
 
-
 @implementation JeanomeViewController
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -71,5 +73,43 @@
     
     [self.navigationController pushViewController:tpvc animated:YES];
 }
+
+
+/*
+    https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
+ */
+-(IBAction)facebookLogin:(id)sender
+{    
+    NSLog(@"JeanomeViewController.m:83   facebookLogin()");
+    
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    // Check and retrieve authorization information
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+            && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        [delegate facebook].accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        [delegate facebook].expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    
+
+    if (![[delegate facebook] isSessionValid]) {
+        
+        [[delegate facebook] authorize:nil];
+        
+        logoutButton.hidden = NO;
+    }
+}
+
+-(IBAction)facebookLogout:(id)sender
+{
+    NSLog(@"JeanomeViewController.m:107   facebookLogout()");
+    
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    [[delegate facebook] logout:delegate];
+}
+
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AFFeatherController.h"
+#import "OverlayViewController.h"
 
 @interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate> 
 {
@@ -16,12 +17,16 @@
     UIImagePickerController *imgPicker;
     
     UIImage *pickedImage;
+    
+    OverlayViewController *overlayViewController;
 }
 
 
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property (nonatomic, retain) UIImagePickerController *imgPicker;
+
+@property (nonatomic, retain) OverlayViewController *overlayViewController;
 
 @property (nonatomic, retain) UIImage *pickedImage;
 

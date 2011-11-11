@@ -10,12 +10,15 @@
 #import "TakePhotoViewController.h"
 #import "JeanomeViewController.h"
 #import "Constants.h"
+#import "FBConnect.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate> {
     
     UINavigationController *nav;
+    Facebook *facebook;
 }
-    
+
+@property (nonatomic, retain) Facebook *facebook;
     
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *nav;

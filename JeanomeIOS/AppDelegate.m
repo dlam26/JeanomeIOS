@@ -11,8 +11,8 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-
 @synthesize nav;
+@synthesize facebook;
 
 - (void)dealloc
 {
@@ -26,9 +26,12 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    // https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
+    facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
+    
     nav = [[UINavigationController alloc] init];
-
     nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
+    
 
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
 
@@ -77,6 +80,37 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+#pragma mark <FBSessionDelegate> stuff
+
+// Pre 4.2 support
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [facebook handleOpenURL:url]; 
+}
+
+// For 4.2+ support
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [facebook handleOpenURL:url]; 
+}
+
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+}
+
+- (void) fbDidLogout {
+    // Remove saved authorization information if it exists
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+        [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults removeObjectForKey:@"FBExpirationDateKey"];
+        [defaults synchronize];
+    }
 }
 
 @end

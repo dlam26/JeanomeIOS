@@ -24,14 +24,8 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, myToolbar, imgPicker;
+@synthesize imageView, myToolbar, imgPicker, pickedImage, overlayViewController;
 
-@synthesize pickedImage;
-
-- (void)dealloc {
-    
-    [super dealloc];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,16 +53,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    NSLog(@"TakePhotoViewController.m:54  viewDidLoad()");
+    // NSLog(@"TakePhotoViewController.m:54  viewDidLoad()");
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) 
     {
         self.imgPicker = [[UIImagePickerController alloc] init];
         self.imgPicker.allowsEditing = NO;
         self.imgPicker.delegate = self;
-        self.imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        
+        self.imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;        
         //self.imgPicker.showsCameraControls = NO;
+        
+        self.overlayViewController = [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
+        
         
         //[self presentModalViewController:self.imgPicker animated:NO];
 
@@ -82,7 +78,18 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
+    self.imageView = nil;
+    self.overlayViewController = nil;
 }
+
+- (void)dealloc {
+    
+    [super dealloc];
+    [overlayViewController release];
+    [imageView release];
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -187,9 +194,16 @@
 
 #pragma mark - IBAction's
 
+-(IBAction)uploadToFacebook:(id)sender
+{    
+    NSLog(@"TakePhotoViewController.m:200   uploadToFacebook()");
+    
+
+}
+
 -(IBAction)showAviary:(id)sender
 {
-    NSLog(@"TakePhotoViewController.m:142  showAviary()");
+    NSLog(@"TakePhotoViewController.m:205  showAviary()");
     
     [self displayFeatherWithImage:[imageView image]];
 }

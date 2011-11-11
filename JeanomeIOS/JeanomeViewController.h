@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "AppDelegate.h"
 #import "Constants.h"
 #import "TakePhotoViewController.h"
 
 @interface JeanomeViewController : UIViewController
 {
-    
+    IBOutlet UIButton *logoutButton;
 }
+
 
 
 -(IBAction)startTakingPhoto:(id)sender;

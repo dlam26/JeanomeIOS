@@ -22,9 +22,11 @@
 
 #import "TakePhotoViewController.h"
 
+
+
 @implementation TakePhotoViewController
 
-@synthesize imageView, myToolbar, imgPicker, pickedImage, overlayViewController;
+@synthesize imageView, myToolbar, imgPicker, pickedImage, overlayViewController, facebookId;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -192,13 +194,61 @@
     NSLog(@"TakePhotoViewController.m:136   featherCancelled()");
 }
 
+#pragma mark - <FBRequestDelegate> protocol
+
+//Sent to the delegate when a request returns and its response has been parsed into an object.
+- (void)request:(FBRequest *)request didLoad:(id)result
+{
+    NSDictionary *dict = result;
+    
+    self.facebookId = [dict objectForKey:@"id"];
+    
+    NSLog(@"TakePhotoViewController.m:206  request()   facebookId: %@", facebookId);
+}
+
 #pragma mark - IBAction's
 
--(IBAction)uploadToFacebook:(id)sender
+/*
+    Do a POST to http://myjeanome.com/closet/<user facebook id>
+ 
+    Ex. how to get facebook user id in JSON  
+ https://graph.facebook.com/me?fields=id&access_token=AAAAAAITEghMBAN7gLcD9XHm2exWasKkBJd3A1qMhZCOCQLSucM3P3LGYPEOoepSpJsKkK9fP5yWZCzT8XGWcYOM79X3yB01UZCW1QAOaQZDZD
+ 
+ */ 
+-(IBAction)uploadPic:(id)sender
 {    
-    NSLog(@"TakePhotoViewController.m:200   uploadToFacebook()");
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
+    NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
+    
+    // Get the users facebook id
+    [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self];
 
+#warning FIXME postURL
+    // NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@", self.facebookId]];
+    
+    
+    // important!  needs to have trailing slash or Django complains about 
+    // the APPEND_SLASH setting not being set...
+    NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@/", @"100003115255847"]];
+    
+    NSLog(@"TakePhotoViewController.m:229   postURL: %@", postURL);
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
+    
+    // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
+    
+    [request setPostValue:@"" forKey:@"category"];
+    [request setPostValue:@"Here is a note on TakePhotoViewController.m:234" forKey:@"note"];
+    [request setPostValue:@"some brand" forKey:@"brand"];
+    [request setPostValue:@"Submit" forKey:@"do_add_item"];
+    [request setPostValue:@"66.66" forKey:@"value"];
+    
+    [request addData:UIImageJPEGRepresentation(pickedImage, 1.0) forKey:@"picture"];
+    
+	[request startAsynchronous];
+    
+    // TODO set network activity indicator
 }
 
 -(IBAction)showAviary:(id)sender

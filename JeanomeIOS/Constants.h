@@ -11,6 +11,9 @@
 //#define JEANOME_TITLE @"Jeanome™"
 #define JEANOME_TITLE @"Jeanome"
 
+// NOTE: dont put trailing slash kk
+#define JEANOME_URL @"http://10.0.1.60:8000"
+
 //  Important!  The id here needs to be concatenated with an fb 
 //  and put in the "URL types" -> "URL Schemes" in the info.plist file
 // 

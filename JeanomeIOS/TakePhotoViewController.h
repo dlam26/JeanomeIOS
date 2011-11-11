@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AFFeatherController.h"
+#import "ASIFormDataRequest.h"
+#import "FBRequest.h"
+
+#import "AppDelegate.h"
 #import "OverlayViewController.h"
 
-@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate> 
+@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate, FBRequestDelegate> 
 {
     UIImageView *imageView;
     UIToolbar *myToolbar;
@@ -19,18 +23,22 @@
     UIImage *pickedImage;
     
     OverlayViewController *overlayViewController;
+    
+    NSString *facebookId;   // the facebook id of the current user
+
 }
 
 
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property (nonatomic, retain) UIImagePickerController *imgPicker;
-
 @property (nonatomic, retain) OverlayViewController *overlayViewController;
-
 @property (nonatomic, retain) UIImage *pickedImage;
+@property (nonatomic, retain) NSString *facebookId;
 
 
 - (void)displayFeatherWithImage:(UIImage *)image;
+
+-(IBAction)uploadPic:(id)sender;
 
 @end

@@ -3,5 +3,14 @@
 
 2. 11/9/2011   Upload pictures somehow
 
+    Q. What does the upload request look like?  (where the hell is the file?)
+
+    views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
+    
+    
+3.    Get logged in users facebook id
+
+https://graph.facebook.com/me?fields=id&access_token=d6fbb26e9641b665b717120bc9fa0fe7
+
 
 

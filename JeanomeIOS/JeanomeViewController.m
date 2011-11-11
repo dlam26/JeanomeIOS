@@ -98,7 +98,7 @@
  */
 -(IBAction)facebookLogin:(id)sender
 {    
-    NSLog(@"JeanomeViewController.m:83   facebookLogin()");
+    // NSLog(@"JeanomeViewController.m:83   facebookLogin()");
     
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
@@ -121,7 +121,7 @@
 
 -(IBAction)facebookLogout:(id)sender
 {
-    NSLog(@"JeanomeViewController.m:107   facebookLogout()");
+    // NSLog(@"JeanomeViewController.m:107   facebookLogout()");
     
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     

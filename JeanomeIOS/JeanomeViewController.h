@@ -7,18 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FacebookBrain.h"
 
 #import "AppDelegate.h"
 #import "Constants.h"
 #import "TakePhotoViewController.h"
 
 @interface JeanomeViewController : UIViewController
-{
+{    
+    FacebookBrain *fb;
+    
     IBOutlet UIButton *logoutButton;
     IBOutlet UILabel *isSessionValidLabel;
 }
 
-
+@property(retain,nonatomic) FacebookBrain *fb;
 
 -(IBAction)startTakingPhoto:(id)sender;
 -(void)updateIsSessionValid;

@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "OverlayViewController.h"
 
-@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate, FBRequestDelegate> 
+@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate> 
 {
     UIImageView *imageView;
     UIToolbar *myToolbar;
@@ -38,6 +38,11 @@
 
 
 - (void)displayFeatherWithImage:(UIImage *)image;
+
+-(NSHTTPCookie *)__createUploadCookie:(NSString *)name 
+                            withValue:(NSString *)value;
+
+
 
 -(IBAction)uploadPic:(id)sender;
 

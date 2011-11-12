@@ -194,19 +194,16 @@
     NSLog(@"TakePhotoViewController.m:136   featherCancelled()");
 }
 
-#pragma mark - <FBRequestDelegate> protocol
-
-//Sent to the delegate when a request returns and its response has been parsed into an object.
-- (void)request:(FBRequest *)request didLoad:(id)result
-{
-    NSDictionary *dict = result;
-    
-    self.facebookId = [dict objectForKey:@"id"];
-    
-    NSLog(@"TakePhotoViewController.m:206  request()   facebookId: %@", facebookId);
-}
 
 #pragma mark - IBAction's
+
+-(IBAction)showAviary:(id)sender
+{
+    NSLog(@"TakePhotoViewController.m:205  showAviary()");
+    
+    [self displayFeatherWithImage:[imageView image]];
+}
+
 
 /*
     Do a POST to http://myjeanome.com/closet/<user facebook id>
@@ -218,21 +215,25 @@
 -(IBAction)uploadPic:(id)sender
 {    
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
-    NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
-    
-    // Get the users facebook id
-    [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self];
 
+    // Get the access token
+    NSString *accessToken = [[delegate facebook] accessToken];
+    
 #warning FIXME postURL
     // NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@", self.facebookId]];
-    
+
+    // set the facebookId (for now, until I put this in AppDelegate.m)
+    self.facebookId = @"100003115255847";
     
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
-    NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@/", @"100003115255847"]];
+    NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
     
-    NSLog(@"TakePhotoViewController.m:229   postURL: %@", postURL);
+    NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
+    NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];
+    
+    
+    NSLog(@"TakePhotoViewController.m:229   postURL: %@   facebookIdCookie: %@    accessTokenCookie: %@", postURL, facebookIdCookie, accessTokenCookie);
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     
@@ -246,17 +247,40 @@
     
     [request addData:UIImageJPEGRepresentation(pickedImage, 1.0) forKey:@"picture"];
     
-	[request startAsynchronous];
+    [request setUseCookiePersistence:NO];
+    [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
+    
+	[request startSynchronous];
     
     // TODO set network activity indicator
 }
 
--(IBAction)showAviary:(id)sender
-{
-    NSLog(@"TakePhotoViewController.m:205  showAviary()");
-    
-    [self displayFeatherWithImage:[imageView image]];
-}
 
+
+/*
+    Create a cookie because the python code in closet/views.py fetches info from it
+ 
+    http://allseeing-i.com/ASIHTTPRequest/How-to-use#persistent_cookies
+ 
+    also see ASIHTTPRequestsTests.m in its source folder
+ */
+-(NSHTTPCookie *)__createUploadCookie:(NSString *)name 
+                      withValue:(NSString *)value
+{
+    NSDictionary *cookieProperties = [[[NSMutableDictionary alloc] init] autorelease];
+    
+    // How to make a cookie from the test file
+    [cookieProperties setValue:value forKey:NSHTTPCookieValue];
+    [cookieProperties setValue:name forKey:NSHTTPCookieName];
+    [cookieProperties setValue:@"myjeanome.com" forKey:NSHTTPCookieDomain];
+    [cookieProperties setValue:[NSDate dateWithTimeIntervalSinceNow:60*60*4] forKey:NSHTTPCookieExpires];
+    [cookieProperties setValue:@"/JeanomeIOS" forKey:NSHTTPCookiePath];
+    
+    NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    
+    // NSLog(@"__createUploadCookie():  %@", cookie);
+    
+    return cookie;
+}
 
 @end

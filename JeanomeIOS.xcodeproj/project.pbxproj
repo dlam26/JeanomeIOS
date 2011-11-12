@@ -47,6 +47,7 @@
 		64A5F183146B39610051C718 /* OverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F181146B39600051C718 /* OverlayViewController.xib */; };
 		64A5F187146B479D0051C718 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F186146B479D0051C718 /* logo.png */; };
 		64A5F189146B4D280051C718 /* babybluehappyface.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F188146B4D280051C718 /* babybluehappyface.png */; };
+		64AA7B8F146E3D670050AC97 /* FacebookBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AA7B8E146E3D670050AC97 /* FacebookBrain.m */; };
 		64BF1DF7146D376E00640419 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DA6146D376E00640419 /* ASIAuthenticationDialog.m */; };
 		64BF1DF8146D376E00640419 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DA9146D376E00640419 /* ASIDataCompressor.m */; };
 		64BF1DF9146D376E00640419 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DAB146D376E00640419 /* ASIDataDecompressor.m */; };
@@ -137,6 +138,8 @@
 		64A5F184146B43560051C718 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		64A5F186146B479D0051C718 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../Jeanome/static/images/logo.png; sourceTree = "<group>"; };
 		64A5F188146B4D280051C718 /* babybluehappyface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = babybluehappyface.png; path = ../../../Desktop/babybluehappyface.png; sourceTree = "<group>"; };
+		64AA7B8D146E3D670050AC97 /* FacebookBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookBrain.h; sourceTree = "<group>"; };
+		64AA7B8E146E3D670050AC97 /* FacebookBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookBrain.m; sourceTree = "<group>"; };
 		64BF1DA5146D376E00640419 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		64BF1DA6146D376E00640419 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		64BF1DA7146D376E00640419 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -239,10 +242,6 @@
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
-				64BF1E29146D3BC800640419 /* libz.dylib */,
-				64BF1E27146D3BB500640419 /* MobileCoreServices.framework */,
-				64BF1E25146D3BA500640419 /* SystemConfiguration.framework */,
-				64BF1E23146D3B9400640419 /* CFNetwork.framework */,
 				649ED3AE146A082A00E558EC /* JeanomeIOS */,
 				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
 				649ED3A7146A082A00E558EC /* Frameworks */,
@@ -262,6 +261,10 @@
 		649ED3A7146A082A00E558EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64BF1E29146D3BC800640419 /* libz.dylib */,
+				64BF1E27146D3BB500640419 /* MobileCoreServices.framework */,
+				64BF1E25146D3BA500640419 /* SystemConfiguration.framework */,
+				64BF1E23146D3B9400640419 /* CFNetwork.framework */,
 				649ED479146A112500E558EC /* CoreText.framework */,
 				649ED477146A111500E558EC /* QuartzCore.framework */,
 				649ED3A8146A082A00E558EC /* UIKit.framework */,
@@ -279,6 +282,8 @@
 				64A5F184146B43560051C718 /* Constants.h */,
 				649ED3B7146A082A00E558EC /* AppDelegate.h */,
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
+				64AA7B8D146E3D670050AC97 /* FacebookBrain.h */,
+				64AA7B8E146E3D670050AC97 /* FacebookBrain.m */,
 				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
 				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
 				649ED48D146A845F00E558EC /* JeanomeViewController.xib */,
@@ -540,6 +545,7 @@
 				64BF1DFD146D376E00640419 /* ASIInputStream.m in Sources */,
 				64BF1DFE146D376E00640419 /* ASINetworkQueue.m in Sources */,
 				64BF1E1E146D3AB100640419 /* Reachability.m in Sources */,
+				64AA7B8F146E3D670050AC97 /* FacebookBrain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

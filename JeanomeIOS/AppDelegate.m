@@ -32,7 +32,6 @@
     nav = [[UINavigationController alloc] init];
     nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
     
-
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
 
     [nav pushViewController:jc animated:YES];

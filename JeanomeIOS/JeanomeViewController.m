@@ -10,7 +10,7 @@
 
 @implementation JeanomeViewController
 
-
+@synthesize fb;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -20,6 +20,7 @@
 
         NSLog(@"JeanomeViewController.m:21   initWithNibName()");
 
+        fb = [[FacebookBrain alloc] init];
     }
     return self;
 }

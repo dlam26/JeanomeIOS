@@ -10,6 +10,7 @@
 
 #import "Constants.h"
 #import "TakePhotoViewController.h"
+#import "SettingsViewController.h"
 
 // wtf http://stackoverflow.com/questions/4091676/strange-behavior-with-compile-error-expected-specifier-qualifier-list-before-c
 @class FacebookBrain;
@@ -18,8 +19,10 @@
 {    
     NSString *facebookId;
     
+    IBOutlet UIButton *loginButton;
     IBOutlet UIButton *logoutButton;
     IBOutlet UILabel *isSessionValidLabel;
+    
 }
 
 @property(retain,nonatomic) NSString *facebookId;

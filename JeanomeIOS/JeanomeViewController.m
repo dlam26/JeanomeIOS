@@ -103,7 +103,7 @@
     // Get the users facebook id
     [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self]; 
 
-    
+//    loginButton.hidden  = YES;
     logoutButton.hidden = NO;    
     [self updateIsSessionValid];
 }
@@ -115,6 +115,8 @@
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     [[delegate facebook] logout:delegate];
+//    loginButton.hidden = NO;
+    logoutButton.hidden = YES;
     [self updateIsSessionValid];
 }
 
@@ -123,6 +125,18 @@
     NSLog(@"JeanomeViewController.m:135   printFacebookId: %@", self.facebookId);
     
     // [fb retain];   //why it's crashing when u click on it twice is beyond me
+}
+
+/*
+    Attached to nav bar item as its selector on front page in AppDelegate.m:32
+ */
+-(void)showSettingsPage
+{
+    NSLog(@"JeanomeViewController.m:135    showSettingsPage()");
+    
+    SettingsViewController *svc = [[SettingsViewController alloc] init];
+    
+    [self.navigationController pushViewController:svc animated:YES];
 }
 
 

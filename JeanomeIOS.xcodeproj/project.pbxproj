@@ -47,7 +47,6 @@
 		64A5F183146B39610051C718 /* OverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F181146B39600051C718 /* OverlayViewController.xib */; };
 		64A5F187146B479D0051C718 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F186146B479D0051C718 /* logo.png */; };
 		64A5F189146B4D280051C718 /* babybluehappyface.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F188146B4D280051C718 /* babybluehappyface.png */; };
-		64AA7B8F146E3D670050AC97 /* FacebookBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AA7B8E146E3D670050AC97 /* FacebookBrain.m */; };
 		64BF1DF7146D376E00640419 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DA6146D376E00640419 /* ASIAuthenticationDialog.m */; };
 		64BF1DF8146D376E00640419 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DA9146D376E00640419 /* ASIDataCompressor.m */; };
 		64BF1DF9146D376E00640419 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DAB146D376E00640419 /* ASIDataDecompressor.m */; };
@@ -61,6 +60,9 @@
 		64BF1E26146D3BA500640419 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF1E25146D3BA500640419 /* SystemConfiguration.framework */; };
 		64BF1E28146D3BB500640419 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF1E27146D3BB500640419 /* MobileCoreServices.framework */; };
 		64BF1E2A146D3BC800640419 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF1E29146D3BC800640419 /* libz.dylib */; };
+		64D65B93146F265F007F4A49 /* transparent_settings_gear_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D65B92146F265F007F4A49 /* transparent_settings_gear_icon.png */; };
+		64D65B9E146F2778007F4A49 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D65B9C146F2777007F4A49 /* SettingsViewController.m */; };
+		64D65B9F146F2778007F4A49 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D65B9D146F2777007F4A49 /* SettingsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,8 +140,6 @@
 		64A5F184146B43560051C718 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		64A5F186146B479D0051C718 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../Jeanome/static/images/logo.png; sourceTree = "<group>"; };
 		64A5F188146B4D280051C718 /* babybluehappyface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = babybluehappyface.png; path = ../../../Desktop/babybluehappyface.png; sourceTree = "<group>"; };
-		64AA7B8D146E3D670050AC97 /* FacebookBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookBrain.h; sourceTree = "<group>"; };
-		64AA7B8E146E3D670050AC97 /* FacebookBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookBrain.m; sourceTree = "<group>"; };
 		64BF1DA5146D376E00640419 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		64BF1DA6146D376E00640419 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		64BF1DA7146D376E00640419 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -166,6 +166,10 @@
 		64BF1E25146D3BA500640419 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		64BF1E27146D3BB500640419 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		64BF1E29146D3BC800640419 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		64D65B92146F265F007F4A49 /* transparent_settings_gear_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent_settings_gear_icon.png; sourceTree = "<group>"; };
+		64D65B9B146F2777007F4A49 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		64D65B9C146F2777007F4A49 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		64D65B9D146F2777007F4A49 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,11 +283,9 @@
 			isa = PBXGroup;
 			children = (
 				647DFFDE146B560600E25B9C /* TODO */,
-				64A5F184146B43560051C718 /* Constants.h */,
 				649ED3B7146A082A00E558EC /* AppDelegate.h */,
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
-				64AA7B8D146E3D670050AC97 /* FacebookBrain.h */,
-				64AA7B8E146E3D670050AC97 /* FacebookBrain.m */,
+				64A5F184146B43560051C718 /* Constants.h */,
 				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
 				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
 				649ED48D146A845F00E558EC /* JeanomeViewController.xib */,
@@ -293,6 +295,9 @@
 				64A5F17F146B39600051C718 /* OverlayViewController.h */,
 				64A5F180146B39600051C718 /* OverlayViewController.m */,
 				64A5F181146B39600051C718 /* OverlayViewController.xib */,
+				64D65B9B146F2777007F4A49 /* SettingsViewController.h */,
+				64D65B9C146F2777007F4A49 /* SettingsViewController.m */,
+				64D65B9D146F2777007F4A49 /* SettingsViewController.xib */,
 				64A5F185146B477B0051C718 /* images */,
 				649ED3AF146A082A00E558EC /* Supporting Files */,
 				64BF1DA4146D376E00640419 /* ASIHttpRequest */,
@@ -363,6 +368,7 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				64D65B92146F265F007F4A49 /* transparent_settings_gear_icon.png */,
 				647DFFE0146B5A0C00E25B9C /* cameraicon.png */,
 				647DFFDC146B4FEF00E25B9C /* LoginWithFacebookNormal.png */,
 				647DFFD7146B4F9200E25B9C /* LoginWithFacebookNormal@2x.png */,
@@ -487,6 +493,8 @@
 				647DFFDF146B560600E25B9C /* TODO in Resources */,
 				647DFFE1146B5A0C00E25B9C /* cameraicon.png in Resources */,
 				647D0007146C70A600E25B9C /* FBDialog.bundle in Resources */,
+				64D65B93146F265F007F4A49 /* transparent_settings_gear_icon.png in Resources */,
+				64D65B9F146F2778007F4A49 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +553,7 @@
 				64BF1DFD146D376E00640419 /* ASIInputStream.m in Sources */,
 				64BF1DFE146D376E00640419 /* ASINetworkQueue.m in Sources */,
 				64BF1E1E146D3AB100640419 /* Reachability.m in Sources */,
-				64AA7B8F146E3D670050AC97 /* FacebookBrain.m in Sources */,
+				64D65B9E146F2778007F4A49 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

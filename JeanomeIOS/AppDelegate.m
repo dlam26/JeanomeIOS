@@ -30,13 +30,18 @@
     nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
     
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
+    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:jc action:@selector(showSettingsPage)];    
+
+    jc.navigationItem.leftBarButtonItem = settingsBarButton;
+
     [nav pushViewController:jc animated:YES];
-    
     [self.window addSubview:nav.view];
     [self.window makeKeyAndVisible];
     
     // from https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
     facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
+    
+    [settingsBarButton release];
     
     return YES;
 }

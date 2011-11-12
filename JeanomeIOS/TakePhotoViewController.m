@@ -225,9 +225,12 @@
     // set the facebookId (for now, until I put this in AppDelegate.m)
     self.facebookId = @"100003115255847";
     
+    
+    NSString *jeanomeURL = [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL];
+    
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
-    NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
+    NSURL *postURL = [NSURL URLWithString:[jeanomeURL stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
     
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];

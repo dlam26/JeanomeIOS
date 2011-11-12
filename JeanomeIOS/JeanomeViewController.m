@@ -99,6 +99,11 @@
         [[delegate facebook] authorize:nil];
     }
     
+    NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
+    // Get the users facebook id
+    [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self]; 
+
+    
     logoutButton.hidden = NO;    
     [self updateIsSessionValid];
 }
@@ -136,14 +141,58 @@
 
 #pragma mark - <FBRequestDelegate> protocol
 
-//Sent to the delegate when a request returns and its response has been parsed into an object.
+/**
+ * Called just before the request is sent to the server.
+ */
+- (void)requestLoading:(FBRequest *)request;
+{
+    
+}
+
+/**
+ * Called when the server responds and begins to send back data.
+ */
+- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response
+{
+    NSLog(@"JeanomeViewController.m:151  didReceiveResponse()");
+}
+
+/**
+ * Called when an error prevents the request from completing successfully.
+ */
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error
+{
+    NSLog(@"JeanomeViewController.m:160  didFailWithError()  %@", error);    
+}
+
+/**
+ * Called when a request returns and its response has been parsed into
+ * an object.
+ *
+ * The resulting object may be a dictionary, an array, a string, or a number,
+ * depending on thee format of the API response.
+ */
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
+    NSLog(@"JeanomeViewController.m:163  didLoad()");
+    
     NSDictionary *dict = result;
     
     self.facebookId = [dict objectForKey:@"id"];
     
     NSLog(@"JeanomeViewController.m:206  request()   facebookId: %@", facebookId);
 }
+
+/**
+ * Called when a request returns a response.
+ *
+ * The result object is the raw response from the server of type NSData
+ */
+- (void)request:(FBRequest *)request didLoadRawResponse:(NSData *)data
+{
+    NSLog(@"JeanomeViewController.m:173  didLoadRawResponse()");
+
+}
+
 
 @end

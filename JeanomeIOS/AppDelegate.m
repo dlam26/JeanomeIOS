@@ -26,18 +26,17 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    // https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
-    facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
-    
     nav = [[UINavigationController alloc] init];
     nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
     
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
-
     [nav pushViewController:jc animated:YES];
     
     [self.window addSubview:nav.view];
     [self.window makeKeyAndVisible];
+    
+    // from https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
+    facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
     
     return YES;
 }

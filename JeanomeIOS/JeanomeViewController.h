@@ -7,21 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FacebookBrain.h"
 
-#import "AppDelegate.h"
 #import "Constants.h"
 #import "TakePhotoViewController.h"
 
-@interface JeanomeViewController : UIViewController
+// wtf http://stackoverflow.com/questions/4091676/strange-behavior-with-compile-error-expected-specifier-qualifier-list-before-c
+@class FacebookBrain;
+
+@interface JeanomeViewController : UIViewController <FBRequestDelegate>
 {    
-    FacebookBrain *fb;
+    NSString *facebookId;
     
     IBOutlet UIButton *logoutButton;
     IBOutlet UILabel *isSessionValidLabel;
 }
 
-@property(retain,nonatomic) FacebookBrain *fb;
+@property(retain,nonatomic) NSString *facebookId;
+
 
 -(IBAction)startTakingPhoto:(id)sender;
 -(void)updateIsSessionValid;

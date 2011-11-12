@@ -10,7 +10,7 @@
 
 @implementation JeanomeViewController
 
-@synthesize fb;
+@synthesize facebookId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -18,9 +18,6 @@
     if (self) {
         // Custom initialization
 
-        NSLog(@"JeanomeViewController.m:21   initWithNibName()");
-
-        fb = [[FacebookBrain alloc] init];
     }
     return self;
 }
@@ -37,25 +34,11 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"JeanomeViewController.m:38   viewDidLoad()");
+    // NSLog(@"JeanomeViewController.m:38   viewDidLoad()");
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    // self.title = JEANOME_TITLE;
-    
-    /*
-    #warning UIBarMetrics only in iOS 5.0
      
-     // set a picture for the navbar title
-     
-     UIImage *logo = [UIImage imageNamed:@"logo.png"];
-     
-    [self.navigationController.navigationBar setBackgroundImage:logo forBarMetrics:UIBarMetricsDefault];
-    */
-     
-    // [self startTakingPhoto:nil];
-    
     
     logoutButton.hidden = YES;
     [self updateIsSessionValid];
@@ -70,12 +53,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
+    // NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
+    // NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -130,6 +113,13 @@
     [self updateIsSessionValid];
 }
 
+-(IBAction)printFacebookId:(id)sender
+{
+    NSLog(@"JeanomeViewController.m:135   printFacebookId: %@", self.facebookId);
+    
+    // [fb retain];   //why it's crashing when u click on it twice is beyond me
+}
+
 
 -(void)updateIsSessionValid
 {
@@ -142,6 +132,18 @@
     isSessionValidLabel.text = [NSString stringWithFormat:@"Is session valid: %@", isSessionValid ? @"YES" : @"NO"];
     
     logoutButton.hidden = !isSessionValid;
+}
+
+#pragma mark - <FBRequestDelegate> protocol
+
+//Sent to the delegate when a request returns and its response has been parsed into an object.
+- (void)request:(FBRequest *)request didLoad:(id)result
+{
+    NSDictionary *dict = result;
+    
+    self.facebookId = [dict objectForKey:@"id"];
+    
+    NSLog(@"JeanomeViewController.m:206  request()   facebookId: %@", facebookId);
 }
 
 @end

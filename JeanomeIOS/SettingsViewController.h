@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Constants.h"
 
-@interface SettingsViewController : UIViewController {
+@interface SettingsViewController : UIViewController <UITextFieldDelegate> {
     
     IBOutlet UITextField *jeanomeURLTextField;
     NSUserDefaults *defaults;

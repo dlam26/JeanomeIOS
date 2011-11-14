@@ -131,12 +131,9 @@
     Attached to nav bar item as its selector on front page in AppDelegate.m:32
  */
 -(void)showSettingsPage
-{
-    NSLog(@"JeanomeViewController.m:135    showSettingsPage()");
-    
-    SettingsViewController *svc = [[SettingsViewController alloc] init];
-    
-    [self.navigationController pushViewController:svc animated:YES];
+{    
+    SettingsViewController *svc = [[[SettingsViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:svc animated:YES];    
 }
 
 

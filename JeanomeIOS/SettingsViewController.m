@@ -39,6 +39,9 @@
     // Do any additional setup after loading the view from its nib.
     
     jeanomeURLTextField.text = [defaults stringForKey:SETTING_JEANOME_URL];
+    jeanomeURLTextField.delegate = self;
+
+    jeanomeURLTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
 
 - (void)viewDidUnload
@@ -59,6 +62,35 @@
     [defaults setValue:[jeanomeURLTextField text] forKey:SETTING_JEANOME_URL];
     
     [defaults synchronize];
+}
+
+#pragma mark -  <UITextFieldDelegate> 
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog(@"SettingsViewController.m:76   textFieldShouldReturn()");
+
+    /*
+    if (textField.text.length) {
+		[textField resignFirstResponder];
+		return YES;
+	} else {
+		return NO;
+	}
+     */
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSLog(@"SettingsViewController.m:76   textFieldDidEndEditing()");
+    
+    /*
+	[self.delegate askerViewController:self didAskQuestion:self.questionLabel.text andGotAnswer:self.answerField.text];
+     */
 }
 
 @end

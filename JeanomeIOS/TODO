@@ -13,4 +13,5 @@
 https://graph.facebook.com/me?fields=id&access_token=d6fbb26e9641b665b717120bc9fa0fe7
 
 
+4. On settings page input for URL, if there's a trailing slash, remove it 
 

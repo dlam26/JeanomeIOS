@@ -117,6 +117,9 @@
 
 #pragma mark - UIImagePickerControllerDelegate
 
+/*
+    Called after you take a picture with the camera and hit 'Use'
+ */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSLog(@"TakePhotoViewController.m:93  didFinishPickingMediaWithInfo()");
@@ -124,6 +127,9 @@
     // NSParameterAssert(image);
     
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
+    
 
     [self setPickedImage:image];
     
@@ -178,6 +184,9 @@
 }
  */
 
+/*
+    Called after you hit save from the Aviary photo editor
+ */
 - (void)feather:(AFFeatherController *)featherController finishedWithImage:(UIImage *)image
 {
     // Handle the result image here
@@ -231,12 +240,14 @@
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
     NSURL *postURL = [NSURL URLWithString:[jeanomeURL stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
+  
+    //NSURL *postURL = [NSURL URLWithString:@"http://10.0.1.60:8000/testing/"];
     
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];
     
     
-    NSLog(@"TakePhotoViewController.m:229   postURL: %@   facebookIdCookie: %@    accessTokenCookie: %@", postURL, facebookIdCookie, accessTokenCookie);
+    // NSLog(@"TakePhotoViewController.m:229   postURL: %@   facebookIdCookie: %@    accessTokenCookie: %@", postURL, facebookIdCookie, accessTokenCookie);
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     
@@ -248,10 +259,28 @@
     [request setPostValue:@"Submit" forKey:@"do_add_item"];
     [request setPostValue:@"66.66" forKey:@"value"];
     
-    [request addData:UIImageJPEGRepresentation(pickedImage, 1.0) forKey:@"picture"];
+    // 11/15/2011   THIS ACTUALLY WORKS TO SEND STUFF!!!
+    // NSData *someData = [NSData dataWithBytes:"asdf" length:strlen("asdf")];
+    // [request addData:someData forKey:@"picture"];
+    
+    // IMPORTANT:  The edited photo after Aviary is set to imageView.image in 
+    
+    [request addData:UIImageJPEGRepresentation(imageView.image, 1.0) forKey:@"picture"];
     
     [request setUseCookiePersistence:NO];
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
+    
+    /*
+    [request setCompletionBlock:^{
+        NSString *responseString = [request responseString];
+        NSLog(@"Response: %@", responseString);
+    }];
+    
+    [request setFailedBlock:^{
+        NSError *error = [request error];
+        NSLog(@"Error: %@", error.localizedDescription);
+    }];
+     */
     
 	[request startSynchronous];
     

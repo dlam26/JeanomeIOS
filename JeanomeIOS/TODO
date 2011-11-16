@@ -15,3 +15,6 @@ https://graph.facebook.com/me?fields=id&access_token=d6fbb26e9641b665b717120bc9f
 
 4. On settings page input for URL, if there's a trailing slash, remove it 
 
+5. Do picture upload in a thread/block
+
+6. Show user facebook picture when logged in

@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "TakePhotoViewController.h"
 #import "SettingsViewController.h"
+#import "ClosetViewController.h"
 
 // wtf http://stackoverflow.com/questions/4091676/strange-behavior-with-compile-error-expected-specifier-qualifier-list-before-c
 @class FacebookBrain;
@@ -18,6 +19,8 @@
 @interface JeanomeViewController : UIViewController <FBRequestDelegate>
 {    
     NSString *facebookId;
+    FBRequest *fbRequest;
+    id fbResult;
     
     IBOutlet UIButton *loginButton;
     IBOutlet UIButton *logoutButton;
@@ -26,9 +29,14 @@
 }
 
 @property(retain,nonatomic) NSString *facebookId;
+@property(retain,nonatomic) FBRequest *fbRequest;
+@property(copy, nonatomic) id fbResult;
 
 
 -(IBAction)startTakingPhoto:(id)sender;
+-(IBAction)openCloset:(id)sender;
+
+
 -(void)updateIsSessionValid;
 
 @end

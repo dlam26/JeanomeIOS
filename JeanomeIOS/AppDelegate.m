@@ -30,9 +30,15 @@
     nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
     
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
+    /*
     UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:jc action:@selector(showSettingsPage)];    
-
-    jc.navigationItem.leftBarButtonItem = settingsBarButton;
+     */    
+    UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"cameraicon" ofType:@"png"]] style:UIBarButtonItemStylePlain target:jc action:@selector(startTakingPhoto:)];
+    
+    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"user-silhouette-icon" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:jc action:@selector(openCloset:)];
+    
+    jc.navigationItem.leftBarButtonItem = cameraBarButton;
+    jc.navigationItem.rightBarButtonItem = myClosetBarButton;
 
     [nav pushViewController:jc animated:YES];
     [self.window addSubview:nav.view];
@@ -41,7 +47,7 @@
     // from https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
     facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
     
-    [settingsBarButton release];
+    [cameraBarButton release]; [myClosetBarButton release];
     
     return YES;
 }

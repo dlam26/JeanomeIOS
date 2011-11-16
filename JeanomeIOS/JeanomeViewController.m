@@ -10,7 +10,7 @@
 
 @implementation JeanomeViewController
 
-@synthesize facebookId;
+@synthesize facebookId, fbResult, fbRequest;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -18,6 +18,7 @@
     if (self) {
         // Custom initialization
 
+        
     }
     return self;
 }
@@ -69,11 +70,19 @@
 
 -(IBAction)startTakingPhoto:(id)sender
 {    
-    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] init];
+    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] initWithFacebookRequest:fbRequest andResponse:fbResult andFacebookId:facebookId];
     
     tpvc.title = @"How's it look?";
     
     [self.navigationController pushViewController:tpvc animated:YES];
+}
+
+-(IBAction)openCloset:(id)sender
+{
+    ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
+    cvc.title = @"My Closet";
+    cvc.fbResult = self.fbResult;
+    [self.navigationController pushViewController:cvc animated:YES];
 }
 
 
@@ -190,8 +199,8 @@
     NSDictionary *dict = result;
     
     self.facebookId = [dict objectForKey:@"id"];
-    
-    NSLog(@"JeanomeViewController.m:206  request()   facebookId: %@", facebookId);
+    self.fbRequest = request;
+    self.fbResult = result;
 }
 
 /**

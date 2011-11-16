@@ -26,8 +26,9 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, myToolbar, imgPicker, pickedImage, overlayViewController, facebookId;
+@synthesize imageView, myToolbar, imgPicker, pickedImage, overlayViewController;
 
+@synthesize fbRequest, fbResult, facebookId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +36,18 @@
     if (self) {
         // Custom initialization
 
+    }
+    return self;
+}
+
+- (id)initWithFacebookRequest:(FBRequest *)req 
+                  andResponse:(id)result
+                andFacebookId:(NSString *)fbid {
+    self = [super init];
+    if (self) {
+        self.fbRequest = req;
+        self.fbResult = result;
+        self.facebookId = fbid;
     }
     return self;
 }
@@ -228,26 +241,17 @@
     // Get the access token
     NSString *accessToken = [[delegate facebook] accessToken];
     
-#warning FIXME postURL
-    // NSURL *postURL = [NSURL URLWithString:[JEANOME_URL stringByAppendingFormat:@"/closet/%@", self.facebookId]];
-
-    // set the facebookId (for now, until I put this in AppDelegate.m)
-    self.facebookId = @"100003115255847";
-    
-    
-    NSString *jeanomeURL = [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL];
-    
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
-    NSURL *postURL = [NSURL URLWithString:[jeanomeURL stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
+    NSURL *postURL = [NSURL URLWithString:[[[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL] stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
   
     //NSURL *postURL = [NSURL URLWithString:@"http://10.0.1.60:8000/testing/"];
-    
+
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];
     
     
-    // NSLog(@"TakePhotoViewController.m:229   postURL: %@   facebookIdCookie: %@    accessTokenCookie: %@", postURL, facebookIdCookie, accessTokenCookie);
+    NSLog(@"TakePhotoViewController.m:229   postURL: %@   facebookIdCookie: %@    accessTokenCookie: %@", postURL, facebookIdCookie, accessTokenCookie);
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     

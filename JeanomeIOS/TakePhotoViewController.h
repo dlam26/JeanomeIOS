@@ -25,7 +25,8 @@
     OverlayViewController *overlayViewController;
     
     NSString *facebookId;   // the facebook id of the current user
-
+    FBRequest *fbRequest;
+    id fbResult;
 }
 
 
@@ -34,8 +35,15 @@
 @property (nonatomic, retain) UIImagePickerController *imgPicker;
 @property (nonatomic, retain) OverlayViewController *overlayViewController;
 @property (nonatomic, retain) UIImage *pickedImage;
-@property (nonatomic, retain) NSString *facebookId;
 
+
+@property (nonatomic, retain) NSString *facebookId;
+@property(retain,nonatomic) FBRequest *fbRequest;
+@property(copy, nonatomic) id fbResult;
+
+- (id)initWithFacebookRequest:(FBRequest *)req 
+                  andResponse:(id)result
+                andFacebookId:(NSString *)fbid;
 
 - (void)displayFeatherWithImage:(UIImage *)image;
 

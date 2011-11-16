@@ -63,6 +63,9 @@
 		64D65B93146F265F007F4A49 /* transparent_settings_gear_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D65B92146F265F007F4A49 /* transparent_settings_gear_icon.png */; };
 		64D65B9E146F2778007F4A49 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D65B9C146F2777007F4A49 /* SettingsViewController.m */; };
 		64D65B9F146F2778007F4A49 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D65B9D146F2777007F4A49 /* SettingsViewController.xib */; };
+		64D65BAD14735BC2007F4A49 /* user-silhouette-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D65BAC14735BC2007F4A49 /* user-silhouette-icon.png */; };
+		64D65BB114735EAA007F4A49 /* ClosetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D65BAF14735EA9007F4A49 /* ClosetViewController.m */; };
+		64D65BB214735EAA007F4A49 /* ClosetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D65BB014735EA9007F4A49 /* ClosetViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +173,10 @@
 		64D65B9B146F2777007F4A49 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		64D65B9C146F2777007F4A49 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		64D65B9D146F2777007F4A49 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		64D65BAC14735BC2007F4A49 /* user-silhouette-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-silhouette-icon.png"; sourceTree = "<group>"; };
+		64D65BAE14735EA8007F4A49 /* ClosetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetViewController.h; sourceTree = "<group>"; };
+		64D65BAF14735EA9007F4A49 /* ClosetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetViewController.m; sourceTree = "<group>"; };
+		64D65BB014735EA9007F4A49 /* ClosetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClosetViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +292,9 @@
 				647DFFDE146B560600E25B9C /* TODO */,
 				649ED3B7146A082A00E558EC /* AppDelegate.h */,
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
+				64D65BAE14735EA8007F4A49 /* ClosetViewController.h */,
+				64D65BAF14735EA9007F4A49 /* ClosetViewController.m */,
+				64D65BB014735EA9007F4A49 /* ClosetViewController.xib */,
 				64A5F184146B43560051C718 /* Constants.h */,
 				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
 				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
@@ -368,6 +378,7 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				64D65BAC14735BC2007F4A49 /* user-silhouette-icon.png */,
 				64D65B92146F265F007F4A49 /* transparent_settings_gear_icon.png */,
 				647DFFE0146B5A0C00E25B9C /* cameraicon.png */,
 				647DFFDC146B4FEF00E25B9C /* LoginWithFacebookNormal.png */,
@@ -495,6 +506,8 @@
 				647D0007146C70A600E25B9C /* FBDialog.bundle in Resources */,
 				64D65B93146F265F007F4A49 /* transparent_settings_gear_icon.png in Resources */,
 				64D65B9F146F2778007F4A49 /* SettingsViewController.xib in Resources */,
+				64D65BAD14735BC2007F4A49 /* user-silhouette-icon.png in Resources */,
+				64D65BB214735EAA007F4A49 /* ClosetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +567,7 @@
 				64BF1DFE146D376E00640419 /* ASINetworkQueue.m in Sources */,
 				64BF1E1E146D3AB100640419 /* Reachability.m in Sources */,
 				64D65B9E146F2778007F4A49 /* SettingsViewController.m in Sources */,
+				64D65BB114735EAA007F4A49 /* ClosetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

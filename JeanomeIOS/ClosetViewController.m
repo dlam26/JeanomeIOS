@@ -10,7 +10,7 @@
 
 @implementation ClosetViewController
 
-@synthesize fbResult;
+@synthesize fbResult, fbResultDict, closet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -18,18 +18,25 @@
     if (self) {
         // Custom initialization
         
-    
     }
     return self;
 }
 
 -(id)initWithFbResult:(id)result
 {
-    NSLog(@"ClosetViewController.m:28   initWithFbResult()");
-
     self.fbResult = result;
+    self.fbResultDict = result;
 
+    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettingsPage)];    
 
+    self.navigationItem.rightBarButtonItem = settingsBarButton;
+    
+    NSString *closetUrlString = [NSString stringWithFormat:@"http://10.0.1.60:8000/api/closet/%@/", [self.fbResultDict objectForKey:@"id"]];
+
+    NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
+
+    self.closet = [[Closet alloc] initWithJSON:closetJSON];
+    
     return self;
 }
 
@@ -58,13 +65,15 @@
     
     NSURL *profilePicURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=large", facebookId]];
     
-    NSData *profilePicData = [NSData dataWithContentsOfURL:profilePicURL];
+    UIImage *profilePicImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:profilePicURL]];
     
-    UIImage *profilePicImage = [UIImage imageWithData:profilePicData];
+    [facebookProfilePic setImage:profilePicImage];
+    [nameLabel setText:[self.closet getName]];
+    [followersLabel setText:[NSString stringWithFormat:@"%@ Followers", [self.closet getFollowers]]];
+    [followingLabel setText:[NSString stringWithFormat:@"%@ Following", [self.closet getFollowing]]];
+    [statusLabel setText:[self.closet getStatus]];
+    [pointsLabel setText:[NSString stringWithFormat:@"%@ pts.", [self.closet getPoints]]];
     
-    [facebookProfilePicView setImage:profilePicImage];
-    
-
 }
 
 - (void)viewDidUnload
@@ -78,6 +87,15 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+/*
+ Attached to nav bar item as its selector on front page in AppDelegate.m:32
+ */
+-(void)showSettingsPage
+{    
+    SettingsViewController *svc = [[[SettingsViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:svc animated:YES];    
 }
 
 @end

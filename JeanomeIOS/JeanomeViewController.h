@@ -26,6 +26,7 @@
     IBOutlet UIButton *logoutButton;
     IBOutlet UILabel *isSessionValidLabel;
     
+    ClosetViewController *closetViewController;
 }
 
 @property(retain,nonatomic) NSString *facebookId;

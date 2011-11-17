@@ -7,19 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Closet.h"
+#import "SettingsViewController.h"
 
 @interface ClosetViewController : UIViewController {
     
     id fbResult;
+    NSDictionary *fbResultDict;
+    
+    Closet *closet;
+    
+    IBOutlet UILabel *nameLabel;
+    IBOutlet UILabel *followersLabel;
+    IBOutlet UILabel *followingLabel;
     
     IBOutlet UILabel *facebookIdLabel;
-    IBOutlet UIImageView *facebookProfilePicView;
+    IBOutlet UIImageView *facebookProfilePic;
+    
+    IBOutlet UIImageView *statusIcon;
+    IBOutlet UILabel *statusLabel;
+    IBOutlet UILabel *pointsLabel;
+    
+    IBOutlet UIScrollView *imageScrollView;
 }
 
 @property(copy, nonatomic) id fbResult;
+@property(retain, nonatomic) NSDictionary *fbResultDict;
+@property(retain, nonatomic) Closet *closet;
+
 
 -(id)initWithFbResult:(id)result;
 
-
+-(void)showSettingsPage;
 
 @end

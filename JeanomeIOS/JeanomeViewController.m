@@ -79,10 +79,17 @@
 
 -(IBAction)openCloset:(id)sender
 {
-    ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
-    cvc.title = @"My Closet";
-    cvc.fbResult = self.fbResult;
-    [self.navigationController pushViewController:cvc animated:YES];
+    if(!self.fbResult) {
+        // Need to be logged in, so redirect to it...
+        
+        [loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
+    else {    
+        ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
+        cvc.title = @"My Closet";
+        cvc.fbResult = self.fbResult;
+        [self.navigationController pushViewController:cvc animated:YES];
+    }
 }
 
 
@@ -124,8 +131,14 @@
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     [[delegate facebook] logout:delegate];
-//    loginButton.hidden = NO;
+    
+    // loginButton.hidden = NO;
     logoutButton.hidden = YES;
+    
+    facebookId = nil;
+    fbRequest = nil;
+    fbResult = nil;
+    
     [self updateIsSessionValid];
 }
 
@@ -136,14 +149,7 @@
     // [fb retain];   //why it's crashing when u click on it twice is beyond me
 }
 
-/*
-    Attached to nav bar item as its selector on front page in AppDelegate.m:32
- */
--(void)showSettingsPage
-{    
-    SettingsViewController *svc = [[[SettingsViewController alloc] init] autorelease];
-    [self.navigationController pushViewController:svc animated:YES];    
-}
+
 
 
 -(void)updateIsSessionValid

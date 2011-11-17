@@ -66,6 +66,7 @@
 		64D65BAD14735BC2007F4A49 /* user-silhouette-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D65BAC14735BC2007F4A49 /* user-silhouette-icon.png */; };
 		64D65BB114735EAA007F4A49 /* ClosetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D65BAF14735EA9007F4A49 /* ClosetViewController.m */; };
 		64D65BB214735EAA007F4A49 /* ClosetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D65BB014735EA9007F4A49 /* ClosetViewController.xib */; };
+		64D65BE714747CF5007F4A49 /* Closet.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D65BE614747CF4007F4A49 /* Closet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +178,8 @@
 		64D65BAE14735EA8007F4A49 /* ClosetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetViewController.h; sourceTree = "<group>"; };
 		64D65BAF14735EA9007F4A49 /* ClosetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetViewController.m; sourceTree = "<group>"; };
 		64D65BB014735EA9007F4A49 /* ClosetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClosetViewController.xib; sourceTree = "<group>"; };
+		64D65BE514747CF3007F4A49 /* Closet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Closet.h; sourceTree = "<group>"; };
+		64D65BE614747CF4007F4A49 /* Closet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Closet.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +227,6 @@
 				647DFFF2146C70A600E25B9C /* FBLoginDialog.m */,
 				647DFFF3146C70A600E25B9C /* FBRequest.h */,
 				647DFFF4146C70A600E25B9C /* FBRequest.m */,
-				647DFFF5146C70A600E25B9C /* JSON */,
 			);
 			name = FBConnect;
 			path = "../../../iphone/facebook-ios-sdk/src";
@@ -247,13 +249,15 @@
 				647D0001146C70A600E25B9C /* SBJsonWriter.h */,
 				647D0002146C70A600E25B9C /* SBJsonWriter.m */,
 			);
-			path = JSON;
+			name = JSON;
+			path = "../../iphone/facebook-ios-sdk/src/JSON";
 			sourceTree = "<group>";
 		};
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
 				649ED3AE146A082A00E558EC /* JeanomeIOS */,
+				647DFFF5146C70A600E25B9C /* JSON */,
 				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
 				649ED3A7146A082A00E558EC /* Frameworks */,
 				649ED3A5146A082A00E558EC /* Products */,
@@ -294,6 +298,8 @@
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
 				64D65BAE14735EA8007F4A49 /* ClosetViewController.h */,
 				64D65BAF14735EA9007F4A49 /* ClosetViewController.m */,
+				64D65BE514747CF3007F4A49 /* Closet.h */,
+				64D65BE614747CF4007F4A49 /* Closet.m */,
 				64D65BB014735EA9007F4A49 /* ClosetViewController.xib */,
 				64A5F184146B43560051C718 /* Constants.h */,
 				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
@@ -568,6 +574,7 @@
 				64BF1E1E146D3AB100640419 /* Reachability.m in Sources */,
 				64D65B9E146F2778007F4A49 /* SettingsViewController.m in Sources */,
 				64D65BB114735EAA007F4A49 /* ClosetViewController.m in Sources */,
+				64D65BE714747CF5007F4A49 /* Closet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

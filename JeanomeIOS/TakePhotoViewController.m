@@ -26,7 +26,7 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, myToolbar, imgPicker, pickedImage, overlayViewController;
+@synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;
 
 @synthesize fbRequest, fbResult, facebookId;
 
@@ -72,13 +72,19 @@
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) 
     {
-        self.imgPicker = [[UIImagePickerController alloc] init];
-        self.imgPicker.allowsEditing = NO;
-        self.imgPicker.delegate = self;
-        self.imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;        
+        imgPicker = [[UIImagePickerController alloc] init];
+        imgPicker.allowsEditing = NO;
+        imgPicker.delegate = self;
+        imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;        
         //self.imgPicker.showsCameraControls = NO;
         
-        self.overlayViewController = [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
+        scrollView.minimumZoomScale = 0.3;
+        scrollView.maximumZoomScale = 3.0;        
+        scrollView.delegate = self;
+        
+        [scrollView setContentSize:CGSizeMake(imageView.bounds.size.width, imageView.bounds.size.height)];
+        
+        overlayViewController = [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
         
         
         //[self presentModalViewController:self.imgPicker animated:NO];
@@ -148,8 +154,6 @@
     
     [self dismissModalViewControllerAnimated:NO];
 
-
-
     [self.imageView setImage:image];
 }
 
@@ -161,6 +165,26 @@
     [self dismissModalViewControllerAnimated:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    UIAlertView *alert;
+    
+    // Unable to save the image  
+    if (error)
+        alert = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                           message:@"Unable to save image to Photo Album." 
+                                          delegate:self cancelButtonTitle:@"Ok" 
+                                 otherButtonTitles:nil];
+    else // All is well
+        alert = [[UIAlertView alloc] initWithTitle:@"Success" 
+                                           message:@"Image saved to Photo Album." 
+                                          delegate:self cancelButtonTitle:@"Ok" 
+                                 otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+}
+
 
 
 - (void)displayFeatherWithImage:(UIImage *)image
@@ -180,6 +204,20 @@
     } else {
         NSAssert(NO, @"AFFeatherController was passed a nil image");
     }
+}
+
+#pragma mark -
+#pragma mark UIScrollView delegate methods
+
+// <UIScrollViewDelegate> 
+- (void)scrollViewDidScroll:(UIScrollView *)sv
+{
+    NSLog(@"TakePhotoViewController.m:214   scrollViewDidScroll: %@", NSStringFromCGPoint(sv.contentOffset));
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
 }
 
 
@@ -318,5 +356,24 @@
     
     return cookie;
 }
+
+
+-(IBAction)savePicToCameraRoll:(id)sender
+{
+    NSLog(@"TakePhotoViewController.m:325   savePicToCameraRoll()");
+    
+    // Save image
+    UIImageWriteToSavedPhotosAlbum(self.pickedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" 
+                                       message:@"Image saved to Photo Album." 
+                                      delegate:self cancelButtonTitle:@"Ok" 
+                             otherButtonTitles:nil];
+    
+    [alert show];
+    [alert release];
+}
+
 
 @end

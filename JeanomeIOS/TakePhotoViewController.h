@@ -14,9 +14,11 @@
 #import "AppDelegate.h"
 #import "OverlayViewController.h"
 
-@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, AFFeatherDelegate> 
+@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, AFFeatherDelegate> 
 {
     UIImageView *imageView;
+    UIScrollView *scrollView;
+
     UIToolbar *myToolbar;
     UIImagePickerController *imgPicker;
     
@@ -30,11 +32,12 @@
 }
 
 
-@property (nonatomic, retain) IBOutlet UIImageView *imageView;
-@property (nonatomic, retain) IBOutlet UIToolbar *myToolbar;
-@property (nonatomic, retain) UIImagePickerController *imgPicker;
-@property (nonatomic, retain) OverlayViewController *overlayViewController;
-@property (nonatomic, retain) UIImage *pickedImage;
+@property(nonatomic, retain) IBOutlet UIImageView *imageView;
+@property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property(nonatomic, retain) IBOutlet UIToolbar *myToolbar;
+@property(nonatomic, retain) UIImagePickerController *imgPicker;
+@property(nonatomic, retain) OverlayViewController *overlayViewController;
+@property(nonatomic, retain) UIImage *pickedImage;
 
 
 @property (nonatomic, retain) NSString *facebookId;
@@ -53,5 +56,7 @@
 
 
 -(IBAction)uploadPic:(id)sender;
+-(IBAction)savePicToCameraRoll:(id)sender;
+
 
 @end

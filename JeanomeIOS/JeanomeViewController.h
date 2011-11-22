@@ -33,11 +33,10 @@
 @property(retain,nonatomic) FBRequest *fbRequest;
 @property(copy, nonatomic) id fbResult;
 
-
 -(IBAction)startTakingPhoto:(id)sender;
 -(IBAction)openCloset:(id)sender;
-
-
 -(void)updateIsSessionValid;
+//-(void)__initClosetView;
+-(void)__initClosetView:(NSString *)notused;
 
 @end

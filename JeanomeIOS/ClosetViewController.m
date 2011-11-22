@@ -26,15 +26,19 @@
 {
     self.fbResult = result;
     self.fbResultDict = result;
+    
+    // 1.  Set up the navigation bar
 
-    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettingsPage)];    
+    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettingsPage)];       
 
     self.navigationItem.rightBarButtonItem = settingsBarButton;
     
+    // 2.  Fetch JSON from the server about the details.
+    
     NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", JEANOME_URL, [self.fbResultDict objectForKey:@"id"]];
-    
-    
+        
     NSLog(@"ClosetViewController.m:36   Fetching from URL... %@", closetUrlString);
+    
 
     NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
 
@@ -77,9 +81,6 @@
     [statusLabel setText:[self.closet getStatus]];
     [pointsLabel setText:[NSString stringWithFormat:@"%@ pts.", [self.closet getPoints]]];
     
-    // turned on from JeanomeViewController.m:93
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
 }
 
 - (void)viewDidUnload
@@ -87,6 +88,14 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"ClosetViewController.m:91   viewWillAppear()");
+    
+    // turned on from JeanomeViewController.m:93
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

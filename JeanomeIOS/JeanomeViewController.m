@@ -82,17 +82,33 @@
     if(!self.fbResult) {
         // Need to be logged in, so redirect to it...
         
+        NSLog(@"JeanomeViewController.m:85   openCloset()  need to be logged in... so clicking the button");
+        
         [loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     else {    
-        
+        // turned off at ClosetViewController.m:98
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
+        NSLog(@"JeanomeViewController.m:93  openCloset()   pushing ClosetViewController....");
+
+        /*
         ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
         cvc.title = @"My Closet";
-        cvc.fbResult = self.fbResult;
         [self.navigationController pushViewController:cvc animated:YES];
+        */
+         
+        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
     }
+}
+
+-(void)__initClosetView:(NSString *)notused;
+{
+    closetViewController = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
+    
+    closetViewController.title = @"Maaa Closet!";
+    [self.navigationController pushViewController:closetViewController animated:YES];
+    
 }
 
 

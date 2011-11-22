@@ -23,7 +23,6 @@
 #import "TakePhotoViewController.h"
 
 
-
 @implementation TakePhotoViewController
 
 @synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;

@@ -59,7 +59,16 @@
     
     // return [self.closetInfo objectForKey:@"points"];
     
-    return [NSDecimalNumber decimalNumberWithString:[self __defaultWith:0 ifThisIsNull:[self.closetInfo objectForKey:@"points"]]];
+    //  if "points" is a string...
+    //return [NSDecimalNumber decimalNumberWithString:[self __defaultWith:@"0" ifThisIsNull:[self.closetInfo objectForKey:@"points"]]];
+
+
+    NSDecimalNumber *points = [self.closetInfo objectForKey:@"points"];
+    
+    if(points == NULL)
+        return 0;
+    else
+        return points;
 }
 
 -(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val

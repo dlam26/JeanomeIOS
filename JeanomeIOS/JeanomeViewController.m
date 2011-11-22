@@ -85,6 +85,9 @@
         [loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     else {    
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
         ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
         cvc.title = @"My Closet";
         cvc.fbResult = self.fbResult;
@@ -200,7 +203,7 @@
  */
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
-    NSLog(@"JeanomeViewController.m:163  didLoad()");
+    // NSLog(@"JeanomeViewController.m:163  didLoad()");
     
     NSDictionary *dict = result;
     

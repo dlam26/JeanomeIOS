@@ -31,7 +31,10 @@
 
     self.navigationItem.rightBarButtonItem = settingsBarButton;
     
-    NSString *closetUrlString = [NSString stringWithFormat:@"http://10.0.1.60:8000/api/closet/%@/", [self.fbResultDict objectForKey:@"id"]];
+    NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", JEANOME_URL, [self.fbResultDict objectForKey:@"id"]];
+    
+    
+    NSLog(@"ClosetViewController.m:36   Fetching from URL... %@", closetUrlString);
 
     NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
 
@@ -69,10 +72,13 @@
     
     [facebookProfilePic setImage:profilePicImage];
     [nameLabel setText:[self.closet getName]];
-    [followersLabel setText:[NSString stringWithFormat:@"%@ Followers", [self.closet getFollowers]]];
-    [followingLabel setText:[NSString stringWithFormat:@"%@ Following", [self.closet getFollowing]]];
+    [followersLabel setText:[NSString stringWithFormat:@"%@ followers", [self.closet getFollowers]]];
+    [followingLabel setText:[NSString stringWithFormat:@"%@ following", [self.closet getFollowing]]];
     [statusLabel setText:[self.closet getStatus]];
     [pointsLabel setText:[NSString stringWithFormat:@"%@ pts.", [self.closet getPoints]]];
+    
+    // turned on from JeanomeViewController.m:93
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
 }
 

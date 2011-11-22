@@ -18,10 +18,12 @@
 
 -(id)initWithJSON:(NSString *)json;
 -(NSString *)getName;
--(NSDecimalNumber *)getPoints;
 -(NSString *)getSquarePhoto;
 -(NSString *)getFollowers;
 -(NSString *)getFollowing;
 -(NSString *)getStatus;
+-(NSDecimalNumber *)getPoints;
+
+-(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val;
 
 @end

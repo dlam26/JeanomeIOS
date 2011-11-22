@@ -12,7 +12,11 @@
 #define JEANOME_TITLE @"Jeanome"
 
 // NOTE: dont put trailing slash kk
-#define JEANOME_URL @"http://10.0.1.60:8000"
+#define JEANOME_URL JEANOME_URL_LOCAL
+
+#define JEANOME_URL_LOCAL @"http://10.0.1.3:8000"
+#define JEANOME_URL_STAGING @"http://staging.myjeanome.com"
+#define JEANOME_URL_PRODUCTION @"http://myjeanome.com"
 
 //  Important!  The id here needs to be concatenated with an fb 
 //  and put in the "URL types" -> "URL Schemes" in the info.plist file

@@ -31,15 +31,15 @@
 				<string key="IBProxiedObjectIdentifier">IBFirstResponder</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUIView" id="903125095">
+			<object class="IBUIView" id="717776978">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUITableView" id="432859784">
-						<reference key="NSNextResponder" ref="903125095"/>
+					<object class="IBUITableView" id="999936042">
+						<reference key="NSNextResponder" ref="717776978"/>
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{320, 200}</string>
-						<reference key="NSSuperview" ref="903125095"/>
+						<reference key="NSSuperview" ref="717776978"/>
 						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -58,7 +58,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 200}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView" ref="432859784"/>
+				<reference key="NSNextKeyView" ref="999936042"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -75,31 +75,31 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">tableViewCellWithTableView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="903125095"/>
+						<reference key="destination" ref="717776978"/>
 					</object>
 					<int key="connectionID">15</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">tableViewInsideCell</string>
-						<reference key="source" ref="903125095"/>
-						<reference key="destination" ref="432859784"/>
+						<reference key="source" ref="717776978"/>
+						<reference key="destination" ref="999936042"/>
 					</object>
 					<int key="connectionID">14</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
-						<reference key="source" ref="432859784"/>
-						<reference key="destination" ref="903125095"/>
+						<reference key="source" ref="999936042"/>
+						<reference key="destination" ref="717776978"/>
 					</object>
 					<int key="connectionID">18</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="432859784"/>
-						<reference key="destination" ref="903125095"/>
+						<reference key="source" ref="999936042"/>
+						<reference key="destination" ref="717776978"/>
 					</object>
 					<int key="connectionID">19</int>
 				</object>
@@ -125,16 +125,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">4</int>
-						<reference key="object" ref="903125095"/>
+						<reference key="object" ref="717776978"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="432859784"/>
+							<reference ref="999936042"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">5</int>
-						<reference key="object" ref="432859784"/>
-						<reference key="parent" ref="903125095"/>
+						<reference key="object" ref="999936042"/>
+						<array class="NSMutableArray" key="children"/>
+						<reference key="parent" ref="717776978"/>
 					</object>
 				</array>
 			</object>
@@ -151,7 +152,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">20</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

@@ -63,7 +63,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
  
-    NSLog(@"ClosetViewController.m:65   viewDidLoad()");
+//    NSLog(@"ClosetViewController.m:65   viewDidLoad()");
     
     NSDictionary *fbDict = fbResult;
     NSString *facebookId = [fbDict objectForKey:@"id"];
@@ -95,7 +95,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"ClosetViewController.m:91   viewWillAppear()");
+  //  NSLog(@"ClosetViewController.m:91   viewWillAppear()");
     
     // turned on from JeanomeViewController.m:93
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -122,7 +122,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 4;
 }
 
 /*
@@ -131,7 +131,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 10;
+    return 1;
 }
 
 
@@ -146,20 +146,38 @@
     if (cell == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"PictureTableViewCell" owner:self options:nil];
 //        tableViewCellWithTableView.data = [dataArray objectAtIndex:indexPath.row];
+        
         tableViewCellWithTableView.tableViewInsideCell.allowsSelection = NO;
+        
+        // rotate it on its side 90 degrees!
+        tableViewCellWithTableView.transform = CGAffineTransformMakeRotation(-(0.5)*M_PI);
+        
         cell = tableViewCellWithTableView;
         [cell setNeedsDisplay];
     }
     
+    
+    
     return cell;
 }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section == 0) {
+        
+        return [NSString stringWithFormat:@"Bags!"];
+    }
+    else 
+        return [NSString stringWithFormat:@"Category %d", section];
+}
+
 
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"ClosetViewController.m:155   didSelectRowAtIndexPath()! %u", indexPath.row);
+    // NSLog(@"ClosetViewController.m:155   didSelectRowAtIndexPath()! %u", indexPath.row);
     
     // Navigation logic may go here. Create and push another view controller.
     /*
@@ -172,12 +190,27 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 50.0;
+    }
+    else
+        return [tableView sectionHeaderHeight];
+}
+
+
 /*
+    This is the height of each closet item picture.  Each photo is 110x110
+ 
+    See PictureTableViewCell.m:64
+ 
+ */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 220;
+    return 110;
 }
- */
+
 
 
 

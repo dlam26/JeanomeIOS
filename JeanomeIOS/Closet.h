@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "JSON.h"
 
-@interface Closet : NSObject {
+@interface Closet : NSObject <UITableViewDataSource, UITableViewDelegate> {
     
     NSDictionary *closetInfo;
 }

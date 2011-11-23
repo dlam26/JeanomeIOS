@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A9E62A8147CC595002566DA /* PictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E62A6147CC594002566DA /* PictureTableViewCell.m */; };
+		1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */; };
 		647DFFDF146B560600E25B9C /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFDE146B560600E25B9C /* TODO */; };
 		649ED3A9146A082A00E558EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3A8146A082A00E558EC /* UIKit.framework */; };
 		649ED3AB146A082A00E558EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AA146A082A00E558EC /* Foundation.framework */; };
@@ -80,6 +82,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A9E62A5147CC593002566DA /* PictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureTableViewCell.h; sourceTree = "<group>"; };
+		1A9E62A6147CC594002566DA /* PictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureTableViewCell.m; sourceTree = "<group>"; };
+		1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureTableViewCell.xib; sourceTree = "<group>"; };
 		647DFFDE146B560600E25B9C /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		649ED3A4146A082A00E558EC /* JeanomeIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JeanomeIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		649ED3A8146A082A00E558EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -257,9 +262,12 @@
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
 				64D65BAE14735EA8007F4A49 /* ClosetViewController.h */,
 				64D65BAF14735EA9007F4A49 /* ClosetViewController.m */,
-				64D65BE514747CF3007F4A49 /* Closet.h */,
-				64D65BE614747CF4007F4A49 /* Closet.m */,
 				64D65BB014735EA9007F4A49 /* ClosetViewController.xib */,
+				64D65BE514747CF3007F4A49 /* Closet.h */,
+				1A9E62A5147CC593002566DA /* PictureTableViewCell.h */,
+				1A9E62A6147CC594002566DA /* PictureTableViewCell.m */,
+				1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */,
+				64D65BE614747CF4007F4A49 /* Closet.m */,
 				64A5F184146B43560051C718 /* Constants.h */,
 				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
 				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
@@ -512,6 +520,7 @@
 				64DDF0F2147B63B900491867 /* LoginWithFacebookNormal.png in Resources */,
 				64DDF0F3147B63B900491867 /* LoginWithFacebookNormal@2x.png in Resources */,
 				64DDF0F4147B63B900491867 /* LoginWithFacebookPressed.png in Resources */,
+				1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +582,7 @@
 				64DDF0E6147B56C400491867 /* SBJsonBase.m in Sources */,
 				64DDF0E7147B56C400491867 /* SBJsonParser.m in Sources */,
 				64DDF0E8147B56C400491867 /* SBJsonWriter.m in Sources */,
+				1A9E62A8147CC595002566DA /* PictureTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,7 @@
 
 -(id)initWithJSON:(NSString *)json
 {    
-    NSLog(@"Closet.m:20   initWithJSON(): %@", json);
+    // NSLog(@"Closet.m:20   initWithJSON(): %@", json);
     
     self.closetInfo = [json JSONValue];
     return self;
@@ -36,7 +36,7 @@
 
 -(NSString *)getFollowers
 {
-    NSLog(@"Closet.m:46  getFollowers(): %@", [self.closetInfo objectForKey:@"followers"]);
+//    NSLog(@"Closet.m:46  getFollowers(): %@", [self.closetInfo objectForKey:@"followers"]);
   
     return [self __defaultWith:@"0" ifThisIsNull:[self.closetInfo objectForKey:@"followers"]];
     
@@ -78,5 +78,46 @@
     else
         return val;
 }
+
+
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Closet.m:108   cellForRowAtIndexPath()");
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"Pic #%u", indexPath.row];
+    
+    return cell;
+}
+
 
 @end

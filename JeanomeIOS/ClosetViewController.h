@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "Closet.h"
 #import "SettingsViewController.h"
+#import "PictureTableViewCell.h"
 
-@interface ClosetViewController : UIViewController {
+@class PictureTableViewCell;
+
+@interface ClosetViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     
     id fbResult;
     NSDictionary *fbResultDict;
@@ -28,12 +31,19 @@
     IBOutlet UILabel *statusLabel;
     IBOutlet UILabel *pointsLabel;
     
-    IBOutlet UIScrollView *imageScrollView;
+    /* 
+        1. Scroll up and down to see photos between categories 
+        2. Scroll side to side to see photos within that category
+     */
+    IBOutlet UITableView *photoCategoryTableView;
 }
 
 @property(copy, nonatomic) id fbResult;
 @property(retain, nonatomic) NSDictionary *fbResultDict;
 @property(retain, nonatomic) Closet *closet;
+
+//  http://iosstuff.wordpress.com/2011/06/29/adding-a-uitableview-inside-a-uitableviewcell/
+@property(retain, nonatomic) IBOutlet PictureTableViewCell *tableViewCellWithTableView;
 
 
 -(id)initWithFbResult:(id)result;

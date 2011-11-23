@@ -46,6 +46,7 @@
     facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
     
     [cameraBarButton release]; [myClosetBarButton release];
+    [jc release];
     
     return YES;
 }

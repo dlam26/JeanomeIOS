@@ -11,6 +11,7 @@
 @implementation ClosetViewController
 
 @synthesize fbResult, fbResultDict, closet;
+@synthesize tableViewCellWithTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,7 +38,7 @@
     
     NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", JEANOME_URL, [self.fbResultDict objectForKey:@"id"]];
         
-    NSLog(@"ClosetViewController.m:36   Fetching from URL... %@", closetUrlString);
+//    NSLog(@"ClosetViewController.m:36  initWithFBResult() Fetching from URL... %@", closetUrlString);
     
 
     NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
@@ -61,6 +62,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+ 
+    NSLog(@"ClosetViewController.m:65   viewDidLoad()");
     
     NSDictionary *fbDict = fbResult;
     NSString *facebookId = [fbDict objectForKey:@"id"];
@@ -112,5 +115,70 @@
     SettingsViewController *svc = [[[SettingsViewController alloc] init] autorelease];
     [self.navigationController pushViewController:svc animated:YES];    
 }
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+/*
+    This is the number of categories...  e.g. Shoes, Bags, Makeup
+ */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return 10;
+}
+
+
+/*
+    Builds rows of each category, and the photos of each category in a closet.
+ 
+ */
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *CellIdentifier = @"CellWithTableView";
+    PictureTableViewCell *cell = (PictureTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        [[NSBundle mainBundle] loadNibNamed:@"PictureTableViewCell" owner:self options:nil];
+//        tableViewCellWithTableView.data = [dataArray objectAtIndex:indexPath.row];
+        tableViewCellWithTableView.tableViewInsideCell.allowsSelection = NO;
+        cell = tableViewCellWithTableView;
+        [cell setNeedsDisplay];
+    }
+    
+    return cell;
+}
+
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"ClosetViewController.m:155   didSelectRowAtIndexPath()! %u", indexPath.row);
+    
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     [detailViewController release];
+     */
+    
+}
+
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 220;
+}
+ */
+
+
 
 @end

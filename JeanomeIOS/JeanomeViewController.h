@@ -15,6 +15,7 @@
 
 // wtf http://stackoverflow.com/questions/4091676/strange-behavior-with-compile-error-expected-specifier-qualifier-list-before-c
 @class FacebookBrain;
+@class TakePhotoViewController;
 
 @interface JeanomeViewController : UIViewController <FBRequestDelegate>
 {    
@@ -27,6 +28,7 @@
     IBOutlet UILabel *isSessionValidLabel;
     
     ClosetViewController *closetViewController;
+    TakePhotoViewController *tpvc;
 }
 
 @property(retain,nonatomic) NSString *facebookId;

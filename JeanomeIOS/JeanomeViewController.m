@@ -89,36 +89,38 @@
         [loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     else {    
-        // turned off at ClosetViewController.m:98
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        NSLog(@"JeanomeViewController.m:93  openCloset()   pushing ClosetViewController....");
 
+        // Original version start
+        /*
         ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
         cvc.title = @"My Closet";
         [self.navigationController pushViewController:cvc animated:YES];
-         
-        //  11/22/2011  doing this via performSelectorInBackground()  
-        //  Causing errors like these...  and makes it not show/display any of the JSON
-        
-        // 1148 Nov 22 17:01:33 dlam-macbook JeanomeIOS[3557]: *** __NSAutoreleaseNoPool(): Object 0x6025810 of class UIView autoreleased with no pool in place - just leaking
-        // 1149 Nov 22 17:01:33 dlam-macbook JeanomeIOS[3557]: *** __NSAutoreleaseNoPool(): Object 0x60213e0 of class UILayoutContainerView autoreleased with no pool in place - just leaking
-        //1150 Nov 22 17:01:33 dlam-macbook JeanomeIOS[3557]: *** __NSAutoreleaseNoPool(): Object 0x604e310 of class __NSArrayM autoreleased with no pool in place - just leaking
-        // 1151 Nov 22 17:01:33 dlam-macbook JeanomeIOS[3557]: *** __NSAutoreleaseNoPool(): Object 0x4d4eee0 of class CABasicAnimation autoreleased with no pool in place - just leakin
-
-        /*
-        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
          */
+
+        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
     }
 }
 
+/*
+    Used via performSelectorInBackground() in openCloset() above 
+ 
+    IMPORTANT   Threads need to set up their own autorelease pool!  See "Thread Programming Guide"
+ 
+ http://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/Multithreading/CreatingThreads/CreatingThreads.html%23//apple_ref/doc/uid/10000057i-CH15-SW8
+ */
 -(void)__initClosetView:(NSString *)notused;
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    // turned off at ClosetViewController.m:98
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;    
+    
     closetViewController = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
     
     closetViewController.title = @"Maaa Closet!";
     [self.navigationController pushViewController:closetViewController animated:YES];
-    
+
+    [pool release];
 }
 
 

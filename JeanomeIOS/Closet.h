@@ -23,6 +23,9 @@
 -(NSString *)getFollowing;
 -(NSString *)getStatus;
 -(NSDecimalNumber *)getPoints;
+-(NSDecimalNumber *)getItemCount;
+
+-(NSDictionary *)getItems;
 
 -(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val;
 

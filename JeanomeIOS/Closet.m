@@ -23,6 +23,13 @@
     return self;
 }
 
+-(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val
+{
+    if(val == NULL)
+        return aDefault;
+    else
+        return val;
+}
 
 -(NSString *)getName
 {
@@ -62,22 +69,32 @@
     //  if "points" is a string...
     //return [NSDecimalNumber decimalNumberWithString:[self __defaultWith:@"0" ifThisIsNull:[self.closetInfo objectForKey:@"points"]]];
 
-
-    NSDecimalNumber *points = [self.closetInfo objectForKey:@"points"];
-    
+    NSDecimalNumber *points = [self.closetInfo objectForKey:@"points"];    
     if(points == NULL)
         return 0;
     else
         return points;
 }
 
--(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val
+-(NSDecimalNumber *)getItemCount
 {
-    if(val == NULL)
-        return aDefault;
+    NSDecimalNumber *itemCount = [self.closetInfo objectForKey:@"itemcount"];
+    if(itemCount == NULL)
+        return 0;
     else
-        return val;
+        return itemCount;
 }
+
+-(NSDictionary *)getItems
+{
+    NSDictionary *items = [self.closetInfo objectForKey:@"items"];
+    
+    if(items == NULL)    
+        return [NSDictionary dictionary];
+    else
+        return items;
+}
+
 
 
 

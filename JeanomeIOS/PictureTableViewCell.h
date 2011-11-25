@@ -10,10 +10,13 @@
 
 @interface PictureTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource> {
     
-    NSDictionary *data;
+    NSDictionary *items;
+    NSDecimalNumber *itemcount;
 }
 
 @property(nonatomic,retain) IBOutlet UITableView *tableViewInsideCell;
-@property(nonatomic,retain) NSDictionary *data;
+@property(nonatomic,retain) NSDictionary *items;  // set from...  ClosetViewController.m:157
+@property(nonatomic,retain) NSDecimalNumber *itemcount;
 
+- (void) _loadClosetImage:intoCell:(UITableViewCell *)cell;
 @end

@@ -12,10 +12,10 @@
 
 @implementation PictureTableViewCell
 
-@synthesize tableViewInsideCell, data;
+@synthesize tableViewInsideCell, items, itemcount;
 
 - (void)dealloc {
-    [data release];
+    [items release];
     [tableViewInsideCell release];
     [super dealloc];
 }
@@ -36,7 +36,7 @@
  */ 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return [itemcount integerValue];
 }
 
 /*
@@ -54,26 +54,48 @@
                                        reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
-//    cell.imageView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bluebluehappyface" ofType:@"png"]];
+    // 11/25/2011  This is weird but without this the cell frame isn't always the same size!
+    //             Default view width is 320.  Default height is 1100.  106.66 is 320 / 3.0!
+    // 
     
-    // cell.textLabel.text = @"^_^";
+    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, 106.666, 106.66);
     
+    UIImage *closetItemImage;
     
-    UIImage *closetItemImage = [UIImage imageNamed:@"babybluehappyface"];
+    // Original - just show blue happy faces :D 
+    //closetItemImage = [UIImage imageNamed:@"babybluehappyface"];
 
-    NSLog(@"PictureTableViewCell.m:64  closetItemImage size: %@", NSStringFromCGSize(closetItemImage.size));
-    
-    UIImageView *iv = [[UIImageView alloc] initWithImage:closetItemImage];
-    iv.image = closetItemImage;
-    
-    // picture will be on its side, so rotate it up
-    iv.transform = CGAffineTransformMakeRotation(degreesToRadians(90));   
+    // Fetch images from Jeanome/facebook to show
+    NSArray *keys = [items allKeys];
+
+    if (indexPath.row < [keys count]) {
         
-    [cell.contentView addSubview:iv];
-    
-    [iv release];
-    
+        NSString *currKey = [keys objectAtIndex:indexPath.row];
+        NSDictionary *imageDict = [items objectForKey:currKey];
+        
+        NSURL *imageURL = [NSURL URLWithString:[imageDict objectForKey:@"image"]];
+        
+        NSLog(@"PictureTableViewCell.m:70  downloading from imageURL: %@   cell.frame: %@   itemcount: %@", imageURL, NSStringFromCGRect(cell.frame), itemcount); 
+        
+        closetItemImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+        
+        // DOSENT WORK
+        //  UIImageView *iv = [[UIImageView alloc] initWithFrame:cell.frame]; 
+        //iv.image = closetItemImage;        
+
+        UIImageView *iv = [[UIImageView alloc] initWithImage:closetItemImage];
+        
+        iv.frame = cell.frame;
+        
+        // picture will be on its side, so rotate it up
+        iv.transform = CGAffineTransformMakeRotation(degreesToRadians(90));     
+        iv.contentMode = UIViewContentModeScaleToFill;
+        
+        [cell.contentView addSubview:iv];
+        [iv release];
+    }
+
+        
     return cell;
 }
 
@@ -89,6 +111,23 @@
  */
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 110;
+}
+
+
+#pragma mark =
+
+/*
+ Loads a UIImageView into cell.
+ 
+ Use threads with this function!
+ 
+ */
+- (void) _loadClosetImage:intoCell:(UITableViewCell *)cell
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    
+    [pool release];
 }
 
 

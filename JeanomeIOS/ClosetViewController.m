@@ -45,6 +45,8 @@
 
     self.closet = [[Closet alloc] initWithJSON:closetJSON];
     
+    self.title = [NSString stringWithFormat:@"%@'s Closet", [self.closet getName]];
+    
     return self;
 }
 
@@ -139,24 +141,26 @@
     Builds rows of each category, and the photos of each category in a closet.
  
  */
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellWithTableView";
     PictureTableViewCell *cell = (PictureTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"PictureTableViewCell" owner:self options:nil];
-//        tableViewCellWithTableView.data = [dataArray objectAtIndex:indexPath.row];
         
         tableViewCellWithTableView.tableViewInsideCell.allowsSelection = NO;
         
         // rotate it on its side 90 degrees!
         tableViewCellWithTableView.transform = CGAffineTransformMakeRotation(-(0.5)*M_PI);
+
+        //  TODO  only get items of the current category shown in this rows tableview
+        tableViewCellWithTableView.items = [closet getItems];
+        tableViewCellWithTableView.itemcount = [closet getItemCount];
         
         cell = tableViewCellWithTableView;
+        
         [cell setNeedsDisplay];
     }
-    
-    
     
     return cell;
 }
@@ -170,7 +174,6 @@
     else 
         return [NSString stringWithFormat:@"Category %d", section];
 }
-
 
 
 #pragma mark - Table view delegate
@@ -210,8 +213,6 @@
 {
     return 110;
 }
-
-
 
 
 @end

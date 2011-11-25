@@ -117,7 +117,6 @@
     
     closetViewController = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
     
-    closetViewController.title = @"Maaa Closet!";
     [self.navigationController pushViewController:closetViewController animated:YES];
 
     [pool release];

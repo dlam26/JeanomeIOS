@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JSON.h"
+#import "ClosetItem.h"
 
 @interface Closet : NSObject <UITableViewDataSource, UITableViewDelegate> {
     
@@ -26,6 +27,7 @@
 -(NSDecimalNumber *)getItemCount;
 
 -(NSDictionary *)getItems;
+-(NSArray *)getClosetItems;
 
 -(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val;
 

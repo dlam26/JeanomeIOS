@@ -12,14 +12,23 @@
 
 @implementation PictureTableViewCell
 
-@synthesize tableViewInsideCell, items, itemcount;
+@synthesize tableViewInsideCell, items, closetItems, itemcount;
+@synthesize imageDownloadsInProgress;
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        imageDownloadsInProgress = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 - (void)dealloc {
     [items release];
     [tableViewInsideCell release];
+    [imageDownloadsInProgress release];
     [super dealloc];
 }
-
 
 #pragma mark - Table view data source
 
@@ -42,7 +51,7 @@
 /*
     Get the photo from Jeanome and put it in the cell!
  */ 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 //    NSLog(@"PictureTableViewCell.m:52   cellForRowAtIndexPath()  %u", indexPath.row);
     
@@ -60,14 +69,47 @@
     
     cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, 106.666, 106.66);
     
-    UIImage *closetItemImage;
-    
     // Original - just show blue happy faces :D 
-    //closetItemImage = [UIImage imageNamed:@"babybluehappyface"];
+    //UIImage *closetItemImage = [UIImage imageNamed:@"babybluehappyface"];
 
+
+    
+    
+    // ASYNCHRNOUS LOADING USING LazyTableImages METHOD
+    
+    ClosetItem *closetItem = [closetItems objectAtIndex:indexPath.row];
+    
+    if (!closetItem.image) {
+        NSLog(@"PictureTableViewCell.m:83  closetItem image not cached... so download!");
+        [self startClosetPictureDownload:closetItem forIndexPath:indexPath];
+        
+        // FIXME  not working...
+        UIActivityIndicatorView  *av = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+        av.frame = cell.imageView.frame;
+        [cell.imageView addSubview:av];
+        [av startAnimating];
+        
+    }
+    else {        
+        NSLog(@"PictureTableViewCell.m:87  load cached closetImage at row %u", indexPath.row);
+        //cell.imageView.image = closetItem.imageView.image;    // load cached image
+        
+        closetItem.imageView.frame = cell.frame;
+        
+        // picture will be on its side, so rotate it up
+//        closetItem.imageView.transform = CGAffineTransformMakeRotation(degreesToRadians(90));     
+//        closetItem.imageView.contentMode = UIViewContentModeScaleToFill;
+        
+        [cell.contentView addSubview:closetItem.imageView];
+    }
+    
+    
+    
+    // SLOW NON-ASYNCHRONOUS IMAGE LOADING 
+    /*
     // Fetch images from Jeanome/facebook to show
     NSArray *keys = [items allKeys];
-
+     
     if (indexPath.row < [keys count]) {
         
         NSString *currKey = [keys objectAtIndex:indexPath.row];
@@ -77,7 +119,7 @@
         
         NSLog(@"PictureTableViewCell.m:70  downloading from imageURL: %@   cell.frame: %@   itemcount: %@", imageURL, NSStringFromCGRect(cell.frame), itemcount); 
         
-        closetItemImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+        UIImage *closetItemImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
         
         // DOSENT WORK
         //  UIImageView *iv = [[UIImageView alloc] initWithFrame:cell.frame]; 
@@ -94,6 +136,7 @@
         [cell.contentView addSubview:iv];
         [iv release];
     }
+     */
 
         
     return cell;
@@ -114,7 +157,7 @@
 }
 
 
-#pragma mark =
+#pragma mark - Other stuff
 
 /*
  Loads a UIImageView into cell.
@@ -129,6 +172,48 @@
     
     [pool release];
 }
+
+
+#pragma mark -
+#pragma mark Table cell image support
+
+- (void)startClosetPictureDownload:(ClosetItem *)closetItem forIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"PictureTableViewCell.m:165   startClosetPictureDownload()  %u", indexPath.row);
+    
+    PictureDownloader *pictureDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    if (pictureDownloader == nil) 
+    {
+        pictureDownloader = [[PictureDownloader alloc] init];
+        pictureDownloader.closetItem = closetItem;
+        pictureDownloader.indexPathInTableView = indexPath;
+        pictureDownloader.delegate = self;
+        [imageDownloadsInProgress setObject:pictureDownloader forKey:indexPath];
+        [pictureDownloader startDownload];
+        // [pictureDownloader release];   
+    }
+}
+
+
+// called by our PictureDownloader when an icon is ready to be displayed
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
+{
+    NSLog(@"PictureTableViewCell.m:180   appImageDidLoad()  row: %u!", indexPath.row);
+
+    PictureDownloader *pictureDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    if (pictureDownloader != nil)
+    {
+        // Display the newly loaded image  (rotated in PictureDownloader.m:106)
+
+        UIImageView *iv = pictureDownloader.closetItem.imageView;
+        
+//        iv.transform = CGAffineTransformMakeRotation(degreesToRadians(90));     
+//        iv.contentMode = UIViewContentModeScaleToFill;
+        
+        [self.contentView addSubview:iv];
+    }
+}
+
 
 
 @end

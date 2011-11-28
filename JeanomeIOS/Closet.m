@@ -95,6 +95,26 @@
         return items;
 }
 
+/*
+    Similar to getItems, but returns an array of ClosetItem objects so that 
+    PictureTablewViewCell can load cached images in ClosetItem's image property
+ */ 
+-(NSArray *)getClosetItems
+{
+    NSDictionary *items = [self getItems];
+    NSMutableArray *closetItems = [[NSMutableArray alloc] init];
+    
+    for(id key in items) {
+        NSString *itemId = (NSString *)key;
+        NSDictionary *imageDict = [items objectForKey:key];
+        ClosetItem *closetItem = [[ClosetItem alloc] initWithImageDict:imageDict andId:itemId];
+        [closetItems addObject:closetItem];
+        [closetItem release];
+    }
+    
+    return [NSArray arrayWithArray:closetItems];
+}
+
 
 
 

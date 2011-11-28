@@ -123,8 +123,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 4;
+    // TODO change this to the number of actual categories once that gets implemented
+    
+    //return 1;
+    
+    return 3;
 }
 
 /*
@@ -142,7 +145,9 @@
  
  */
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString *CellIdentifier = @"CellWithTableView";
+
     PictureTableViewCell *cell = (PictureTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
@@ -150,12 +155,13 @@
         
         tableViewCellWithTableView.tableViewInsideCell.allowsSelection = NO;
         
-        // rotate it on its side 90 degrees!
+        // rotate the table view on its side 90 degrees!
         tableViewCellWithTableView.transform = CGAffineTransformMakeRotation(-(0.5)*M_PI);
 
         //  TODO  only get items of the current category shown in this rows tableview
-        tableViewCellWithTableView.items = [closet getItems];
-        tableViewCellWithTableView.itemcount = [closet getItemCount];
+        tableViewCellWithTableView.items       = [closet getItems];
+        tableViewCellWithTableView.closetItems = [closet getClosetItems];
+        tableViewCellWithTableView.itemcount   = [closet getItemCount];
         
         cell = tableViewCellWithTableView;
         
@@ -167,9 +173,11 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0) {
-        
-        return [NSString stringWithFormat:@"Bags!"];
+    if(section == 0) {        
+        return [NSString stringWithFormat:@"Shoes"];
+    }
+    else if(section == 1) {
+        return @"Bags";
     }
     else 
         return [NSString stringWithFormat:@"Category %d", section];
@@ -202,12 +210,9 @@
         return [tableView sectionHeaderHeight];
 }
 
-
 /*
-    This is the height of each closet item picture.  Each photo is 110x110
- 
+    This is the height of each closet item picture.  Each photo is 110x110 
     See PictureTableViewCell.m:64
- 
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

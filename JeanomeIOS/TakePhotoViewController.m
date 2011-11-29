@@ -81,9 +81,11 @@
         scrollView.maximumZoomScale = 3.0;        
         scrollView.delegate = self;
         
-        [scrollView setContentSize:CGSizeMake(imageView.bounds.size.width, imageView.bounds.size.height)];
+        //[scrollView setContentSize:CGSizeMake(imageView.bounds.size.width, imageView.bounds.size.height)];
         
-        overlayViewController = [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
+        [scrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
+        
+//        overlayViewController = [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
         
         
         //[self presentModalViewController:self.imgPicker animated:NO];
@@ -100,13 +102,13 @@
     // e.g. self.myOutlet = nil;
     
     self.imageView = nil;
-    self.overlayViewController = nil;
+//    self.overlayViewController = nil;
 }
 
 - (void)dealloc {
     
     [super dealloc];
-    [overlayViewController release];
+//    [overlayViewController release];
     [imageView release];
 }
 

@@ -54,12 +54,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
+     NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
+     NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -150,7 +150,8 @@
     [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self]; 
 
 //    loginButton.hidden  = YES;
-    logoutButton.hidden = NO;    
+    logoutButton.hidden = NO;
+    
     [self updateIsSessionValid];
 }
 

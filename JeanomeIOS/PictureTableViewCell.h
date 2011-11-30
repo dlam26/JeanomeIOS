@@ -13,13 +13,14 @@
 #import "ClosetItem.h"
 #import "PictureDownloader.h"
 
-@interface PictureTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource, PictureDownloaderDelegate> {
+@interface PictureTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource, PictureDownloaderDelegate, UIScrollViewDelegate> {
     
     NSDecimalNumber *itemcount;    
     NSDictionary *items;            // set in ClosetViewController.m:157
     NSArray *closetItems; // contains ClosetItem's
     
     NSMutableDictionary *imageDownloadsInProgress;
+    UITableView *tableViewInsideCell;
 }
 
 @property(nonatomic,retain) NSDecimalNumber *itemcount;
@@ -31,5 +32,5 @@
 
 - (void) _loadClosetImage:intoCell:(UITableViewCell *)cell;
 
-- (void)startClosetPictureDownload:(ClosetItem *)closetItem forIndexPath:(NSIndexPath *)indexPath;
+- (void)startClosetPictureDownload:(NSDictionary *)info;
 @end

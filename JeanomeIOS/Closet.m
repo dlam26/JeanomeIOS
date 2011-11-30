@@ -102,11 +102,12 @@
 -(NSArray *)getClosetItems
 {
     NSDictionary *items = [self getItems];
-    NSMutableArray *closetItems = [[NSMutableArray alloc] init];
+    NSArray *itemIds = [items allKeys];
     
-    for(id key in items) {
-        NSString *itemId = (NSString *)key;
-        NSDictionary *imageDict = [items objectForKey:key];
+    NSMutableArray *closetItems = [[NSMutableArray alloc] init];
+
+    for(NSString* itemId in itemIds) {
+        NSDictionary *imageDict = [items objectForKey:itemId];
         ClosetItem *closetItem = [[ClosetItem alloc] initWithImageDict:imageDict andId:itemId];
         [closetItems addObject:closetItem];
         [closetItem release];

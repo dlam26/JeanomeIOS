@@ -95,13 +95,13 @@
     else {    
 
         // Original version start
-        /*
+  
         ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
         cvc.title = @"My Closet";
         [self.navigationController pushViewController:cvc animated:YES];
-         */
+  
 
-        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
+//        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
     }
 }
 

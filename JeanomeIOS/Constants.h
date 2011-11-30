@@ -12,9 +12,9 @@
 #define JEANOME_TITLE @"Jeanome"
 
 // NOTE: dont put trailing slash kk
-// #define JEANOME_URL @"http://localhost:8000"
+#define JEANOME_URL @"http://localhost:8000"
 
-#define JEANOME_URL @"http://staging.myjeanome.com"
+// #define JEANOME_URL @"http://staging.myjeanome.com"
 
 #define JEANOME_URL_LOCAL @"http://10.0.1.23:8000"
 #define JEANOME_URL_MERCEDES @"http//192.168.1.119:8000"

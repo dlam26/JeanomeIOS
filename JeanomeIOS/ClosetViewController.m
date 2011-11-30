@@ -8,6 +8,8 @@
 
 #import "ClosetViewController.h"
 
+#define degreesToRadians(x) (M_PI * x / 180.0)
+
 @implementation ClosetViewController
 
 @synthesize fbResult, fbResultDict, closet;
@@ -125,9 +127,9 @@
 {
     // TODO change this to the number of actual categories once that gets implemented
     
-    //return 1;
+    return 1;
     
-    return 3;
+    //return 3;
 }
 
 /*
@@ -150,6 +152,7 @@
 
     PictureTableViewCell *cell = (PictureTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    
     if (cell == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"PictureTableViewCell" owner:self options:nil];
         
@@ -157,6 +160,7 @@
         
         // rotate the table view on its side 90 degrees!
         tableViewCellWithTableView.transform = CGAffineTransformMakeRotation(-(0.5)*M_PI);
+        // tableViewCellWithTableView.transform = CGAffineTransformMakeRotation(degreesToRadians(90));
 
         //  TODO  only get items of the current category shown in this rows tableview
         tableViewCellWithTableView.items       = [closet getItems];
@@ -164,6 +168,8 @@
         tableViewCellWithTableView.itemcount   = [closet getItemCount];
         
         cell = tableViewCellWithTableView;
+        
+        cell.imageDownloadsInProgress = [NSMutableDictionary dictionary];
         
         [cell setNeedsDisplay];
     }

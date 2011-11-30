@@ -125,7 +125,7 @@
 					<object class="IBUIButton" id="724899919">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{79, 84}, {158, 154}}</string>
+						<string key="NSFrame">{{71, 159}, {158, 154}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="879026424"/>
@@ -212,7 +212,7 @@
 						<reference key="IBUIFontDescription" ref="390978601"/>
 						<reference key="IBUIFont" ref="303261311"/>
 					</object>
-					<object class="IBUIImageView" id="126348314">
+					<object class="IBUIImageView" id="846320657">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{47, 20}, {222, 61}}</string>
@@ -230,7 +230,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="126348314"/>
+				<reference key="NSNextKeyView" ref="846320657"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -316,14 +316,14 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="724899919"/>
 							<reference ref="879026424"/>
 							<reference ref="988910159"/>
 							<reference ref="422261065"/>
 							<reference ref="421800438"/>
 							<reference ref="487606367"/>
 							<reference ref="689325373"/>
-							<reference ref="126348314"/>
+							<reference ref="846320657"/>
+							<reference ref="724899919"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -375,7 +375,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">27</int>
-						<reference key="object" ref="126348314"/>
+						<reference key="object" ref="846320657"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>

@@ -13,6 +13,10 @@
 #import "SettingsViewController.h"
 #import "ClosetViewController.h"
 
+// http://stackoverflow.com/questions/146986/what-defines-are-set-up-by-xcode-when-compiling-for-iphone
+#include "TargetConditionals.h"
+
+
 // wtf http://stackoverflow.com/questions/4091676/strange-behavior-with-compile-error-expected-specifier-qualifier-list-before-c
 @class FacebookBrain;
 @class TakePhotoViewController;

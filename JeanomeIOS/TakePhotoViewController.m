@@ -12,8 +12,11 @@
  
  Verify that the device is capable of picking content from the desired source. Do this calling the isSourceTypeAvailable: class method, providing a constant from the “UIImagePickerControllerSourceType” enum.
  Check which media types are available, for the source type you’re using, by calling the availableMediaTypesForSourceType: class method. This lets you distinguish between a camera that can be used for video recording and one that can be used only for still images.
+ 
  Tell the image picker controller to adjust the UI according to the media types you want to make available—still images, movies, or both—by setting the mediaTypes property.
+ 
  Present the user interface by calling the presentViewController:animated:completion: method of the currently active view controller, passing your configured image picker controller as the new view controller.
+ 
  On iPad, present the user interface using a popover. Doing so is valid only if the sourceType property of the image picker controller is set to UIImagePickerControllerSourceTypeCamera. To use a popover controller, use the methods described in “Presenting and Dismissing the Popover” in UIPopoverController Class Reference.
  
  When the user taps a button to pick a newly-captured or saved image or movie, or cancels the operation, dismiss the image picker using your delegate object. For newly-captured media, your delegate can then save it to the Camera Roll on the device. For previously-saved media, your delegate can then use the image data according to the purpose of your app.
@@ -69,29 +72,38 @@
 
     // NSLog(@"TakePhotoViewController.m:54  viewDidLoad()");
     
+    NSLog(@"Is there a camera? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]);
+    
+    NSLog(@"Is there a photo library? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]);
+    
+    NSLog(@"Is there a saved photos album? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]);
+    
+    // #1  setup scrollView so you can pan/pinch around the image
+    scrollView.minimumZoomScale = 0.3;
+    scrollView.maximumZoomScale = 3.0;        
+    scrollView.delegate = self;                
+    [scrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
+
+    // #2  setup the image picker!
+    imgPicker = [[UIImagePickerController alloc] init];
+    imgPicker.delegate = self;
+    imgPicker.allowsEditing = NO;
+    //imgPicker.showsCameraControls = NO;
+    
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) 
     {
-        imgPicker = [[UIImagePickerController alloc] init];
-        imgPicker.allowsEditing = NO;
-        imgPicker.delegate = self;
         imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;        
-        //self.imgPicker.showsCameraControls = NO;
-        
-        scrollView.minimumZoomScale = 0.3;
-        scrollView.maximumZoomScale = 3.0;        
-        scrollView.delegate = self;
-        
-        //[scrollView setContentSize:CGSizeMake(imageView.bounds.size.width, imageView.bounds.size.height)];
-        
-        [scrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
-        
-//        overlayViewController = [[[OverlayViewController alloc] initWithNibName:@"OverlayViewController" bundle:nil] autorelease];
-        
-        
-        //[self presentModalViewController:self.imgPicker animated:NO];
 
-        [self presentViewController:imgPicker animated:NO completion:NULL];
+        [self presentViewController:imgPicker animated:NO completion:NULL];        
+    }
+    else {
+        imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
+        NSLog(@"TakePhotoViewController.m:91   No camera available (probably on simulator, so picking from photo library");              
+
+        //[self presentViewController:imgPicker animated:NO completion:NULL];
+        
+        [self presentModalViewController:imgPicker animated:YES];
     }
 }
 
@@ -201,6 +213,9 @@
         //
         AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
         [featherController setDelegate:self];
+        
+        //  11/29/2011   Set animated to null, since you see TakePhotoViewController.xlb for like 
+        //               a half a second while its animating to Aviary
         [self presentModalViewController:featherController animated:YES];
     } else {
         NSAssert(NO, @"AFFeatherController was passed a nil image");

@@ -11,6 +11,12 @@
 		1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
+		1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */; };
+		1ABA437B1485A13100D809D7 /* IMG_20111030_232021.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */; };
+		1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */; };
+		1AC08B0D1485947D0032D2E7 /* jeanome_logo_new_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0C1485947D0032D2E7 /* jeanome_logo_new_114.png */; };
+		1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0F148596CE0032D2E7 /* newlogo.png */; };
+		1AC08B12148596D70032D2E7 /* icon_happy_smiley_300.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */; };
 		647DFFDF146B560600E25B9C /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFDE146B560600E25B9C /* TODO */; };
 		649ED3A9146A082A00E558EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3A8146A082A00E558EC /* UIKit.framework */; };
 		649ED3AB146A082A00E558EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED3AA146A082A00E558EC /* Foundation.framework */; };
@@ -91,6 +97,12 @@
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
 		1AA6D80B148395B600525AB0 /* PictureDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureDownloader.h; sourceTree = "<group>"; };
 		1AA6D80C148395B600525AB0 /* PictureDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureDownloader.m; sourceTree = "<group>"; };
+		1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_20111030_233250.jpg; sourceTree = "<group>"; };
+		1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_20111030_232021.jpg; sourceTree = "<group>"; };
+		1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ColorTouch-1322004372315.jpeg"; sourceTree = "<group>"; };
+		1AC08B0C1485947D0032D2E7 /* jeanome_logo_new_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jeanome_logo_new_114.png; sourceTree = "<group>"; };
+		1AC08B0F148596CE0032D2E7 /* newlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newlogo.png; sourceTree = "<group>"; };
+		1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_happy_smiley_300.png; sourceTree = "<group>"; };
 		647DFFDE146B560600E25B9C /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		649ED3A4146A082A00E558EC /* JeanomeIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JeanomeIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		649ED3A8146A082A00E558EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -224,6 +236,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1ABA43751485A0E500D809D7 /* demophotos */ = {
+			isa = PBXGroup;
+			children = (
+				1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */,
+				1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */,
+				1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */,
+			);
+			name = demophotos;
+			sourceTree = "<group>";
+		};
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +384,10 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1ABA43751485A0E500D809D7 /* demophotos */,
+				1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */,
+				1AC08B0F148596CE0032D2E7 /* newlogo.png */,
+				1AC08B0C1485947D0032D2E7 /* jeanome_logo_new_114.png */,
 				64DDF0EF147B63B900491867 /* LoginWithFacebookNormal.png */,
 				64DDF0F0147B63B900491867 /* LoginWithFacebookNormal@2x.png */,
 				64DDF0F1147B63B900491867 /* LoginWithFacebookPressed.png */,
@@ -531,6 +557,12 @@
 				64DDF0F3147B63B900491867 /* LoginWithFacebookNormal@2x.png in Resources */,
 				64DDF0F4147B63B900491867 /* LoginWithFacebookPressed.png in Resources */,
 				1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */,
+				1AC08B0D1485947D0032D2E7 /* jeanome_logo_new_114.png in Resources */,
+				1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */,
+				1AC08B12148596D70032D2E7 /* icon_happy_smiley_300.png in Resources */,
+				1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */,
+				1ABA437B1485A13100D809D7 /* IMG_20111030_232021.jpg in Resources */,
+				1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

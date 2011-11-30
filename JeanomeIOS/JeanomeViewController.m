@@ -54,12 +54,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-     NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
+//     NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-     NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
+///     NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -69,7 +69,10 @@
 }
 
 -(IBAction)startTakingPhoto:(id)sender
-{    
+{   
+//#if (TARGET_IPHONE_SIMULATOR)
+    
+//#else 
     tpvc = [[TakePhotoViewController alloc] initWithFacebookRequest:fbRequest andResponse:fbResult andFacebookId:facebookId];
     
     tpvc.title = @"How's it look?";
@@ -77,6 +80,7 @@
     [self.navigationController pushViewController:tpvc animated:YES];
     
     [tpvc release];
+//#endif
 }
 
 -(IBAction)openCloset:(id)sender

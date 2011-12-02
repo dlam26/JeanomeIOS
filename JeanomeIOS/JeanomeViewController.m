@@ -92,16 +92,23 @@
         
         [loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
-    else {    
+    else {
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
-        // Original version start
-  
+        // Original version, kinda stalls for a sec while it loads the JSON from myjeanome.com/api
         ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:fbResult] autorelease];
         cvc.title = @"My Closet";
         [self.navigationController pushViewController:cvc animated:YES];
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
   
-
+        // Asynchrnous closet load,  but causes problems loading images initially 
+        // in PictureTableViewCell in the table view image thingy
 //        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
+        
+        
+
     }
 }
 

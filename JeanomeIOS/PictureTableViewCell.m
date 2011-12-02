@@ -12,14 +12,28 @@
 
 @implementation PictureTableViewCell
 
-@synthesize tableViewInsideCell, items, closetItems, itemcount;
+@synthesize closet;
+@synthesize tableViewInsideCell;
 @synthesize imageDownloadsInProgress;
 
 
 - (void)dealloc {
-    [items release];
     [tableViewInsideCell release];
     [super dealloc];
+}
+
+- (void) _logImageSize:(UIImage *)image atLine:(int)line
+{
+    size_t imageSize = CGImageGetBytesPerRow(image.CGImage) * CGImageGetHeight(image.CGImage);        
+    NSLog(@"PictureTableViewcell.m:%d  imageSize: %zu", line, imageSize);
+}
+
+-(void)pictureTap:(id)target
+{
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Tapped picture!" message:@"Wooo wooo" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil] autorelease];
+    // optional - add more buttons:
+    [alert addButtonWithTitle:@"Yes"];
+    [alert show];
 }
 
 #pragma mark - Table view data source
@@ -37,7 +51,7 @@
  */ 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [itemcount integerValue];
+    return [closet.closetItems count];
 }
 
 /*
@@ -47,40 +61,52 @@
     
     // NSLog(@"Is%@ main thread", ([NSThread isMainThread] ? @"" : @" NOT"));
 
-    
     NSUInteger row = indexPath.row;
-    NSUInteger section = indexPath.section;
 
-    // NSLog(@"PictureTableViewCell.m:52   cellForRowAtIndexPath()  %u  %u", row, section);
-    
+    // NSString *CellIdentifier = [NSString stringWithFormat:@"Cell"];
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell %u", row];
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                       reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        
+//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     }
     
+    // Since we are reusing the cells clear out the subviews from the old cell
+//    for (UIImageView *view in cell.subviews) {
+//        [view removeFromSuperview];
+//    }
+    
+    NSLog(@"PictureTableViewCell.m:52   cellForRowAtIndexPath()  %u   reuse: %@   cell subview count: %u", row, cell.reuseIdentifier, [[cell.contentView subviews] count]);
     
     // 11/25/2011  This is weird but without this the cell frame isn't always the same size!
     //             Default view width is 320.  Default height is 1100.  106.66 is 320 / 3.0!
-    // 
-    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, 106.666, 106.66);
+    // cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, 106.666, 106.666);
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, screenWidth / 3.0 , screenWidth / 3.0);
     
     // Original - just show blue happy faces :D 
     //UIImage *closetItemImage = [UIImage imageNamed:@"babybluehappyface"];
 
+    ClosetItem *closetItem = [[closet getClosetItemsArray] objectAtIndex:row];
     
-    ClosetItem *closetItem = [closetItems objectAtIndex:row];
+    //  IMPORTANT,  clear out the other subviews or else they will stack on top of each other
+    for(UIView *subView in [cell.contentView subviews]) {
+        [subView removeFromSuperview];
+    }
     
     // DEBUG - Just put label's of the image ID's
     /*
     UILabel *itemIdLabel = [[UILabel alloc] initWithFrame:cell.frame];
     itemIdLabel.transform = CGAffineTransformMakeRotation(degreesToRadians(90)); 
-    itemIdLabel.text = [NSString stringWithFormat:@"%u.) #%@", row, closetItem.itemId];
+    itemIdLabel.text = [NSString stringWithFormat:@"row %u #%@", row, closetItem.itemId];
     [cell.contentView addSubview:itemIdLabel];
-     */
-    
+    */
+   
     // ASYNCHRNOUS IMAGE LOADING USING LazyTableImages METHOD, WEIRD RIGHT NOW
     if (!closetItem.image) {
         NSLog(@"PictureTableViewCell.m:83  closetItem image not cached... so download!");
@@ -93,20 +119,20 @@
     }
     else {        
         NSLog(@"PictureTableViewCell.m:87  load cached closetImage at row %u  itemId: %@", indexPath.row, closetItem.itemId);
-        //cell.imageView.image = closetItem.imageView.image;    // load cached image
         
-        closetItem.imageView.frame = cell.frame;
+        closetItem.imageView.frame = cell.frame;        //  rotated in PictureDownloader.m:106
+        //[cell.contentView addSubview:closetItem.imageView];
         
-        // picture will be on its side, so rotate it up
-//        closetItem.imageView.transform = CGAffineTransformMakeRotation(degreesToRadians(90));     
-//        closetItem.imageView.contentMode = UIViewContentModeScaleToFill;
-        
-        [cell.contentView addSubview:closetItem.imageView];
-        [cell setNeedsDisplay];
+        cell.backgroundView = closetItem.imageView;
     }
-     
     
     
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pictureTap:)];
+    
+    [cell addGestureRecognizer:tgr];
+    
+    [tgr release];
+                                   
     
     // SLOW NON-ASYNCHRONOUS IMAGE LOADING 
     /*
@@ -205,28 +231,79 @@
 // called by our PictureDownloader when an icon is ready to be displayed
 - (void)appImageDidLoad:(NSIndexPath *)indexPath
 {
-    NSLog(@"PictureTableViewCell.m:217   appImageDidLoad()  row: %u!", indexPath.row);
-
     PictureDownloader *pictureDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    
     if (pictureDownloader != nil)
     {
+        // Image downloaded, so save it to the closet item's image and imageView
+         
         // Display the newly loaded image  (rotated in PictureDownloader.m:106)
 
         UIImageView *iv = pictureDownloader.closetItem.imageView;
 
-        size_t imageSize = CGImageGetBytesPerRow(iv.image.CGImage) * CGImageGetHeight(iv.image.CGImage);
+        NSLog(@"PictureTableViewCell.m:217   appImageDidLoad()  row: %u!   itemId: %@", indexPath.row, pictureDownloader.closetItem.itemId);
         
-        NSLog(@"PictureTableViewCell.m:228   imageSize: %zu", imageSize);
+        /*
+        if(indexPath.row == 1)
+            iv.image = [UIImage imageNamed:@"babybluehappyface"];;
+         */
         
         UITableViewCell *cell = [tableViewInsideCell cellForRowAtIndexPath:indexPath];
+
+        /*
+        NSLog(@"cell.frame: %@", NSStringFromCGRect(cell.frame)); 
+        NSLog(@"cell.bounds: %@", NSStringFromCGRect(cell.bounds)); 
+        */
+        
         iv.frame = cell.frame;
-        [cell.contentView addSubview:iv];
-    
-        //[self.contentView addSubview:iv];
+        
+        //iv.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, 75, 75);   // testing
+        
+        //[cell.contentView addSubview:iv];
+        
+        cell.backgroundView = iv;
     }
     else {
         
-        NSLog(@"PictureTableViewCell.m:237  pictureDownloader at row %u was nil!", indexPath.row);
+        NSLog(@"PictureTableViewCell.m:237  XXX pictureDownloader at row %u was nil!", indexPath.row);
+    }
+}
+
+/*
+
+// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    NSLog(@"PictureTableViewCell.m:232   loadImagesForOnscreenRows()");
+    
+    if ([closet.closetItems count] > 0)
+    {
+        NSArray *visiblePaths = [self.tableViewInsideCell indexPathsForVisibleRows];
+        for (NSIndexPath *indexPath in visiblePaths)
+        {
+            ClosetItem *closetItem = [[closet getClosetItemsArray] objectAtIndex:indexPath.row];
+            
+            if (!closetItem.image) // avoid the app icon download if the app already has an icon
+            {
+                NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:closetItem, @"closetItem", indexPath, @"indexPath", nil];
+                
+                [self startClosetPictureDownload:info];
+            }
+            else {
+                
+                
+                // NSLog(@"Should put cached image into  row: %u", indexPath.row);
+
+                // ClosetItem *closetItem = [closetItems objectAtIndex:indexPath.row];
+                
+                // UITableViewCell *cell = [self.tableViewInsideCell cellForRowAtIndexPath:indexPath];
+                // UIImageView *iv = [[UIImageView alloc] initWithImage:closetItem.image];
+                // iv.frame = cell.frame;
+                // [cell.contentView addSubview:iv];
+                
+                
+            }
+        }
     }
 }
 
@@ -237,7 +314,7 @@
 // Load images for all onscreen rows when scrolling is finished
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    NSLog(@"PictureTableViewCell.m:233   scrollViewDidEndDragging()");
+//    NSLog(@"PictureTableViewCell.m:233   scrollViewDidEndDragging()");
     
     if (!decelerate)
 	{
@@ -247,11 +324,11 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"PictureTableViewCell.m:243   scrollViewDidEndDragging()");
+//    NSLog(@"PictureTableViewCell.m:243   scrollViewDidEndDragging()");
     
 //    [self loadImagesForOnscreenRows];
 }
 
-
-
+*/
+                     
 @end

@@ -13,13 +13,32 @@
 
 @implementation Closet
     
-@synthesize closetInfo;
+@synthesize closetInfo, closetItems;
 
 -(id)initWithJSON:(NSString *)json
 {    
     // NSLog(@"Closet.m:20   initWithJSON(): %@", json);
     
     self.closetInfo = [json JSONValue];
+    
+    //  From the JSON dict in closetInfo, store a dict of the ClosetItem objects so we 
+    //  can store fetched images in it
+    self.closetItems = [NSMutableDictionary dictionary];
+    
+    NSDictionary *itemsFromJSON = [self.closetInfo objectForKey:@"items"];
+    
+    // NSDecimalNumber *itemCount = [self.closetInfo objectForKey:@"itemcount"];
+    
+    if(itemsFromJSON) {        
+        // Translate the dict made from JSON into ClosetItem objects
+        for(NSString* itemId in [itemsFromJSON allKeys]) {
+            NSDictionary *imageDict = [itemsFromJSON objectForKey:itemId];
+            ClosetItem *ci = [[ClosetItem alloc] initWithImageDict:imageDict andId:itemId];
+            [self.closetItems setObject:ci forKey:itemId];
+            [ci release];
+        }
+    }
+    
     return self;
 }
 
@@ -76,54 +95,33 @@
         return points;
 }
 
--(NSDecimalNumber *)getItemCount
-{
-    NSDecimalNumber *itemCount = [self.closetInfo objectForKey:@"itemcount"];
-    if(itemCount == NULL)
-        return 0;
-    else
-        return itemCount;
-}
-
--(NSDictionary *)getItems
-{
-    NSDictionary *items = [self.closetInfo objectForKey:@"items"];
-    
-    if(items == NULL)    
-        return [NSDictionary dictionary];
-    else
-        return items;
-}
 
 /*
     Similar to getItems, but returns an array of ClosetItem objects so that 
     PictureTablewViewCell can load cached images in ClosetItem's image property
  */ 
--(NSArray *)getClosetItems
+-(NSArray *)getClosetItemsArray
 {
-    NSDictionary *items = [self getItems];
-    NSArray *itemIds = [items allKeys];
+    NSArray *itemIds = [closetItems allKeys];    
+    NSMutableArray *closetItemsArray = [[NSMutableArray alloc] init];
     
-    NSMutableArray *closetItems = [[NSMutableArray alloc] init];
-
-    for(NSString* itemId in itemIds) {
-        NSDictionary *imageDict = [items objectForKey:itemId];
-        ClosetItem *closetItem = [[ClosetItem alloc] initWithImageDict:imageDict andId:itemId];
-        [closetItems addObject:closetItem];
-        [closetItem release];
-    }
+    for(NSString* itemId in itemIds)
+        [closetItemsArray addObject:[closetItems objectForKey:itemId]];
     
-    return [NSArray arrayWithArray:closetItems];
+    return [NSArray arrayWithArray:closetItemsArray];
 }
 
-
+-(void)setClosetItem:(ClosetItem *)closetItem forItemId:(NSString *)itemId
+{
+    [closetItems setObject:closetItems forKey:itemId];
+}
 
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSLog(@"Closet.m:120   didSelectRowAtIndexPath()  %u", indexPath.row);
 }
 
 

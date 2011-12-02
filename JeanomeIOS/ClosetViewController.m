@@ -42,7 +42,8 @@
         
 //    NSLog(@"ClosetViewController.m:36  initWithFBResult() Fetching from URL... %@", closetUrlString);
     
-
+    //  TODO  replace with NSURLRequest, or some asynchronous call so i can show network activity indicator
+    //
     NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
 
     self.closet = [[Closet alloc] initWithJSON:closetJSON];
@@ -163,9 +164,8 @@
         // tableViewCellWithTableView.transform = CGAffineTransformMakeRotation(degreesToRadians(90));
 
         //  TODO  only get items of the current category shown in this rows tableview
-        tableViewCellWithTableView.items       = [closet getItems];
-        tableViewCellWithTableView.closetItems = [closet getClosetItems];
-        tableViewCellWithTableView.itemcount   = [closet getItemCount];
+    
+        tableViewCellWithTableView.closet = closet;
         
         cell = tableViewCellWithTableView;
         
@@ -217,12 +217,18 @@
 }
 
 /*
-    This is the height of each closet item picture.  Each photo is 110x110 
+    This is the height of each closet item picture.  To show 3 on one screen, we should just divide
+    the total screen width by 3!
+ 
     See PictureTableViewCell.m:64
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 110;
+    // return 110;
+
+    //return 106.666;
+    
+    return [[UIScreen mainScreen] bounds].size.width / 3.0;
 }
 
 

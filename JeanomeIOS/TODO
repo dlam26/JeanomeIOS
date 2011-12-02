@@ -18,3 +18,5 @@ https://graph.facebook.com/me?fields=id&access_token=d6fbb26e9641b665b717120bc9f
 5. Do picture upload in a thread/block
 
 6. Show user facebook picture when logged in
+
+7. 11/30/2011   If the user has never logged into Jeanome, the api will return some bad JSON when looking at their closet page,  so it needs to create it somehow.

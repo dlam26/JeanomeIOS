@@ -13,9 +13,12 @@
 @interface Closet : NSObject <UITableViewDataSource, UITableViewDelegate> {
     
     NSDictionary *closetInfo;
+    
+    NSMutableDictionary *closetItems;
 }
 
 @property(retain,nonatomic) NSDictionary *closetInfo;
+@property(retain,nonatomic) NSMutableDictionary *closetItems;
 
 -(id)initWithJSON:(NSString *)json;
 -(NSString *)getName;
@@ -24,10 +27,10 @@
 -(NSString *)getFollowing;
 -(NSString *)getStatus;
 -(NSDecimalNumber *)getPoints;
--(NSDecimalNumber *)getItemCount;
 
--(NSDictionary *)getItems;
--(NSArray *)getClosetItems;
+-(NSArray *)getClosetItemsArray;
+
+-(void)setClosetItem:(ClosetItem *)closetItem forItemId:(NSString *)itemId;
 
 -(NSString *)__defaultWith:(NSString *)aDefault ifThisIsNull:(id)val;
 

@@ -10,22 +10,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Closet.h"
 #import "ClosetItem.h"
 #import "PictureDownloader.h"
 
 @interface PictureTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource, PictureDownloaderDelegate, UIScrollViewDelegate> {
     
-    NSDecimalNumber *itemcount;    
-    NSDictionary *items;            // set in ClosetViewController.m:157
-    NSArray *closetItems; // contains ClosetItem's
-    
+    Closet *closet;
+        
     NSMutableDictionary *imageDownloadsInProgress;
     UITableView *tableViewInsideCell;
 }
 
-@property(nonatomic,retain) NSDecimalNumber *itemcount;
-@property(nonatomic,retain) NSDictionary *items;  // set from...  ClosetViewController.m:157
-@property(nonatomic,retain) NSArray *closetItems;
+@property(nonatomic,retain) Closet *closet;
 
 @property(nonatomic,retain) IBOutlet UITableView *tableViewInsideCell;
 @property(nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
@@ -33,4 +30,11 @@
 - (void) _loadClosetImage:intoCell:(UITableViewCell *)cell;
 
 - (void)startClosetPictureDownload:(NSDictionary *)info;
+
+- (void) _logImageSize:(UIImage *)image atLine:(int)line;
+
+//- (void) _logImageSize:(UIImage *)image atLine:(int)line;
+
+-(void)pictureTap:(id)target;
+
 @end

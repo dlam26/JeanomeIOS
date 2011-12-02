@@ -71,7 +71,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"PictureDownloader.m:74  didRecieveResponse()");
+    // NSLog(@"PictureDownloader.m:74  didRecieveResponse()");
 
    // NSMutableData *responseData = [[NSMutableData alloc] init];
 }
@@ -96,7 +96,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"PictureDownloader.m:92   connectionDidFinishLoading()");
+    //NSLog(@"PictureDownloader.m:92   connectionDidFinishLoading()");
     
     // Set appIcon and clear temporary data/image
     UIImage *image = [[UIImage alloc] initWithData:self.activeDownload];

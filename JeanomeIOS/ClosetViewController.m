@@ -38,7 +38,7 @@
     
     // 2.  Fetch JSON from the server about the details.
     
-    NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", JEANOME_URL, [self.fbResultDict objectForKey:@"id"]];
+    NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL], [self.fbResultDict objectForKey:@"id"]];
         
 //    NSLog(@"ClosetViewController.m:36  initWithFBResult() Fetching from URL... %@", closetUrlString);
     

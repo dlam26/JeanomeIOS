@@ -16,26 +16,32 @@
 @interface ClosetItem : NSObject
 {
     NSString *itemId;
+    NSString *brand;
+    NSNumber *value;
     NSString *note;
     NSString *category;
     NSString *imageURL;
-    NSString *brand;
     NSDate *time;
-    
+
     UIImage *image;
     UIImageView *imageView;
-    
 }
 
 @property (nonatomic,retain) NSString *itemId;
+@property (nonatomic,retain) NSString *brand;
+@property (nonatomic,retain) NSNumber *value;
 @property (nonatomic,retain) NSString *note;
 @property (nonatomic,retain) NSString *category;
 @property (nonatomic,retain) NSString *imageURL;
-@property (nonatomic,retain) NSString *brand;
+
 @property (nonatomic,retain) NSDate *time;
 @property (nonatomic,retain) UIImage *image;
 @property (nonatomic,retain) UIImageView *imageView;
 
 -(id)initWithImageDict:(NSDictionary *)imageDict andId:(NSString *)theId;
 
++(NSDictionary *)makeImageDict:(NSString *)itemId withNote:(NSString *)note 
+                  withCategory:(NSString *)category withImageURL:(NSString *)imageURL
+                     withBrand:(NSString *)brand withValue:(NSNumber *)value 
+                      withTime:(NSString *)time;
 @end

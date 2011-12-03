@@ -7,12 +7,41 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import "ClosetItem.h"
 
-@interface ClosetItemDetailsViewController : UIViewController
+@protocol PhotoDetailsDelegate <NSObject>
+
+@required
+-(void)saveDetails:(NSDictionary *)details;
+
+@end
+
+
+@interface ClosetItemDetailsViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
 {
+    IBOutlet UITextField *categoryTextField;
+    IBOutlet UITextField *brandTextField;
+    IBOutlet UITextField *costTextField;
+    IBOutlet UITextView *noteTextView;
+    IBOutlet UIScrollView *scrollView;
     
+    id <PhotoDetailsDelegate> delegate;
+    
+    ClosetItem *ci;
 }
 
+@property(nonatomic,retain) IBOutlet UITextField *categoryTextField;
+@property(nonatomic,retain) IBOutlet UITextField *brandTextField;
+@property(nonatomic,retain) IBOutlet UITextField *costTextField;
+@property(nonatomic,retain) IBOutlet UITextView *noteTextView;
+@property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
+@property(nonatomic,retain) id <PhotoDetailsDelegate> delegate;
+@property(nonatomic,retain) ClosetItem *ci;
+
+-(id)initWithClosetItem:(ClosetItem *)closetItem;
+
+-(IBAction)saveDetails:(id)sender;
 
 
 @end

@@ -13,8 +13,11 @@
 
 #import "AppDelegate.h"
 #import "OverlayViewController.h"
+#import "ClosetItemDetailsViewController.h"
+#import "ClosetItem.h"
 
-@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, AFFeatherDelegate> 
+
+@interface TakePhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, AFFeatherDelegate, PhotoDetailsDelegate> 
 {
     UIImageView *imageView;
     UIScrollView *scrollView;
@@ -29,6 +32,9 @@
     NSString *facebookId;   // the facebook id of the current user
     FBRequest *fbRequest;
     id fbResult;
+    
+    // stores info about the new closet item that'll be created from the picked image
+    ClosetItem *closetItem;
 }
 
 
@@ -39,10 +45,11 @@
 @property(nonatomic, retain) OverlayViewController *overlayViewController;
 @property(nonatomic, retain) UIImage *pickedImage;
 
-
-@property (nonatomic, retain) NSString *facebookId;
+@property(nonatomic, retain) NSString *facebookId;
 @property(retain,nonatomic) FBRequest *fbRequest;
 @property(copy, nonatomic) id fbResult;
+
+@property(nonatomic, retain) ClosetItem *closetItem;
 
 - (id)initWithFacebookRequest:(FBRequest *)req 
                   andResponse:(id)result

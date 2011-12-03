@@ -29,8 +29,8 @@
 @implementation TakePhotoViewController
 
 @synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;
-
 @synthesize fbRequest, fbResult, facebookId;
+@synthesize closetItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,11 +72,11 @@
 
     // NSLog(@"TakePhotoViewController.m:54  viewDidLoad()");
     
+    /*
     NSLog(@"Is there a camera? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]);
-    
     NSLog(@"Is there a photo library? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]);
-    
     NSLog(@"Is there a saved photos album? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]);
+    */
     
     // #1  setup scrollView so you can pan/pinch around the image
     scrollView.minimumZoomScale = 0.5;
@@ -318,8 +318,6 @@
 
 -(IBAction)showAviary:(id)sender
 {
-    NSLog(@"TakePhotoViewController.m:323  showAviary()");
-    
     [self displayFeatherWithImage:[imageView image]];
 }
 
@@ -329,6 +327,8 @@
  
     Ex. how to get facebook user id in JSON  
  https://graph.facebook.com/me?fields=id&access_token=AAAAAAITEghMBAN7gLcD9XHm2exWasKkBJd3A1qMhZCOCQLSucM3P3LGYPEOoepSpJsKkK9fP5yWZCzT8XGWcYOM79X3yB01UZCW1QAOaQZDZD
+ 
+    FIXME,  need to be logged into facebook for this to work  (it uses self.facebookId)
  
  */ 
 -(IBAction)uploadPic:(id)sender
@@ -340,25 +340,23 @@
     
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
-    NSURL *postURL = [NSURL URLWithString:[[[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL] stringByAppendingFormat:@"/closet/%@/", self.facebookId]];
+    NSURL *postURL = [NSURL URLWithString:[[[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL] stringByAppendingFormat:@"/closet/add/"]];
   
-    //NSURL *postURL = [NSURL URLWithString:@"http://10.0.1.60:8000/testing/"];
-
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];
-    
-    
-    NSLog(@"TakePhotoViewController.m:229   postURL: %@   facebookIdCookie: %@    accessTokenCookie: %@", postURL, facebookIdCookie, accessTokenCookie);
+        
+    NSLog(@"TakePhotoViewController.m:348   postURL: %@ ", postURL);
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     
     // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
+
+    [request setPostValue:closetItem.brand forKey:@"brand"];
+    [request setPostValue:closetItem.category forKey:@"category"];
+    [request setPostValue:closetItem.value forKey:@"value"];
+    [request setPostValue:closetItem.note forKey:@"note"];
+    [request setPostValue:@"Submit" forKey:@"do_add_item"];   // wtf is this lol
     
-    [request setPostValue:@"" forKey:@"category"];
-    [request setPostValue:@"Here is a note on TakePhotoViewController.m:234" forKey:@"note"];
-    [request setPostValue:@"some brand" forKey:@"brand"];
-    [request setPostValue:@"Submit" forKey:@"do_add_item"];
-    [request setPostValue:@"66.66" forKey:@"value"];
     
     // 11/15/2011   THIS ACTUALLY WORKS TO SEND STUFF!!!
     // NSData *someData = [NSData dataWithBytes:"asdf" length:strlen("asdf")];
@@ -434,16 +432,27 @@
     [alert release];
 }
 
-/*
-    Presents a modal view so the user can enter details about the photo.
- 
-    See "About Modal View Controllers" in the docs!
- 
- */
+
 -(IBAction)editDetails:(id)sender
 {
-
+    ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:self.closetItem];
+    
+    c.title = @"Editing Item Details";
+    c.delegate = self;    
+    [[self navigationController] pushViewController:c animated:YES];    
+    [c release];
 }
 
+#pragma mark - <PhotoDetailsDelegate>
+
+/*
+    see ClosetItemDetailsViewController.m:93
+ */ 
+-(void)saveDetails:(NSDictionary *)details
+{
+    NSLog(@"TakePhotoViewController.m:452   saveDetails() <PhotoDetailsDelegate> method!" );
+    
+    self.closetItem = [[ClosetItem alloc] initWithImageDict:details andId:nil];
+}
 
 @end

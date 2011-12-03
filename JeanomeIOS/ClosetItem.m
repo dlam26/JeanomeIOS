@@ -10,7 +10,7 @@
 
 @implementation ClosetItem
 
-@synthesize itemId, note, category, imageURL, brand, time;
+@synthesize itemId, note, category, imageURL, brand, value, time;
 @synthesize image, imageView;
 
 - (void)dealloc {
@@ -35,10 +35,29 @@
     self.imageURL = [imageDict objectForKey:@"image"];
     // self.image = SET ELSEWHERE
     self.brand = [imageDict objectForKey:@"brand"];
+    self.value = [imageDict objectForKey:@"value"];
     self.time = [imageDict objectForKey:@"time"];   // TODO convert to NSDate
     return self;
 }
 
++(NSDictionary *)makeImageDict:(NSString *)itemId withNote:(NSString *)note 
+                  withCategory:(NSString *)category withImageURL:(NSString *)imageURL
+                     withBrand:(NSString *)brand withValue:(NSNumber *)value 
+                      withTime:(NSString *)time
+{
+//    NSDictionary *toReturn = [NSDictionary dictionaryWithObjectsAndKeys:itemId, @"id", note, @"note", category, @"category", imageURL, @"image", brand, @"brand", time, @"time", nil];
+    
+    NSDictionary *toReturn = [NSMutableDictionary dictionary];
+    [toReturn setValue:itemId forKey:@"id"];
+    [toReturn setValue:note forKey:@"note"];
+    [toReturn setValue:category forKey:@"category"];
+    [toReturn setValue:imageURL forKey:@"image"];
+    [toReturn setValue:brand forKey:@"brand"];
+    [toReturn setValue:value forKey:@"value"];
+    [toReturn setValue:time forKey:@"time"];
+    
+    return toReturn;
+}
 
 
 @end

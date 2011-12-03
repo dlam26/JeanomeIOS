@@ -54,9 +54,11 @@
                             withValue:(NSString *)value;
 
 
-
+-(IBAction)showAviary:(id)sender;
 -(IBAction)uploadPic:(id)sender;
 -(IBAction)savePicToCameraRoll:(id)sender;
+-(IBAction)editDetails:(id)sender;
+
 
 
 @end

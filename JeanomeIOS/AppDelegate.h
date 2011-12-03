@@ -19,8 +19,9 @@
 }
 
 @property (nonatomic, retain) Facebook *facebook;
-    
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *nav;
+
++(UIColor *)getJeanomeColor;
 
 @end

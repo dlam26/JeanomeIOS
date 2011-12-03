@@ -14,7 +14,6 @@
 		1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */; };
 		1ABA437B1485A13100D809D7 /* IMG_20111030_232021.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */; };
 		1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */; };
-		1AC08B0D1485947D0032D2E7 /* jeanome_logo_new_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0C1485947D0032D2E7 /* jeanome_logo_new_114.png */; };
 		1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0F148596CE0032D2E7 /* newlogo.png */; };
 		1AC08B12148596D70032D2E7 /* icon_happy_smiley_300.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */; };
 		647DFFDF146B560600E25B9C /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFDE146B560600E25B9C /* TODO */; };
@@ -67,7 +66,6 @@
 		64DDF0E7147B56C400491867 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DDF0E0147B56C400491867 /* SBJsonParser.m */; };
 		64DDF0E8147B56C400491867 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DDF0E2147B56C400491867 /* SBJsonWriter.m */; };
 		64DDF0EA147B635000491867 /* babybluehappyface.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DDF0E9147B635000491867 /* babybluehappyface.png */; };
-		64DDF0EC147B637900491867 /* cameraicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DDF0EB147B637900491867 /* cameraicon.png */; };
 		64DDF0EE147B639400491867 /* transparent_settings_gear_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DDF0ED147B639400491867 /* transparent_settings_gear_icon.png */; };
 		64DDF0F2147B63B900491867 /* LoginWithFacebookNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DDF0EF147B63B900491867 /* LoginWithFacebookNormal.png */; };
 		64DDF0F3147B63B900491867 /* LoginWithFacebookNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DDF0F0147B63B900491867 /* LoginWithFacebookNormal@2x.png */; };
@@ -77,6 +75,9 @@
 		64E20662147B0FD00014CA48 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E2064D147B0FD00014CA48 /* FBDialog.m */; };
 		64E20663147B0FD00014CA48 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E2064F147B0FD00014CA48 /* FBLoginDialog.m */; };
 		64E20664147B0FD00014CA48 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E20651147B0FD00014CA48 /* FBRequest.m */; };
+		64F280BF14890E4C00490236 /* jeanome_logo_new_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F280BE14890E4C00490236 /* jeanome_logo_new_114.png */; };
+		64F280C81489D1FC00490236 /* ClosetItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F280C61489D1FA00490236 /* ClosetItemDetailsViewController.m */; };
+		64F280C91489D1FC00490236 /* ClosetItemDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F280C71489D1FA00490236 /* ClosetItemDetailsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,7 +188,6 @@
 		64DDF0E1147B56C400491867 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		64DDF0E2147B56C400491867 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		64DDF0E9147B635000491867 /* babybluehappyface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = babybluehappyface.png; sourceTree = "<group>"; };
-		64DDF0EB147B637900491867 /* cameraicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraicon.png; sourceTree = "<group>"; };
 		64DDF0ED147B639400491867 /* transparent_settings_gear_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent_settings_gear_icon.png; sourceTree = "<group>"; };
 		64DDF0EF147B63B900491867 /* LoginWithFacebookNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginWithFacebookNormal.png; sourceTree = "<group>"; };
 		64DDF0F0147B63B900491867 /* LoginWithFacebookNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginWithFacebookNormal@2x.png"; sourceTree = "<group>"; };
@@ -203,6 +203,10 @@
 		64E2064F147B0FD00014CA48 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
 		64E20650147B0FD00014CA48 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
 		64E20651147B0FD00014CA48 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
+		64F280BE14890E4C00490236 /* jeanome_logo_new_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jeanome_logo_new_114.png; path = ../jeanome_logo_new_114.png; sourceTree = "<group>"; };
+		64F280C51489D1F900490236 /* ClosetItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetItemDetailsViewController.h; sourceTree = "<group>"; };
+		64F280C61489D1FA00490236 /* ClosetItemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItemDetailsViewController.m; sourceTree = "<group>"; };
+		64F280C71489D1FA00490236 /* ClosetItemDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClosetItemDetailsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +299,9 @@
 				64D65BE614747CF4007F4A49 /* Closet.m */,
 				1AA6D8071482DB6700525AB0 /* ClosetItem.h */,
 				1AA6D8081482DB6700525AB0 /* ClosetItem.m */,
+				64F280C51489D1F900490236 /* ClosetItemDetailsViewController.h */,
+				64F280C61489D1FA00490236 /* ClosetItemDetailsViewController.m */,
+				64F280C71489D1FA00490236 /* ClosetItemDetailsViewController.xib */,
 				64A5F184146B43560051C718 /* Constants.h */,
 				1AA6D80B148395B600525AB0 /* PictureDownloader.h */,
 				1AA6D80C148395B600525AB0 /* PictureDownloader.m */,
@@ -384,6 +391,7 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				64F280BE14890E4C00490236 /* jeanome_logo_new_114.png */,
 				1ABA43751485A0E500D809D7 /* demophotos */,
 				1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */,
 				1AC08B0F148596CE0032D2E7 /* newlogo.png */,
@@ -392,7 +400,6 @@
 				64DDF0F0147B63B900491867 /* LoginWithFacebookNormal@2x.png */,
 				64DDF0F1147B63B900491867 /* LoginWithFacebookPressed.png */,
 				64D65BAC14735BC2007F4A49 /* user-silhouette-icon.png */,
-				64DDF0EB147B637900491867 /* cameraicon.png */,
 				64DDF0ED147B639400491867 /* transparent_settings_gear_icon.png */,
 				64DDF0E9147B635000491867 /* babybluehappyface.png */,
 				64A5F186146B479D0051C718 /* logo.png */,
@@ -551,18 +558,18 @@
 				64D65BB214735EAA007F4A49 /* ClosetViewController.xib in Resources */,
 				64E20661147B0FD00014CA48 /* FBDialog.bundle in Resources */,
 				64DDF0EA147B635000491867 /* babybluehappyface.png in Resources */,
-				64DDF0EC147B637900491867 /* cameraicon.png in Resources */,
 				64DDF0EE147B639400491867 /* transparent_settings_gear_icon.png in Resources */,
 				64DDF0F2147B63B900491867 /* LoginWithFacebookNormal.png in Resources */,
 				64DDF0F3147B63B900491867 /* LoginWithFacebookNormal@2x.png in Resources */,
 				64DDF0F4147B63B900491867 /* LoginWithFacebookPressed.png in Resources */,
 				1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */,
-				1AC08B0D1485947D0032D2E7 /* jeanome_logo_new_114.png in Resources */,
 				1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */,
 				1AC08B12148596D70032D2E7 /* icon_happy_smiley_300.png in Resources */,
 				1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */,
 				1ABA437B1485A13100D809D7 /* IMG_20111030_232021.jpg in Resources */,
 				1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */,
+				64F280BF14890E4C00490236 /* jeanome_logo_new_114.png in Resources */,
+				64F280C91489D1FC00490236 /* ClosetItemDetailsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +634,7 @@
 				1A9E62A8147CC595002566DA /* PictureTableViewCell.m in Sources */,
 				1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */,
 				1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */,
+				64F280C81489D1FC00490236 /* ClosetItemDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

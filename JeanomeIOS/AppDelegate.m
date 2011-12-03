@@ -27,11 +27,11 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     nav = [[UINavigationController alloc] init];
-    nav.navigationBar.tintColor = [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];   // light bluish
+    nav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
     
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
-
-    UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"cameraicon" ofType:@"png"]] style:UIBarButtonItemStylePlain target:jc action:@selector(startTakingPhoto:)];
+    
+    UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:jc action:@selector(startTakingPhoto:)];    
     
     UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"user-silhouette-icon" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:jc action:@selector(openCloset:)];
     
@@ -119,6 +119,11 @@
         [defaults removeObjectForKey:@"FBExpirationDateKey"];
         [defaults synchronize];
     }
+}
+
++ (UIColor *)getJeanomeColor
+{
+    return [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];
 }
 
 @end

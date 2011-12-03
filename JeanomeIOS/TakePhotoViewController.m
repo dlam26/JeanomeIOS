@@ -79,8 +79,8 @@
     NSLog(@"Is there a saved photos album? %d", [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]);
     
     // #1  setup scrollView so you can pan/pinch around the image
-    scrollView.minimumZoomScale = 0.3;
-    scrollView.maximumZoomScale = 3.0;        
+    scrollView.minimumZoomScale = 0.5;
+    scrollView.maximumZoomScale = 2.0;        
     scrollView.delegate = self;                
     [scrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
 
@@ -105,6 +105,51 @@
         
         [self presentModalViewController:imgPicker animated:YES];
     }
+    
+    // #3 Setup navigation bar with multiple buttons
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 185, 44.01)];
+    toolbar.tintColor = [AppDelegate getJeanomeColor];
+    
+    NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:3];
+    UIBarButtonItem *b;
+    
+    // create a spacer
+    b = [[UIBarButtonItem alloc]
+         initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [buttons addObject:b];
+    [b release];
+
+    // create a "edit" button that'll bring up Aviary again
+    b = [[UIBarButtonItem alloc]
+          initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(showAviary:)];
+    b.style = UIBarButtonItemStyleBordered;
+    [buttons addObject:b];
+    [b release];
+    
+    // create another spacer
+    b = [[UIBarButtonItem alloc]
+         initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [buttons addObject:b];
+    [b release];
+    
+    b = [[UIBarButtonItem alloc] initWithTitle:@"Details" style:UIBarButtonItemStyleBordered target:self action:@selector(editDetails:)];
+    [buttons addObject:b];
+    [b release];
+    
+    // create a upload button with the system save icon!
+    b = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(uploadPic:)];    
+    b.style = UIBarButtonItemStyleBordered;
+    [buttons addObject:b];
+    [b release];
+
+    [toolbar setItems:buttons animated:NO];
+    
+    [buttons release];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toolbar];
+    
+    [toolbar release];    
 }
 
 - (void)viewDidUnload
@@ -154,7 +199,7 @@
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"TakePhotoViewController.m:93  didFinishPickingMediaWithInfo()");
+    NSLog(@"TakePhotoViewController.m:192  didFinishPickingMediaWithInfo()");
     
     // NSParameterAssert(image);
     
@@ -164,15 +209,13 @@
     
 
     [self setPickedImage:image];
-    
     [self dismissModalViewControllerAnimated:NO];
-
     [self.imageView setImage:image];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    NSLog(@"TakePhotoViewController.m:99  imagePickerControllerDidCancel()");
+    NSLog(@"TakePhotoViewController.m:210  imagePickerControllerDidCancel()");
 
     
     [self dismissModalViewControllerAnimated:YES];
@@ -202,7 +245,7 @@
 
 - (void)displayFeatherWithImage:(UIImage *)image
 {
-    NSLog(@"TakePhotoViewController.m:135   displayFeatherWithImage()");
+    NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()");
     
     if (image) {
         //
@@ -216,7 +259,7 @@
         
         //  11/29/2011   Set animated to null, since you see TakePhotoViewController.xlb for like 
         //               a half a second while its animating to Aviary
-        [self presentModalViewController:featherController animated:YES];
+        [self presentModalViewController:featherController animated:NO];
     } else {
         NSAssert(NO, @"AFFeatherController was passed a nil image");
     }
@@ -275,7 +318,7 @@
 
 -(IBAction)showAviary:(id)sender
 {
-    NSLog(@"TakePhotoViewController.m:205  showAviary()");
+    NSLog(@"TakePhotoViewController.m:323  showAviary()");
     
     [self displayFeatherWithImage:[imageView image]];
 }
@@ -389,6 +432,17 @@
     
     [alert show];
     [alert release];
+}
+
+/*
+    Presents a modal view so the user can enter details about the photo.
+ 
+    See "About Modal View Controllers" in the docs!
+ 
+ */
+-(IBAction)editDetails:(id)sender
+{
+
 }
 
 

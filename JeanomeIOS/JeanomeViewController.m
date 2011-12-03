@@ -75,10 +75,9 @@
 //#else 
     tpvc = [[TakePhotoViewController alloc] initWithFacebookRequest:fbRequest andResponse:fbResult andFacebookId:facebookId];
     
-    tpvc.title = @"How's it look?";
+    // tpvc.title = @"How's it look?";
     
     [self.navigationController pushViewController:tpvc animated:YES];
-    
     [tpvc release];
 //#endif
 }

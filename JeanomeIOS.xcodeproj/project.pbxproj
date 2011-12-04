@@ -10,7 +10,10 @@
 		1A9E62A8147CC595002566DA /* PictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E62A6147CC594002566DA /* PictureTableViewCell.m */; };
 		1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */; };
 		1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EC148AEE460029BC43 /* Default@2x.png */; };
-		1A9FD4F0148AEE4A0029BC43 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EF148AEE4A0029BC43 /* Default.png */; };
+		1A9FD4F2148B7A5B0029BC43 /* iphone_logo_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */; };
+		1A9FD509148B81210029BC43 /* icon_profile_20.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD508148B81210029BC43 /* icon_profile_20.png */; };
+		1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FD50B148B82910029BC43 /* RootViewController.m */; };
+		1A9FD50E148B82940029BC43 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD50C148B82930029BC43 /* RootViewController.xib */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
 		1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */; };
@@ -96,8 +99,13 @@
 		1A9E62A5147CC593002566DA /* PictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureTableViewCell.h; sourceTree = "<group>"; };
 		1A9E62A6147CC594002566DA /* PictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureTableViewCell.m; sourceTree = "<group>"; };
 		1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureTableViewCell.xib; sourceTree = "<group>"; };
-		1A9FD4EC148AEE460029BC43 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		1A9FD4EF148AEE4A0029BC43 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1A9FD4EC148AEE460029BC43 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		1A9FD4EF148AEE4A0029BC43 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iphone_logo_57.png; path = ../iphone_logo_57.png; sourceTree = "<group>"; };
+		1A9FD508148B81210029BC43 /* icon_profile_20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_profile_20.png; path = ../../../Dropbox/jeanome/html_css_mock_up/Jeanome_iPhone/icon_profile_20.png; sourceTree = "<group>"; };
+		1A9FD50A148B82910029BC43 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		1A9FD50B148B82910029BC43 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		1A9FD50C148B82930029BC43 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		1AA6D8071482DB6700525AB0 /* ClosetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetItem.h; sourceTree = "<group>"; };
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
 		1AA6D80B148395B600525AB0 /* PictureDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureDownloader.h; sourceTree = "<group>"; };
@@ -257,8 +265,6 @@
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
-				1A9FD4EF148AEE4A0029BC43 /* Default.png */,
-				1A9FD4EC148AEE460029BC43 /* Default@2x.png */,
 				649ED3AE146A082A00E558EC /* JeanomeIOS */,
 				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
 				649ED3A7146A082A00E558EC /* Frameworks */,
@@ -309,23 +315,26 @@
 				64F280C61489D1FA00490236 /* ClosetItemDetailsViewController.m */,
 				64F280C71489D1FA00490236 /* ClosetItemDetailsViewController.xib */,
 				64A5F184146B43560051C718 /* Constants.h */,
+				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
+				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
+				649ED48D146A845F00E558EC /* JeanomeViewController.xib */,
 				1AA6D80B148395B600525AB0 /* PictureDownloader.h */,
 				1AA6D80C148395B600525AB0 /* PictureDownloader.m */,
 				1A9E62A5147CC593002566DA /* PictureTableViewCell.h */,
 				1A9E62A6147CC594002566DA /* PictureTableViewCell.m */,
 				1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */,
-				649ED48B146A845F00E558EC /* JeanomeViewController.h */,
-				649ED48C146A845F00E558EC /* JeanomeViewController.m */,
-				649ED48D146A845F00E558EC /* JeanomeViewController.xib */,
-				649ED3D9146A0BBA00E558EC /* TakePhotoViewController.h */,
-				649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */,
-				649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */,
 				64A5F17F146B39600051C718 /* OverlayViewController.h */,
 				64A5F180146B39600051C718 /* OverlayViewController.m */,
 				64A5F181146B39600051C718 /* OverlayViewController.xib */,
+				1A9FD50A148B82910029BC43 /* RootViewController.h */,
+				1A9FD50B148B82910029BC43 /* RootViewController.m */,
+				1A9FD50C148B82930029BC43 /* RootViewController.xib */,
 				64D65B9B146F2777007F4A49 /* SettingsViewController.h */,
 				64D65B9C146F2777007F4A49 /* SettingsViewController.m */,
 				64D65B9D146F2777007F4A49 /* SettingsViewController.xib */,
+				649ED3D9146A0BBA00E558EC /* TakePhotoViewController.h */,
+				649ED3DA146A0BBA00E558EC /* TakePhotoViewController.m */,
+				649ED3DB146A0BBA00E558EC /* TakePhotoViewController.xib */,
 				64DDF0D5147B56C400491867 /* JSON */,
 				64E20643147B0FD00014CA48 /* FBConnect */,
 				64A5F185146B477B0051C718 /* images */,
@@ -397,9 +406,13 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1A9FD508148B81210029BC43 /* icon_profile_20.png */,
+				1A9FD4EF148AEE4A0029BC43 /* Default.png */,
+				1A9FD4EC148AEE460029BC43 /* Default@2x.png */,
 				64F280BE14890E4C00490236 /* jeanome_logo_new_114.png */,
 				1ABA43751485A0E500D809D7 /* demophotos */,
 				1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */,
+				1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */,
 				1AC08B0F148596CE0032D2E7 /* newlogo.png */,
 				1AC08B0C1485947D0032D2E7 /* jeanome_logo_new_114.png */,
 				64DDF0EF147B63B900491867 /* LoginWithFacebookNormal.png */,
@@ -577,7 +590,9 @@
 				64F280BF14890E4C00490236 /* jeanome_logo_new_114.png in Resources */,
 				64F280C91489D1FC00490236 /* ClosetItemDetailsViewController.xib in Resources */,
 				1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */,
-				1A9FD4F0148AEE4A0029BC43 /* Default.png in Resources */,
+				1A9FD4F2148B7A5B0029BC43 /* iphone_logo_57.png in Resources */,
+				1A9FD509148B81210029BC43 /* icon_profile_20.png in Resources */,
+				1A9FD50E148B82940029BC43 /* RootViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +658,7 @@
 				1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */,
 				1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */,
 				64F280C81489D1FC00490236 /* ClosetItemDetailsViewController.m in Sources */,
+				1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

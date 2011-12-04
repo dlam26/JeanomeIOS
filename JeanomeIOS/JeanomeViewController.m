@@ -11,6 +11,7 @@
 @implementation JeanomeViewController
 
 @synthesize facebookId, fbResult, fbRequest;
+@synthesize theNavigationBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -18,7 +19,7 @@
     if (self) {
         // Custom initialization
 
-        
+        self.theNavigationBar.tintColor = [AppDelegate getJeanomeColor];        
     }
     return self;
 }
@@ -248,6 +249,13 @@
     self.facebookId = [dict objectForKey:@"id"];
     self.fbRequest = request;
     self.fbResult = result;
+    
+    //  12/4/2011  Changing screens to follow the mockup, 
+    //             so store the login info so i can retrieve it later    
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    delegate.facebookId = [dict objectForKey:@"id"];
+    delegate.facebookLoginDict = result;
+    
 }
 
 /**

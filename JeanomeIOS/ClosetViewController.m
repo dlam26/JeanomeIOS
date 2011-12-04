@@ -143,6 +143,20 @@
 }
 
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section == 0) {        
+        return [NSString stringWithFormat:@"Shoes"];
+    }
+    else if(section == 1) {
+        return @"Bags";
+    }
+    else 
+        return [NSString stringWithFormat:@"Category %d", section];
+}
+
+
+
 /*
     Builds rows of each category, and the photos of each category in a closet.
  
@@ -175,18 +189,6 @@
     }
     
     return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if(section == 0) {        
-        return [NSString stringWithFormat:@"Shoes"];
-    }
-    else if(section == 1) {
-        return @"Bags";
-    }
-    else 
-        return [NSString stringWithFormat:@"Category %d", section];
 }
 
 

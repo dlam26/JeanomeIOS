@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "AppDelegate.h"
+
 #import "Constants.h"
 #import "TakePhotoViewController.h"
 #import "SettingsViewController.h"
@@ -18,7 +20,6 @@
 
 
 // wtf http://stackoverflow.com/questions/4091676/strange-behavior-with-compile-error-expected-specifier-qualifier-list-before-c
-@class FacebookBrain;
 @class TakePhotoViewController;
 
 @interface JeanomeViewController : UIViewController <FBRequestDelegate>
@@ -30,6 +31,7 @@
     IBOutlet UIButton *loginButton;
     IBOutlet UIButton *logoutButton;
     IBOutlet UILabel *isSessionValidLabel;
+    IBOutlet UINavigationBar *theNavigationBar;
     
     ClosetViewController *closetViewController;
     TakePhotoViewController *tpvc;
@@ -38,6 +40,7 @@
 @property(retain,nonatomic) NSString *facebookId;
 @property(retain,nonatomic) FBRequest *fbRequest;
 @property(copy, nonatomic) id fbResult;
+@property(retain,nonatomic) IBOutlet UINavigationBar *theNavigationBar;
 
 -(IBAction)startTakingPhoto:(id)sender;
 -(IBAction)openCloset:(id)sender;

@@ -14,6 +14,8 @@
 @synthesize nav;
 @synthesize facebook;
 
+@synthesize facebookId, facebookLoginDict;
+
 - (void)dealloc
 {
     [_window release];
@@ -26,27 +28,31 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    nav = [[UINavigationController alloc] init];
-    nav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
+//    nav = [[UINavigationController alloc] init];
+//    nav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
     
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
     
+    /*
     UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:jc action:@selector(startTakingPhoto:)];    
     
-    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"user-silhouette-icon" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:jc action:@selector(openCloset:)];
+    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile_20" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:jc action:@selector(openCloset:)];
     
     jc.navigationItem.leftBarButtonItem = cameraBarButton;
     jc.navigationItem.rightBarButtonItem = myClosetBarButton;
+     */
 
-    [nav pushViewController:jc animated:YES];
-    [self.window addSubview:nav.view];
+    // [nav pushViewController:jc animated:YES];
+    //    [self.window addSubview:nav.view];
+  
+    [self.window addSubview:jc.view];
     [self.window makeKeyAndVisible];
     
     // from https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
     facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
     
-    [cameraBarButton release]; [myClosetBarButton release];
-    [jc release];
+    //[cameraBarButton release]; [myClosetBarButton release]; [jc release];
+
     
     return YES;
 }
@@ -103,14 +109,38 @@
     return [facebook handleOpenURL:url]; 
 }
 
+/**
+ * Called when the user has succesfully logged in.
+ */   
 - (void)fbDidLogin {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
+    [defaults synchronize];    
     
+    RootViewController *rvc = [[RootViewController alloc] init];
+    
+    UINavigationController *newNav = [[UINavigationController alloc] init];
+    newNav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
+
+    [newNav pushViewController:rvc animated:NO];
+    
+    self.window.rootViewController = newNav;
+    
+    [rvc release]; [newNav release];
 }
 
+
+/**
+ * Called when the user dismissed the dialog without logging in.
+ */
+- (void)fbDidNotLogin:(BOOL)cancelled {
+
+}
+
+/**
+ * Called when the user logged out.
+ */
 - (void) fbDidLogout {
     // Remove saved authorization information if it exists
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

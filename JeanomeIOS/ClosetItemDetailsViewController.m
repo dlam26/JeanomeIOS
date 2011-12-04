@@ -11,7 +11,7 @@
 @implementation ClosetItemDetailsViewController
 
 @synthesize categoryTextField, brandTextField;
-@synthesize costTextField, noteTextView, scrollView, delegate;
+@synthesize costTextField, noteTextField, scrollView, delegate;
 @synthesize ci;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -20,11 +20,13 @@
     if (self) {
         // Custom initialization
         
-        noteTextView.editable = YES;
-
-//        noteTextView.layer.borderWidth = 2.0f;
-//        noteTextView.layer.borderColor = [[UIColor blackColor] CGColor];
-//        noteTextView.clipsToBounds = YES;                
+        UIPickerView *categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 480, 320, 270)];
+        categoryPicker.delegate = self;
+        categoryPicker.dataSource = self;
+        categoryPicker.showsSelectionIndicator = YES;
+        [self.view addSubview:categoryPicker];
+        
+        categoryTextField.inputView = categoryPicker;
     }
     return self;
 }
@@ -35,6 +37,11 @@
     self = [super init];
     if (self) {
         self.ci = closetItem;
+        
+        self.categoryTextField.text = self.ci.category;
+        self.brandTextField.text = self.ci.brand;
+        self.costTextField.text = self.ci.value ? [NSString stringWithFormat:@"%@", self.ci.value] : @"";
+        self.noteTextField.text = self.ci.note;
     }
     return self;    
 }
@@ -54,11 +61,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    self.categoryTextField.text = ci.category;
-    self.brandTextField.text = ci.brand;
-    self.costTextField.text = ci.value ? [NSString stringWithFormat:@"%@", ci.value] : @"";
-    self.noteTextView.text = ci.note;
+
 }
 
 - (void)viewDidUnload
@@ -80,14 +83,18 @@
  */
 - (void)animateTextField:(id)textField up:(BOOL)up
 {
-    if(textField == noteTextView || textField == costTextField) {
+    if(textField == noteTextField || textField == costTextField) {
         
         int movementDistance;
         float movementDuration = movementDuration = 0.3f; // tweak as needed
         
-        if(textField == noteTextView) {            
-            movementDistance = 150; // tweak as needed
+
+        if(textField == costTextField)     {
+            movementDistance = 50;
         }
+        else if(textField == noteTextField) {            
+            movementDistance = 100; // tweak as needed
+        }        
         else {
             movementDistance = 85;
         }
@@ -113,7 +120,7 @@
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     
-    NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text 
+    NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextField.text
                                            withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]]];
     [self.delegate saveDetails:imageDict];                               
     [df release]; [nf release];
@@ -192,28 +199,43 @@
     }
 }
 
+#pragma mark - <UIPickerViewDelegate> 
 
-#pragma mark- <UITextViewDelegate>
+// for the category select
 
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    NSLog(@"ClosetItemDetailsViewController.m:74   textViewShouldEndEditing()!");
-    
-    // can validate stuff here
-    
-    return YES;
+    return 30.0;
 }
 
--(void)textViewDidBeginEditing:(UITextView *)textView
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    [self animateTextField:textView up:YES];
+    if(row == 0) {
+        return @"Shoes";
+    }
+    else {
+        return @"Bags";
+    }
 }
 
--(void)textViewDidEndEditing:(UITextView *)textView
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [self animateTextField:textView up:NO];
+    self.categoryTextField.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    [self.categoryTextField resignFirstResponder];
 }
 
+#pragma mark - <UIPickerViewDataSource> 
 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+/*  Should return the number of categories unlocked for the current user.
+ */ 
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return  2;
+}
 
 @end

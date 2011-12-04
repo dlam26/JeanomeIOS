@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "JeanomeIOS/PictureDownloader.m"
-         timestampString = "344171189.562844"
+         filePath = "JeanomeIOS/ClosetItem.m"
+         timestampString = "344651514.545321"
          startingColumnNumber = "2147483647"
          endingColumnNumber = "2147483647"
-         startingLineNumber = "56"
-         endingLineNumber = "56"
-         landmarkName = "-startDownload"
+         startingLineNumber = "59"
+         endingLineNumber = "59"
+         landmarkName = "+makeImageDict:withNote:withCategory:withImageURL:withBrand:withValue:withTime:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -22,41 +22,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "JeanomeIOS/PictureDownloader.m"
-         timestampString = "344172051.936225"
+         filePath = "JeanomeIOS/ClosetItemDetailsViewController.m"
+         timestampString = "344652360.07701"
          startingColumnNumber = "2147483647"
          endingColumnNumber = "2147483647"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
-         landmarkName = "-connection:didReceiveData:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "JeanomeIOS/PictureDownloader.m"
-         timestampString = "344172051.936225"
-         startingColumnNumber = "2147483647"
-         endingColumnNumber = "2147483647"
-         startingLineNumber = "91"
-         endingLineNumber = "91"
-         landmarkName = "-connection:didFailWithError:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "JeanomeIOS/PictureDownloader.m"
-         timestampString = "344175019.104907"
-         startingColumnNumber = "2147483647"
-         endingColumnNumber = "2147483647"
-         startingLineNumber = "109"
-         endingLineNumber = "109"
-         landmarkName = "-connectionDidFinishLoading:"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
+         landmarkName = "-initWithClosetItem:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

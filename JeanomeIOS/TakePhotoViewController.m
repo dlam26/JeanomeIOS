@@ -432,12 +432,14 @@
     [alert release];
 }
 
-
+/*
+    Selector assigned to UIToolbar button in viewDidLoad() on line 136 above ^^
+ */
 -(IBAction)editDetails:(id)sender
 {
     ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:self.closetItem];
     
-    c.title = @"Editing Item Details";
+    c.title = @"Item Details";
     c.delegate = self;    
     [[self navigationController] pushViewController:c animated:YES];    
     [c release];

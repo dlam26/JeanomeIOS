@@ -18,12 +18,13 @@
 @end
 
 
-@interface ClosetItemDetailsViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
+@interface ClosetItemDetailsViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 {
     IBOutlet UITextField *categoryTextField;
     IBOutlet UITextField *brandTextField;
     IBOutlet UITextField *costTextField;
-    IBOutlet UITextView *noteTextView;
+    IBOutlet UITextField *noteTextField;
+    
     IBOutlet UIScrollView *scrollView;
     
     id <PhotoDetailsDelegate> delegate;
@@ -34,7 +35,7 @@
 @property(nonatomic,retain) IBOutlet UITextField *categoryTextField;
 @property(nonatomic,retain) IBOutlet UITextField *brandTextField;
 @property(nonatomic,retain) IBOutlet UITextField *costTextField;
-@property(nonatomic,retain) IBOutlet UITextView *noteTextView;
+@property(nonatomic,retain) IBOutlet UITextField *noteTextField;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) id <PhotoDetailsDelegate> delegate;
 @property(nonatomic,retain) ClosetItem *ci;

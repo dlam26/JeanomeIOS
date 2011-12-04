@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1A9E62A8147CC595002566DA /* PictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E62A6147CC594002566DA /* PictureTableViewCell.m */; };
 		1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */; };
+		1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EC148AEE460029BC43 /* Default@2x.png */; };
+		1A9FD4F0148AEE4A0029BC43 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EF148AEE4A0029BC43 /* Default.png */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
 		1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */; };
@@ -94,6 +96,8 @@
 		1A9E62A5147CC593002566DA /* PictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureTableViewCell.h; sourceTree = "<group>"; };
 		1A9E62A6147CC594002566DA /* PictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureTableViewCell.m; sourceTree = "<group>"; };
 		1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureTableViewCell.xib; sourceTree = "<group>"; };
+		1A9FD4EC148AEE460029BC43 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		1A9FD4EF148AEE4A0029BC43 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		1AA6D8071482DB6700525AB0 /* ClosetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetItem.h; sourceTree = "<group>"; };
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
 		1AA6D80B148395B600525AB0 /* PictureDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureDownloader.h; sourceTree = "<group>"; };
@@ -253,6 +257,8 @@
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
+				1A9FD4EF148AEE4A0029BC43 /* Default.png */,
+				1A9FD4EC148AEE460029BC43 /* Default@2x.png */,
 				649ED3AE146A082A00E558EC /* JeanomeIOS */,
 				649ED3C6146A082B00E558EC /* JeanomeIOSTests */,
 				649ED3A7146A082A00E558EC /* Frameworks */,
@@ -570,6 +576,8 @@
 				1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */,
 				64F280BF14890E4C00490236 /* jeanome_logo_new_114.png in Resources */,
 				64F280C91489D1FC00490236 /* ClosetItemDetailsViewController.xib in Resources */,
+				1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */,
+				1A9FD4F0148AEE4A0029BC43 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

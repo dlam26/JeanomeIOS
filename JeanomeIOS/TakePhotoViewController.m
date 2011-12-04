@@ -350,39 +350,54 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     
     // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
+    
+    // Can only have 2 decimal digits!
+    NSNumberFormatter *twoDecimalDigitsFormatter = [[NSNumberFormatter alloc] init];
+    [twoDecimalDigitsFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [twoDecimalDigitsFormatter setMaximumFractionDigits:2];
+    NSNumber *truncatedValue = [twoDecimalDigitsFormatter numberFromString:[twoDecimalDigitsFormatter stringFromNumber:self.closetItem.value]];
 
-    [request setPostValue:closetItem.brand forKey:@"brand"];
-    [request setPostValue:closetItem.category forKey:@"category"];
-    [request setPostValue:closetItem.value forKey:@"value"];
-    [request setPostValue:closetItem.note forKey:@"note"];
-    [request setPostValue:@"Submit" forKey:@"do_add_item"];   // wtf is this lol
+
+    [request setPostValue:self.closetItem.brand forKey:@"brand"];
+    [request setPostValue:truncatedValue forKey:@"value"];
+    [request setPostValue:[self.closetItem getCategoryIdentifier] forKey:@"category"];    
+    [request setPostValue:self.closetItem.note forKey:@"note"];
+
+    // 12/3/2011  I think this is for the ghetto hidden form thing thats used 
+    // when creating a closet item
+    [request setPostValue:@"Submit" forKey:@"do_add_item"];   
     
-    
-    // 11/15/2011   THIS ACTUALLY WORKS TO SEND STUFF!!!
-    // NSData *someData = [NSData dataWithBytes:"asdf" length:strlen("asdf")];
-    // [request addData:someData forKey:@"picture"];
-    
-    // IMPORTANT:  The edited photo after Aviary is set to imageView.image in 
-    
+    // IMPORTANT:  The edited photo after Aviary is set to imageView.image
     [request addData:UIImageJPEGRepresentation(imageView.image, 1.0) forKey:@"picture"];
-    
     [request setUseCookiePersistence:NO];
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
     
+    [request startSynchronous];
+    
     /*
+    
     [request setCompletionBlock:^{
         NSString *responseString = [request responseString];
-        NSLog(@"Response: %@", responseString);
+        NSLog(@"TakePhotoViewController.m:372   Response: %@", responseString);
     }];
     
     [request setFailedBlock:^{
         NSError *error = [request error];
-        NSLog(@"Error: %@", error.localizedDescription);
+        NSLog(@"TakePhotoViewController.m:377   Error: %@", error.localizedDescription);
     }];
-     */
+
+    //UIProgressView *progressView  = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];  
     
+    UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(100, 100, 200, 50)];
+    progressView.progressViewStyle = UIProgressViewStyleBar;
+    
+    [request setUploadProgressDelegate:progressView];
 	[request startSynchronous];
     
+    NSLog(@"TakePhotoViewController.m:382   progress: %f",[progressView progress]);
+
+     */
+
     // TODO set network activity indicator
 }
 

@@ -42,6 +42,7 @@
         self.brandTextField.text = self.ci.brand;
         self.costTextField.text = self.ci.value ? [NSString stringWithFormat:@"%@", self.ci.value] : @"";
         self.noteTextField.text = self.ci.note;
+
     }
     return self;    
 }
@@ -211,6 +212,9 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if(row == 0) {
+        return @"";
+    }
+    else if(row == 1) {
         return @"Shoes";
     }
     else {
@@ -235,7 +239,7 @@
  */ 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return  2;
+    return 3;
 }
 
 @end

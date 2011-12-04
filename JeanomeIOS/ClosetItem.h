@@ -44,4 +44,11 @@
                   withCategory:(NSString *)category withImageURL:(NSString *)imageURL
                      withBrand:(NSString *)brand withValue:(NSNumber *)value 
                       withTime:(NSString *)time;
+
++(NSString *)categoryNameToIdentifier:(NSString *)categoryName;
+
+-(NSString *)getCategoryIdentifier;
+
+
+
 @end

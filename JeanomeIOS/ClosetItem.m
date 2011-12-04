@@ -59,5 +59,31 @@
     return toReturn;
 }
 
++(NSString *)categoryNameToIdentifier:(NSString *)categoryName
+{
+    NSString *categoryAbbreviation;
+    
+    if ([categoryName isEqual:@"Shoes"])
+        categoryAbbreviation = @"S";    
+    else if ([categoryName isEqual:@"Bags"])
+        categoryAbbreviation = @"B";
+    else if ([categoryName isEqual:@"Makeup"])
+        categoryAbbreviation = @"M";
+    else if ([categoryName isEqual:@"Jeans"])
+        categoryAbbreviation = @"J";
+    else if ([categoryName isEqual:@"Clothes"])
+        categoryAbbreviation = @"C";
+    else if ([categoryName isEqual:@"Electronics"])
+        categoryAbbreviation = @"E";
+    else 
+        categoryAbbreviation = @"S";
+    
+    return categoryAbbreviation;
+}
+
+-(NSString *)getCategoryIdentifier
+{
+    return [ClosetItem categoryNameToIdentifier:self.category];
+}
 
 @end

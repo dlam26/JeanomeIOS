@@ -11,8 +11,8 @@
 @implementation ClosetItemDetailsViewController
 
 @synthesize categoryTextField, brandTextField;
-@synthesize costTextField, noteTextField, scrollView, delegate;
-@synthesize ci;
+@synthesize costTextField, noteTextField, scrollView, delegate, editDetailsTable, closetItemImageView;
+@synthesize closetItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,23 +26,25 @@
         categoryPicker.showsSelectionIndicator = YES;
         [self.view addSubview:categoryPicker];
         
-        categoryTextField.inputView = categoryPicker;
+        self.categoryTextField.inputView = categoryPicker;                
+
+
     }
     return self;
 }
 
 // see TakePhotoViewController.m:438 in editDetails()
--(id)initWithClosetItem:(ClosetItem *)closetItem
+-(id)initWithClosetItem:(ClosetItem *)item
 {
     self = [super init];
     if (self) {
-        self.ci = closetItem;
+        self.closetItem = item;        
+        self.categoryTextField.text = self.closetItem.category;
+        self.brandTextField.text = self.closetItem.brand;
+        self.costTextField.text = self.closetItem.value ? [NSString stringWithFormat:@"%@", self.closetItem.value] : @"";
+        self.noteTextField.text = self.closetItem.note;
         
-        self.categoryTextField.text = self.ci.category;
-        self.brandTextField.text = self.ci.brand;
-        self.costTextField.text = self.ci.value ? [NSString stringWithFormat:@"%@", self.ci.value] : @"";
-        self.noteTextField.text = self.ci.note;
-
+        self.closetItemImageView.image = self.closetItem.image;
     }
     return self;    
 }
@@ -241,5 +243,54 @@
 {
     return 3;
 }
+
+
+#pragma mark - <UITableViewDataSource>
+
+//  This is the number of categories...  e.g. Shoes, Bags, Makeup
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section == 0) {
+        return 3;
+    }
+    else {
+        return 1;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section == 0) {        
+        return @"Details";
+    }
+    else {
+        return @"";
+    }
+
+}
+
+/*
+ Builds rows of each category, and the photos of each category in a closet.
+ 
+ */
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    return cell;
+}
+
+
+#pragma mark - <UITableViewDelegate>
 
 @end

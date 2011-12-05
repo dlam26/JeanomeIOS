@@ -37,7 +37,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-
+        
+        closetItem = [[ClosetItem alloc] init];   // important!
     }
     return self;
 }
@@ -79,8 +80,8 @@
     */
     
     // #1  setup scrollView so you can pan/pinch around the image
-    scrollView.minimumZoomScale = 0.5;
-    scrollView.maximumZoomScale = 2.0;        
+    scrollView.minimumZoomScale = 1.0;
+    scrollView.maximumZoomScale = 3.0;        
     scrollView.delegate = self;                
     [scrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
 
@@ -106,8 +107,7 @@
         [self presentModalViewController:imgPicker animated:YES];
     }
     
-    // #3 Setup navigation bar with multiple buttons
-    
+    // #3 Setup navigation bar with multiple buttons    
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 185, 44.01)];
     toolbar.tintColor = [AppDelegate getJeanomeColor];
     
@@ -157,9 +157,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
-    self.imageView = nil;
-//    self.overlayViewController = nil;
 }
 
 - (void)dealloc {
@@ -210,7 +207,7 @@
 
     [self setPickedImage:image];
     [self dismissModalViewControllerAnimated:NO];
-    [self.imageView setImage:image];
+    [imageView setImage:image];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -276,7 +273,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return self.imageView;
+    return imageView;
 }
 
 
@@ -301,15 +298,17 @@
 {
     // Handle the result image here
     
-    NSLog(@"TakePhotoViewController.m:129   finishedWithImage()");
+    NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
     
+    closetItem.image = image;
     imageView.image = image;
+    
+    [self editDetails:nil];
 }
 
 - (void)featherCanceled:(AFFeatherController *)featherController
 {
-    // Handle cancelation here
-    
+    // Handle cancelation here    
     NSLog(@"TakePhotoViewController.m:136   featherCancelled()");
 }
 
@@ -355,13 +354,13 @@
     NSNumberFormatter *twoDecimalDigitsFormatter = [[NSNumberFormatter alloc] init];
     [twoDecimalDigitsFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [twoDecimalDigitsFormatter setMaximumFractionDigits:2];
-    NSNumber *truncatedValue = [twoDecimalDigitsFormatter numberFromString:[twoDecimalDigitsFormatter stringFromNumber:self.closetItem.value]];
+    NSNumber *truncatedValue = [twoDecimalDigitsFormatter numberFromString:[twoDecimalDigitsFormatter stringFromNumber:closetItem.value]];
 
 
-    [request setPostValue:self.closetItem.brand forKey:@"brand"];
+    [request setPostValue:closetItem.brand forKey:@"brand"];
     [request setPostValue:truncatedValue forKey:@"value"];
-    [request setPostValue:[self.closetItem getCategoryIdentifier] forKey:@"category"];    
-    [request setPostValue:self.closetItem.note forKey:@"note"];
+    [request setPostValue:[closetItem getCategoryIdentifier] forKey:@"category"];    
+    [request setPostValue:closetItem.note forKey:@"note"];
 
     // 12/3/2011  I think this is for the ghetto hidden form thing thats used 
     // when creating a closet item
@@ -452,12 +451,22 @@
  */
 -(IBAction)editDetails:(id)sender
 {
-    ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:self.closetItem];
-    
-    c.title = @"Item Details";
-    c.delegate = self;    
-    [[self navigationController] pushViewController:c animated:YES];    
-    [c release];
+    if(!closetItem) {
+
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Doh!" 
+                                           message:@"Can't edit details because self.closetItem was nil." 
+                                          delegate:self cancelButtonTitle:@"Ok" 
+                                 otherButtonTitles:nil];        
+        [alert show];
+        [alert release];
+    }
+    else {        
+        ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:closetItem];    
+        c.title = @"Item Details";
+        c.delegate = self;    
+        [[self navigationController] pushViewController:c animated:YES];    
+        [c release];
+    }           
 }
 
 #pragma mark - <PhotoDetailsDelegate>
@@ -469,7 +478,11 @@
 {
     NSLog(@"TakePhotoViewController.m:452   saveDetails() <PhotoDetailsDelegate> method!" );
     
-    self.closetItem = [[ClosetItem alloc] initWithImageDict:details andId:nil];
+    ClosetItem *c = [[ClosetItem alloc] initWithImageDict:details andId:nil];
+    
+    closetItem = c;
+    
+    [c release];
 }
 
 @end

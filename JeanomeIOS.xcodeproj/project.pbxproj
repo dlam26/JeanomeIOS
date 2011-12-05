@@ -14,6 +14,7 @@
 		1A9FD509148B81210029BC43 /* icon_profile_20.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD508148B81210029BC43 /* icon_profile_20.png */; };
 		1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FD50B148B82910029BC43 /* RootViewController.m */; };
 		1A9FD50E148B82940029BC43 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD50C148B82930029BC43 /* RootViewController.xib */; };
+		1A9FD513148C47460029BC43 /* iphone_logo_toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD512148C47460029BC43 /* iphone_logo_toolbar.png */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
 		1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */; };
@@ -106,6 +107,7 @@
 		1A9FD50A148B82910029BC43 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1A9FD50B148B82910029BC43 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		1A9FD50C148B82930029BC43 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		1A9FD512148C47460029BC43 /* iphone_logo_toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iphone_logo_toolbar.png; path = ../../../Dropbox/jeanome/html_css_mock_up/Jeanome_iPhone/iphone_logo_toolbar.png; sourceTree = "<group>"; };
 		1AA6D8071482DB6700525AB0 /* ClosetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetItem.h; sourceTree = "<group>"; };
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
 		1AA6D80B148395B600525AB0 /* PictureDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureDownloader.h; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1A9FD512148C47460029BC43 /* iphone_logo_toolbar.png */,
 				1A9FD508148B81210029BC43 /* icon_profile_20.png */,
 				1A9FD4EF148AEE4A0029BC43 /* Default.png */,
 				1A9FD4EC148AEE460029BC43 /* Default@2x.png */,
@@ -593,6 +596,7 @@
 				1A9FD4F2148B7A5B0029BC43 /* iphone_logo_57.png in Resources */,
 				1A9FD509148B81210029BC43 /* icon_profile_20.png in Resources */,
 				1A9FD50E148B82940029BC43 /* RootViewController.xib in Resources */,
+				1A9FD513148C47460029BC43 /* iphone_logo_toolbar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

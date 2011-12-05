@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad
 {
-    // NSLog(@"JeanomeViewController.m:38   viewDidLoad()");
+     NSLog(@"JeanomeViewController.m:38   viewDidLoad()");
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

@@ -11,7 +11,7 @@
 @implementation ClosetItemDetailsViewController
 
 @synthesize categoryTextField, brandTextField;
-@synthesize costTextField, noteTextField, scrollView, delegate, editDetailsTable, closetItemImageView;
+@synthesize costTextField, noteTextField, scrollView, delegate, editDetailsTable;
 @synthesize closetItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,8 +43,6 @@
         self.brandTextField.text = self.closetItem.brand;
         self.costTextField.text = self.closetItem.value ? [NSString stringWithFormat:@"%@", self.closetItem.value] : @"";
         self.noteTextField.text = self.closetItem.note;
-        
-        self.closetItemImageView.image = self.closetItem.image;
     }
     return self;    
 }
@@ -247,7 +245,7 @@
 
 #pragma mark - <UITableViewDataSource>
 
-//  This is the number of categories...  e.g. Shoes, Bags, Makeup
+// first section is for the photo, second section is for editing the details, third is for the description
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
@@ -256,6 +254,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0) {
+        return 1;
+    }
+    else if(section == 1) {
         return 3;
     }
     else {
@@ -265,7 +266,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0) {        
+    if(section == 1) {        
         return @"Details";
     }
     else {
@@ -277,20 +278,121 @@
 /*
  Builds rows of each category, and the photos of each category in a closet.
  
+ http://stackoverflow.com/questions/409259/having-a-uitextfield-in-a-uitableviewcell
+ 
  */
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }    
+
+    if([indexPath section] == 0) {        
+        UIImageView *v = [[UIImageView alloc] initWithFrame:CGRectMake(20.0, 20.0, 11.0, 140.0)];
+                
+        v.image = closetItem.image;
+                          
+        [cell addSubview:v];
+        
+        // get rid of the cell borders
+        cell.backgroundView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+
+    }    
+    else if([indexPath section] == 1) {
+        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(110, 10, 185, 30)];
+        tf.adjustsFontSizeToFitWidth = YES;
+        tf.textColor = [UIColor blackColor];
+        
+        if([indexPath row] == 0) {
+            // Category
+            tf.placeholder = @"(Required)";
+            tf.keyboardType = UIKeyboardTypeDefault;
+            tf.returnKeyType = UIReturnKeyNext;
+        }
+        else if([indexPath row] == 1) {
+            // Price
+            tf.placeholder = @"$";
+            tf.keyboardType = UIKeyboardTypeDecimalPad;
+            tf.returnKeyType = UIReturnKeyNext;
+        }
+        else if([indexPath row] == 2) {
+            // Brand
+            tf.placeholder = @"(Required)";
+            tf.keyboardType = UIKeyboardTypeDefault;
+            tf.returnKeyType = UIReturnKeyDone;
+        }
+        
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.textAlignment = UITextAlignmentLeft;
+        tf.tag = 0;
+        
+        
+        tf.clearButtonMode = UITextFieldViewModeNever;
+        [tf setEnabled:YES];
+        
+        [cell addSubview:tf];
+        
+        [tf release];
     }
+    else {
+        // Description box
+        UITextView *tv = [[UITextView alloc] initWithFrame:cell.frame];
+        tv.editable = YES;
+        tv.text = @"Say something";
+        tv.textColor = [UIColor lightGrayColor];
+        tv.delegate = self;
+    }
+    
+    // Put in the text labels
+    
+    if ([indexPath section] == 1) { // Email & Password Section
+        if ([indexPath row] == 0) { // Email
+            cell.textLabel.text = @"Category";
+        }
+        else if ([indexPath row] == 1) {
+            cell.textLabel.text = @"Price";
+        }
+        else {
+            cell.textLabel.text = @"Brand";
+        }
+    }
+    else {
+        // no text label for the description
+    }
+
     
     return cell;
 }
 
 
 #pragma mark - <UITableViewDelegate>
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0) {
+        return tableView.rowHeight * 3.0;   // holds the picture
+    }    
+    else if(indexPath.section == 2) {
+        return tableView.rowHeight * 4.0;   // e.g. the description box
+    }
+    else {
+        return tableView.rowHeight;
+    }
+}
+
+#pragma mark - <UITextViewDelegate>
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    // clear out the psuedo-placeholder text in the description UITextView
+    textView.text = @"";
+    return YES;
+}
 
 @end

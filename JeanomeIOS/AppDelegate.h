@@ -32,5 +32,7 @@
 
 
 +(UIColor *)getJeanomeColor;
++(UIImageView *)getJeanomeLogoImageView;
++(UIImageView *)getJeanomeLogoImageViewWithFrame:(CGRect)frame;
 
 @end

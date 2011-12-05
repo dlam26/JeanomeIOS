@@ -24,6 +24,9 @@
         tableView.delegate = self;
         tableView.dataSource = self;
          */
+        
+//        self.navigationItem.titleView = [AppDelegate getJeanomeLogoImageView];
+        self.navigationItem.titleView = [AppDelegate getJeanomeLogoImageView];
     }
     return self;
 }
@@ -52,7 +55,6 @@
  
     self.navigationItem.leftBarButtonItem = cameraBarButton;
     self.navigationItem.rightBarButtonItem = myClosetBarButton;
-
     
     rootTableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     rootTableView.dataSource = self;
@@ -81,6 +83,13 @@
 -(IBAction)startTakingPhoto:(id)sender
 {   
     NSLog(@"RootViewController.m:83   startTakingPhoto()");
+    
+    UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	myIndicator.center = CGPointMake(160, 240);
+	myIndicator.hidesWhenStopped = NO;
+    
+    [myIndicator startAnimating];
+    
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -169,12 +178,14 @@
     UITapGestureRecognizer *cameraTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startTakingPhoto:)];
     cameraTapRecognizer.delegate = self;
         
-    UIImageView *bigCameraIcon = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"iphone_logo_57" ofType:@"png"]]];
+    UIImageView *bigCameraIcon = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_camera_95" ofType:@"png"]]];
     [bigCameraIcon setFrame:bigCameraIcon.frame];
     [bigCameraIcon setUserInteractionEnabled:YES];
     [bigCameraIcon addGestureRecognizer:cameraTapRecognizer];
+    [bigCameraIcon.layer setBorderColor:[[UIColor blackColor] CGColor]];
+
     [cameraTapRecognizer release];
-    
+
     CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];    
     bigCameraIcon.frame = CGRectMake(cell.frame.origin.x + 10.0, cell.frame.origin.y + 10.0, 100.0, cellHeight - 20.0);
     bigCameraIcon.backgroundColor = [UIColor grayColor];
@@ -257,7 +268,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 110;
 }
 
 
@@ -275,7 +286,14 @@
     return YES;
 }
 
+#pragma mark - <UITextViewDelegate>
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    // clear out the psuedo-placeholder text in the description UITextView
+    textView.text = @"";
+    return YES;
+}
 
 
 

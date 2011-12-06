@@ -163,10 +163,18 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"CellIdentifier";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    // NSLog(@"RootViewController.m:176  (%d,%d)  SUBVIEW COUNT: %u", indexPath.section, indexPath.row, [[cell subviews] count]);
+
+    // 12/5/2011 reused table cells are stacking on top of each other and messing up screen
+    if ([[cell subviews] count] > 1) {
+        return cell;
     }
     
     // #0  Make a wrapper UIView which spans the original cell height/width
@@ -276,7 +284,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    NSLog(@"RootViewController.m:266  shouldReceiveTouch()");
+    NSLog(@"RootViewController.m:266  gestureRecognizer:shouldReceiveTouch()");
     return YES;
 }
 

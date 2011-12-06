@@ -25,8 +25,8 @@
         tableView.dataSource = self;
          */
         
-//        self.navigationItem.titleView = [AppDelegate getJeanomeLogoImageView];
-        self.navigationItem.titleView = [AppDelegate getJeanomeLogoImageView];
+        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
+        
     }
     return self;
 }
@@ -47,7 +47,7 @@
     // Do any additional setup after loading the view from its nib.
     
     nav = [[UINavigationController alloc] init];
-    nav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
+    nav.navigationBar.tintColor = [Jeanome getJeanomeColor];
     
     UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(startTakingPhoto:)];    
     
@@ -113,7 +113,7 @@
     
     // Original version, kinda stalls for a sec while it loads the JSON from myjeanome.com/api
     ClosetViewController *cvc = [[[ClosetViewController alloc] initWithFbResult:appDelegate.facebookLoginDict] autorelease];
-    cvc.title = @"My Closet";
+
     [self.navigationController pushViewController:cvc animated:YES];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

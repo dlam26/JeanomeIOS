@@ -18,11 +18,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
 
-        self.theNavigationBar.tintColor = [AppDelegate getJeanomeColor]; 
-        
-        self.navigationItem.titleView = [AppDelegate getJeanomeLogoImageView];
-        
     }
     return self;
 }
@@ -39,13 +36,15 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"JeanomeViewController.m:38   viewDidLoad()");
+    NSLog(@"JeanomeViewController.m:38   viewDidLoad()   facebookId: %@", facebookId);
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    logoutButton.hidden = YES;
+    //logoutButton.hidden = YES;
     [self updateIsSessionValid];
+    
+    self.theNavigationBar.tintColor = [Jeanome getJeanomeColor]; 
 }
 
 - (void)viewDidUnload
@@ -156,6 +155,10 @@
 
     if (![[delegate facebook] isSessionValid]) {
         [[delegate facebook] authorize:nil];
+    }
+    else {
+        NSLog(@"JeanomeViewController.m:161   already logged in to facebook... so gogogogo!");
+        [delegate fbDidLogin];
     }
     
     NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];

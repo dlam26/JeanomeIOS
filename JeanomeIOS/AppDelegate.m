@@ -28,8 +28,6 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    nav = [[UINavigationController alloc] init];
-//    nav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
     
     JeanomeViewController *jc = [[JeanomeViewController alloc] init];
     
@@ -117,12 +115,11 @@
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];    
-    
-    RootViewController *rvc = [[RootViewController alloc] init];
-    
+        
     UINavigationController *newNav = [[UINavigationController alloc] init];
-    newNav.navigationBar.tintColor = [AppDelegate getJeanomeColor];
+    newNav.navigationBar.tintColor = [Jeanome getJeanomeColor];
 
+    RootViewController *rvc = [[RootViewController alloc] init];
     [newNav pushViewController:rvc animated:NO];
     
     self.window.rootViewController = newNav;
@@ -151,34 +148,5 @@
     }
 }
 
-+ (UIColor *)getJeanomeColor
-{
-    return [UIColor colorWithRed:0.43 green:0.54 blue:0.78 alpha:1.0];
-}
-
-/*
-    see RootViewController.m:28
- */
-+(UIImageView *)getJeanomeLogoImageView 
-{
-    UIImage *logo = [UIImage imageNamed:@"iphone_logo_toolbar-smaller"];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, logo.size.width, logo.size.height)];    
-    imageView.image = logo;
-                                  
-//    UIImageView *imageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iphone_logo_toolbar"]] autorelease];
-    
-    
-    return imageView;
-}
-
-+(UIImageView *)getJeanomeLogoImageViewWithFrame:(CGRect)frame
-{
-    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:frame] autorelease];
-    
-    imageView.image = [[UIImage imageNamed:@"iphone_logo_toolbar"] autorelease];
-    
-    return imageView;
-}
 
 @end

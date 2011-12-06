@@ -109,7 +109,7 @@
     
     // #3 Setup navigation bar with multiple buttons    
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 185, 44.01)];
-    toolbar.tintColor = [AppDelegate getJeanomeColor];
+    toolbar.tintColor = [Jeanome getJeanomeColor];
     
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:3];
     UIBarButtonItem *b;

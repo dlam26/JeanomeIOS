@@ -10,9 +10,11 @@
 
 @implementation ClosetItemDetailsViewController
 
-@synthesize categoryTextField, brandTextField;
-@synthesize costTextField, noteTextField, scrollView, delegate, editDetailsTable;
+@synthesize scrollView, delegate, editDetailsTable;
 @synthesize closetItem;
+@synthesize categoryTextField, priceTextField, brandTextField;
+@synthesize categoryPicker;
+@synthesize noteTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -20,15 +22,12 @@
     if (self) {
         // Custom initialization
         
-        UIPickerView *categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 480, 320, 270)];
+        categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 480, 320, 270)];
         categoryPicker.delegate = self;
         categoryPicker.dataSource = self;
         categoryPicker.showsSelectionIndicator = YES;
         [self.view addSubview:categoryPicker];
         
-        self.categoryTextField.inputView = categoryPicker;                
-
-
     }
     return self;
 }
@@ -39,10 +38,6 @@
     self = [super init];
     if (self) {
         self.closetItem = item;        
-        self.categoryTextField.text = self.closetItem.category;
-        self.brandTextField.text = self.closetItem.brand;
-        self.costTextField.text = self.closetItem.value ? [NSString stringWithFormat:@"%@", self.closetItem.value] : @"";
-        self.noteTextField.text = self.closetItem.note;
     }
     return self;    
 }
@@ -79,38 +74,6 @@
 }
 
 
-/*
-    from http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-text-field
- */
-- (void)animateTextField:(id)textField up:(BOOL)up
-{
-    if(textField == noteTextField || textField == costTextField) {
-        
-        int movementDistance;
-        float movementDuration = movementDuration = 0.3f; // tweak as needed
-        
-
-        if(textField == costTextField)     {
-            movementDistance = 50;
-        }
-        else if(textField == noteTextField) {            
-            movementDistance = 100; // tweak as needed
-        }        
-        else {
-            movementDistance = 85;
-        }
-        
-        int movement = (up ? -movementDistance : movementDistance);
-        
-        [UIView beginAnimations: @"anim" context: nil];
-        [UIView setAnimationBeginsFromCurrentState: YES];
-        [UIView setAnimationDuration: movementDuration];
-        self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-        [UIView commitAnimations];
-    }
-}
-
-
 #pragma mark - IBActions
 
 /*
@@ -121,9 +84,14 @@
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     
+    //  FIXME
+    /*
     NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextField.text
-                                           withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]]];
-    [self.delegate saveDetails:imageDict];                               
+                                           withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]]];
+     */
+    
+    // [self.delegate saveDetails:imageDict];
+    
     [df release]; [nf release];
         
     // Now, with everthing saved, go back to the TakePhotoViewController
@@ -135,7 +103,7 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    NSLog(@"ClosetItemDetailsViewController.m:55   textFieldShouldEndEditing()!");
+    //NSLog(@"ClosetItemDetailsViewController.m:133   textFieldShouldEndEditing()!");
     
     // TODO    check/valid the input for the field here   e.g. price can't be negative
 
@@ -144,7 +112,19 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"ClosetItemDetailsViewController.m:64   textFieldShouldReturn()!");
+    //NSLog(@"ClosetItemDetailsViewController.m:142   textFieldShouldReturn()!");
+    
+    //  When hitting 'Next' on the keyboard, it should go to the next field
+    // 
+    if (textField == categoryTextField) {
+        [priceTextField becomeFirstResponder];
+    }
+    else if(textField == priceTextField) {
+        [brandTextField becomeFirstResponder];
+    }
+    else if(textField == brandTextField) {
+        [noteTextView becomeFirstResponder];
+    }
     
     [textField resignFirstResponder];
     
@@ -153,6 +133,10 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    NSLog(@"ClosetItemDetailsViewController.m:161   textFieldDidBeginEditing()");
+    
+    selectedField = textField;
+    
     [self animateTextField:textField up:YES];
 }
 
@@ -169,7 +153,7 @@
 {
     //  cost/value field can have at most 7 digits:  `value` decimal(7,2) NOT NULL
     // 
-    if([textField isEqual:costTextField]) {
+    if([textField isEqual:priceTextField]) {
         
         NSString *newCost = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
@@ -190,6 +174,9 @@
                 // Numbers don't have more than one decimal or negative sign
                 return NO;
             }
+            else if([nf numberFromString:newCost] < 0) {
+                return NO;
+            }
             else {   
                 return YES;
             }
@@ -199,6 +186,71 @@
         return YES;
     }
 }
+
+#pragma mark - <UITextViewDelegate>    ...for note field
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    NSLog(@"ClosetItemDetailsViewController.m:202   textViewShouldBeginEditing()");    
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSLog(@"ClosetItemDetailsViewController.m:209   textViewDidBeginEditing()");
+    
+    textView.textColor = [UIColor blackColor];
+    
+    // clear out the psuedo-placeholder text in the description UITextView
+    if([textView.text isEqualToString:DEFAULT_NOTE_PLACEHOLDER]) {
+        textView.text = @"";
+    }
+    
+    [self animateTextField:textView up:YES];
+    
+    selectedField = textView;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    NSLog(@"ClosetItemDetailsViewController.m:214   textViewShouldEndEditing()");
+    
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    NSLog(@"ClosetItemDetailsViewController.m:223   textViewDidEndEditing()");
+    
+    [self animateTextField:textView up:NO];
+}
+
+/*
+    12/5/2011  Put in a ghetto thing to limit the size of what's typed 
+    into MAX_LENGTH because UITextView is a UIScrollView and I 
+    don't like the scroll view inside a scroll view thing.  
+    (see line 410 where i set tv.scrollEnabled = NO;
+ 
+    Besides, I dont think you'd want to type that much anyways.            
+ */ 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSUInteger currLength = [textView.text length];
+    NSUInteger replacementLength = [text length];
+    NSUInteger MAX_LENGTH = 350;
+    
+    if(replacementLength + currLength <= currLength) {
+        return YES;                         // always allow delete
+    }
+    else if(currLength < MAX_LENGTH) {
+        return YES;                         // no more than MAX_LENGTH characters
+    }
+    else {
+        return NO;
+    }
+
+}
+
 
 #pragma mark - <UIPickerViewDelegate> 
 
@@ -224,8 +276,8 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    self.categoryTextField.text = [self pickerView:pickerView titleForRow:row forComponent:component];
-    [self.categoryTextField resignFirstResponder];
+//    self.categoryTextField.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+//    [self.categoryTextField resignFirstResponder];
 }
 
 #pragma mark - <UIPickerViewDataSource> 
@@ -276,7 +328,11 @@
 }
 
 /*
- Builds rows of each category, and the photos of each category in a closet.
+    Shows rows of editable fields in cells where,
+ 
+        The first cell contains an image of the current closet item
+        The rest contain a one line editable field
+        The last is the 'note' for the closet item
  
  http://stackoverflow.com/questions/409259/having-a-uitextfield-in-a-uitableviewcell
  
@@ -286,14 +342,13 @@
     static NSString *CellIdentifier = @"CellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }    
 
-    if([indexPath section] == 0) {        
-        UIImageView *v = [[UIImageView alloc] initWithFrame:CGRectMake(20.0, 20.0, 11.0, 140.0)];
+    if([indexPath section] == 0) {    // Just holds the ClosetItem image
+        
+        UIImageView *v = [[UIImageView alloc] initWithFrame:CGRectMake(20.0, 0.0, 140.0, 140.0)];
                 
         v.image = closetItem.image;
                           
@@ -304,49 +359,66 @@
 
     }    
     else if([indexPath section] == 1) {
-        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(110, 10, 185, 30)];
+        
+        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(110, 12, 195, 30)];
         tf.adjustsFontSizeToFitWidth = YES;
         tf.textColor = [UIColor blackColor];
         
         if([indexPath row] == 0) {
-            // Category
-            tf.placeholder = @"(Required)";
-            tf.keyboardType = UIKeyboardTypeDefault;
+            tf.placeholder   = @"(Required)";
+            tf.keyboardType  = UIKeyboardTypeDefault;
             tf.returnKeyType = UIReturnKeyNext;
+            categoryTextField = tf;
         }
         else if([indexPath row] == 1) {
-            // Price
-            tf.placeholder = @"$";
-            tf.keyboardType = UIKeyboardTypeDecimalPad;
+            tf.placeholder   = @"$";
+            //tf.keyboardType  = UIKeyboardTypeDecimalPad;
+            tf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             tf.returnKeyType = UIReturnKeyNext;
+            priceTextField    = tf;
         }
         else if([indexPath row] == 2) {
-            // Brand
-            tf.placeholder = @"(Required)";
-            tf.keyboardType = UIKeyboardTypeDefault;
-            tf.returnKeyType = UIReturnKeyDone;
+            tf.placeholder   = @"(Required)";
+            tf.keyboardType  = UIKeyboardTypeDefault;
+            tf.returnKeyType = UIReturnKeyNext;
+            brandTextField   = tf;
         }
         
         tf.autocorrectionType = UITextAutocorrectionTypeNo;
         tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
         tf.textAlignment = UITextAlignmentLeft;
         tf.tag = 0;
-        
-        
         tf.clearButtonMode = UITextFieldViewModeNever;
+        tf.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+        tf.delegate = self;
+
         [tf setEnabled:YES];
-        
         [cell addSubview:tf];
-        
         [tf release];
     }
     else {
-        // Description box
-        UITextView *tv = [[UITextView alloc] initWithFrame:cell.frame];
-        tv.editable = YES;
-        tv.text = @"Say something";
+        // the 'note'
+        
+        //   12/5/2011  This dosen't seem to work, it goes outside of 
+        //   the cell border and stuff
+        // 
+        // CGRect textViewFrame = CGRectMake(10.0, 10.0, cell.frame.size.width-10.0, cell.frame.size.height-10.0);
+        
+        CGRect textViewFrame = CGRectMake(10.0, 10.0, 300.0, 160.0);
+        
+        UITextView *tv = [[UITextView alloc] initWithFrame:textViewFrame];        
+        tv.text = DEFAULT_NOTE_PLACEHOLDER;
         tv.textColor = [UIColor lightGrayColor];
+        tv.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+        tv.scrollEnabled = NO;
         tv.delegate = self;
+        
+        [tv setFont:[UIFont systemFontOfSize:14.0]];
+        [tv setEditable:YES];
+                
+        [cell addSubview:tv];
+        
+        noteTextView = tv;        
     }
     
     // Put in the text labels
@@ -358,14 +430,18 @@
         else if ([indexPath row] == 1) {
             cell.textLabel.text = @"Price";
         }
-        else {
+        else if([indexPath row] == 2) {
             cell.textLabel.text = @"Brand";
         }
     }
     else {
         // no text label for the description
     }
+    
+    //  Properties that should be applied to all cells:
 
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     return cell;
 }
@@ -386,13 +462,84 @@
     }
 }
 
-#pragma mark - <UITextViewDelegate>
+#pragma mark - done input accessory view delegate  <InputAccessoryDoneDelegate>
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+-(void)accessoryNext
 {
-    // clear out the psuedo-placeholder text in the description UITextView
-    textView.text = @"";
-    return YES;
+    if(selectedField) { 
+        if(selectedField == categoryTextField) {
+            [self _accessoryActivate:priceTextField];
+        }
+        else if(selectedField == priceTextField) {
+            [self _accessoryActivate:brandTextField];
+        }
+        else if(selectedField == brandTextField) {
+            [self _accessoryActivate:noteTextView];
+        }   
+        else if(selectedField == noteTextView) {
+            [self _accessoryActivate:categoryTextField];
+        }
+    }
+}
+
+-(void)accessoryPrev
+{
+    if(selectedField) {        
+        if(selectedField == categoryTextField) {
+            [self _accessoryActivate:noteTextView];
+        }
+        else if(selectedField == priceTextField) {
+            [self _accessoryActivate:categoryTextField];
+        }
+        else if(selectedField == brandTextField) {
+            [self _accessoryActivate:priceTextField];
+        }
+        else if(selectedField == noteTextView) {
+            [self _accessoryActivate:brandTextField];
+        }
+    }    
+}
+
+-(void)accessoryDone
+{
+    [selectedField resignFirstResponder];
+}
+
+-(void)_accessoryActivate:(id)field 
+{
+    [field becomeFirstResponder];
+    selectedField = field;
+}
+
+
+#pragma mark - OTHER
+
+
+/*
+ from http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-text-field
+ */
+- (void)animateTextField:(id)field up:(BOOL)up
+{
+    int movementDistance;
+    
+    if(field == categoryTextField) 
+        movementDistance = 140;
+    else if(field == priceTextField)
+        movementDistance = 180;
+    else if(field == brandTextField)
+        movementDistance = 220;
+    else if(field == noteTextView)
+        movementDistance = 240;
+    
+    float movementDuration = movementDuration = 0.3f; // tweak as needed
+    
+    int movement = (up ? -movementDistance : movementDistance);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
 }
 
 @end

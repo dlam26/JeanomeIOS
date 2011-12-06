@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "Jeanome.h"
 #import "AppDelegate.h"
 #import "TakePhotoViewController.h"
 

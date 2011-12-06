@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Jeanome.h"
 #import "AFFeatherController.h"
 #import "ASIFormDataRequest.h"
 #import "FBRequest.h"

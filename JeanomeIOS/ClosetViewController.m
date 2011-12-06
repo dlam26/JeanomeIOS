@@ -2,6 +2,9 @@
 //  ClosetViewController.m
 //  JeanomeIOS
 //
+//     Title set in RootViewController.m:115 
+//
+//
 //  Created by David Lam on 11/15/11.
 //  Copyright (c) 2011 Home. All rights reserved.
 //
@@ -21,6 +24,9 @@
     if (self) {
         // Custom initialization
         
+        NSLog(@"ClosetViewController.m:27  initWithNibName()");
+        
+        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
     }
     return self;
 }
@@ -48,7 +54,7 @@
 
     self.closet = [[Closet alloc] initWithJSON:closetJSON];
     
-    self.title = [NSString stringWithFormat:@"%@'s Closet", [self.closet getName]];
+    // self.title = [NSString stringWithFormat:@"%@'s Closet", [self.closet getName]];
     
     return self;
 }

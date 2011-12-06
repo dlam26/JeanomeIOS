@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Jeanome.h"
 #import "AppDelegate.h"
 
 #import "Constants.h"

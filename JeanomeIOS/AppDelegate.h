@@ -12,6 +12,7 @@
 #import "RootViewController.h"
 #import "Constants.h"
 #import "FBConnect.h"
+#import "Jeanome.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate> {
     
@@ -29,10 +30,5 @@
 
 @property(nonatomic,retain) NSString *facebookId;
 @property(nonatomic,retain) NSDictionary *facebookLoginDict;
-
-
-+(UIColor *)getJeanomeColor;
-+(UIImageView *)getJeanomeLogoImageView;
-+(UIImageView *)getJeanomeLogoImageViewWithFrame:(CGRect)frame;
 
 @end

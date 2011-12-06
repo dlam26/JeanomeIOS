@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Jeanome.h"
 #import "Closet.h"
 #import "SettingsViewController.h"
 #import "PictureTableViewCell.h"

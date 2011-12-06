@@ -22,7 +22,7 @@
 @end
 
 
-@interface ClosetItemDetailsViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate>
+@interface ClosetItemDetailsViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate>
 {
     id <PhotoDetailsDelegate> delegate;
     ClosetItem *closetItem;
@@ -38,6 +38,7 @@
 
     id selectedField;   // set to one of the four things above when selected
     
+    UIActionSheet *actionSheet;
     UIPickerView *categoryPicker;
 }
 

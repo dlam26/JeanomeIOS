@@ -96,34 +96,14 @@
 
 #pragma mark - <UITextFieldDelegate>
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    //NSLog(@"ClosetItemDetailsViewController.m:133   textFieldShouldEndEditing()!");
-    
-    // TODO    check/valid the input for the field here   e.g. price can't be negative
-
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    //NSLog(@"ClosetItemDetailsViewController.m:142   textFieldShouldReturn()!");
-    
-    //  When hitting 'Next' on the keyboard, it should go to the next field
-    // 
-    if (textField == categoryTextField) {
-        [priceTextField becomeFirstResponder];
+    if(textField == categoryTextField) {
+        
+        return NO;
     }
-    else if(textField == priceTextField) {
-        [brandTextField becomeFirstResponder];
-    }
-    else if(textField == brandTextField) {
-        [noteTextView becomeFirstResponder];
-    }
-    
-    [textField resignFirstResponder];
-    
-    return NO;
+    else
+        return YES;        
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -132,6 +112,14 @@
     [self animateTextField:textField up:YES];
 }
 
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    //NSLog(@"ClosetItemDetailsViewController.m:133   textFieldShouldEndEditing()!");
+    
+    // TODO    check/valid the input for the field here   e.g. price can't be negative
+    
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -178,6 +166,30 @@
         return YES;
     }
 }
+
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    //NSLog(@"ClosetItemDetailsViewController.m:142   textFieldShouldReturn()!");
+    
+    //  When hitting 'Next' on the keyboard, it should go to the next field
+    // 
+    if (textField == categoryTextField) {
+        [priceTextField becomeFirstResponder];
+    }
+    else if(textField == priceTextField) {
+        [brandTextField becomeFirstResponder];
+    }
+    else if(textField == brandTextField) {
+        [noteTextView becomeFirstResponder];
+    }
+    
+    [textField resignFirstResponder];
+    
+    return NO;
+}
+
 
 #pragma mark - <UITextViewDelegate>    ...for note field
 
@@ -268,8 +280,10 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-//    self.categoryTextField.text = [self pickerView:pickerView titleForRow:row forComponent:component];
-//    [self.categoryTextField resignFirstResponder];
+    NSLog(@"ClosetItemDetailsViewController.m:283  didSelectRow");
+    
+    categoryTextField.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    [categoryTextField resignFirstResponder];
 }
 
 #pragma mark - <UIPickerViewDataSource> 
@@ -286,22 +300,64 @@
     return 3;
 }
 
-// called from ClosetItemDetailsViewController.m:377  UITapGestureRecognizer
+
+/*
+    Can't put a inputAccessoryView in a UIPicker, so do some workaround with
+    a UIActionSheet
+ 
+    http://stackoverflow.com/questions/5591815/how-to-add-a-done-button-over-the-pickerview
+
+    called from ClosetItemDetailsViewController.m:377  UITapGestureRecognizer
+ */
+
 -(void)_showCategoryPicker
 {
     NSLog(@"ClosetItemDetailsViewController.m:293   _showCategoryPicker()");
     
-    categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 480, 320, 270)];
+    categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 270)];
     categoryPicker.delegate = self;
     categoryPicker.dataSource = self;
     categoryPicker.showsSelectionIndicator = YES;
-    [self.view addSubview:categoryPicker];
+    
+    UIToolbar *tb = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_hideCategoryPicker)];
+    
+    // flexible space to position button on right
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    tb.items = [NSArray arrayWithObjects:space, doneButton, nil];
+    
+    
+    actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                              delegate:self
+                                     cancelButtonTitle:nil
+                                destructiveButtonTitle:nil
+                                     otherButtonTitles:nil];
+    [actionSheet addSubview:tb];
+    [actionSheet addSubview:categoryPicker];
+    [actionSheet showInView:self.view.superview];
+    [actionSheet setBounds:CGRectMake(0,0,320, 400)];
+    
+    [categoryPicker release]; [actionSheet release]; [space release]; [doneButton release];
+
+    [self animateTextField:categoryPicker up:YES];
+
 
     /*
     UIViewController *vc = [[UIViewController alloc] init];
     vc.view = categoryPicker;
     [self presentModalViewController:vc animated:YES];
      */
+}
+
+-(void)_hideCategoryPicker
+{
+    NSLog(@"ClosetItemDetailsViewController.m:354   _hideCategoryPicker()");
+
+    [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+
+    [self animateTextField:categoryPicker up:NO];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -377,9 +433,11 @@
         
         if([indexPath row] == 0) {
             tf.placeholder   = @"(Required)";
+            /*
             tf.keyboardType  = UIKeyboardTypeDefault;
             tf.returnKeyType = UIReturnKeyNext;
             tf.text = closetItem.category;
+             */
             categoryTextField = tf;
             
             //  use a category select picker instead of a text field
@@ -555,7 +613,7 @@
 {
     int movementDistance;
     
-    if(field == categoryTextField) 
+    if(field == categoryTextField || field == categoryPicker) 
         movementDistance = 140;
     else if(field == priceTextField)
         movementDistance = 180;

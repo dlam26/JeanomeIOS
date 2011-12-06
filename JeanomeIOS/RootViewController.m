@@ -182,21 +182,20 @@
     UIView *wrapper = [[UIView alloc] initWithFrame:cell.frame];
         
     // #1  Add the big camera icon that shows up on the left...
-    //    
-    UITapGestureRecognizer *cameraTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startTakingPhoto:)];
-    cameraTapRecognizer.delegate = self;
-        
+    //            
     UIImageView *bigCameraIcon = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_camera_95" ofType:@"png"]]];
     [bigCameraIcon setFrame:bigCameraIcon.frame];
     [bigCameraIcon setUserInteractionEnabled:YES];
-    [bigCameraIcon addGestureRecognizer:cameraTapRecognizer];
     [bigCameraIcon.layer setBorderColor:[[UIColor blackColor] CGColor]];
-
-    [cameraTapRecognizer release];
 
     CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];    
     bigCameraIcon.frame = CGRectMake(cell.frame.origin.x + 10.0, cell.frame.origin.y + 10.0, 100.0, cellHeight - 20.0);
     bigCameraIcon.backgroundColor = [UIColor grayColor];
+    
+    UITapGestureRecognizer *cameraTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startTakingPhoto:)];
+    cameraTapRecognizer.delegate = self;
+    [bigCameraIcon addGestureRecognizer:cameraTapRecognizer];
+    [cameraTapRecognizer release];
     
     
     // #2  add the "Showcase that lovely purse" label to the right

@@ -43,7 +43,7 @@
 +(NSDictionary *)makeImageDict:(NSString *)itemId withNote:(NSString *)note 
                   withCategory:(NSString *)category withImageURL:(NSString *)imageURL
                      withBrand:(NSString *)brand withValue:(NSNumber *)value 
-                      withTime:(NSString *)time;
+                      withTime:(NSString *)time withImage:(UIImage *)image;
 
 +(NSString *)categoryNameToIdentifier:(NSString *)categoryName;
 

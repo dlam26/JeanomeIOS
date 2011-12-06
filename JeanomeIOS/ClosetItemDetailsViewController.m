@@ -10,7 +10,8 @@
 
 @implementation ClosetItemDetailsViewController
 
-@synthesize scrollView, delegate, editDetailsTable;
+@synthesize delegate;
+@synthesize editDetailsTable;
 @synthesize closetItem;
 @synthesize categoryTextField, priceTextField, brandTextField;
 @synthesize categoryPicker;
@@ -21,13 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
-        categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 480, 320, 270)];
-        categoryPicker.delegate = self;
-        categoryPicker.dataSource = self;
-        categoryPicker.showsSelectionIndicator = YES;
-        [self.view addSubview:categoryPicker];
-        
+
     }
     return self;
 }
@@ -58,6 +53,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveDetails:)];
+    
+    self.navigationItem.rightBarButtonItem = doneButton;
 }
 
 - (void)viewDidUnload
@@ -77,25 +75,22 @@
 #pragma mark - IBActions
 
 /*
-    FIXME  figure out what to pass to withImageURL
+
+    12/6/2011   hmm don't think need to pass withImageURL anything because its set 
+                from the Python code after you upload
  */
 -(IBAction)saveDetails:(id)sender
 {
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     
-    //  FIXME
-    /*
-    NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextField.text
-                                           withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]]];
-     */
-    
-    // [self.delegate saveDetails:imageDict];
+    NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
+                                           withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image];
+    [self.delegate saveDetails:imageDict];
     
     [df release]; [nf release];
         
-    // Now, with everthing saved, go back to the TakePhotoViewController
-    
+    // Now, with everthing saved, go back to the TakePhotoViewController    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -133,10 +128,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"ClosetItemDetailsViewController.m:161   textFieldDidBeginEditing()");
-    
     selectedField = textField;
-    
     [self animateTextField:textField up:YES];
 }
 
@@ -191,13 +183,13 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    NSLog(@"ClosetItemDetailsViewController.m:202   textViewShouldBeginEditing()");    
+//    NSLog(@"ClosetItemDetailsViewController.m:202   textViewShouldBeginEditing()");    
     return YES;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    NSLog(@"ClosetItemDetailsViewController.m:209   textViewDidBeginEditing()");
+//    NSLog(@"ClosetItemDetailsViewController.m:209   textViewDidBeginEditing()");
     
     textView.textColor = [UIColor blackColor];
     
@@ -213,14 +205,14 @@
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
-    NSLog(@"ClosetItemDetailsViewController.m:214   textViewShouldEndEditing()");
+//    NSLog(@"ClosetItemDetailsViewController.m:214   textViewShouldEndEditing()");
     
     return YES;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    NSLog(@"ClosetItemDetailsViewController.m:223   textViewDidEndEditing()");
+//    NSLog(@"ClosetItemDetailsViewController.m:223   textViewDidEndEditing()");
     
     [self animateTextField:textView up:NO];
 }
@@ -294,6 +286,23 @@
     return 3;
 }
 
+// called from ClosetItemDetailsViewController.m:377  UITapGestureRecognizer
+-(void)_showCategoryPicker
+{
+    NSLog(@"ClosetItemDetailsViewController.m:293   _showCategoryPicker()");
+    
+    categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 480, 320, 270)];
+    categoryPicker.delegate = self;
+    categoryPicker.dataSource = self;
+    categoryPicker.showsSelectionIndicator = YES;
+    [self.view addSubview:categoryPicker];
+
+    /*
+    UIViewController *vc = [[UIViewController alloc] init];
+    vc.view = categoryPicker;
+    [self presentModalViewController:vc animated:YES];
+     */
+}
 
 #pragma mark - <UITableViewDataSource>
 
@@ -345,18 +354,20 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }    
+    
+    // 12/5/2011 reused table cells are stacking on top of each other and messing up screen
+    if ([[cell subviews] count] > 1) {
+        return cell;
+    }
 
     if([indexPath section] == 0) {    // Just holds the ClosetItem image
         
-        UIImageView *v = [[UIImageView alloc] initWithFrame:CGRectMake(20.0, 0.0, 140.0, 140.0)];
-                
-        v.image = closetItem.image;
-                          
-        [cell addSubview:v];
+        itemImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20.0, 0.0, 140.0, 140.0)];                
+        itemImageView.image = closetItem.image;                          
+        [cell addSubview:itemImageView];
         
         // get rid of the cell borders
         cell.backgroundView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-
     }    
     else if([indexPath section] == 1) {
         
@@ -368,19 +379,26 @@
             tf.placeholder   = @"(Required)";
             tf.keyboardType  = UIKeyboardTypeDefault;
             tf.returnKeyType = UIReturnKeyNext;
+            tf.text = closetItem.category;
             categoryTextField = tf;
+            
+            //  use a category select picker instead of a text field
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_showCategoryPicker)];            
+            [tf addGestureRecognizer:tap];
         }
         else if([indexPath row] == 1) {
             tf.placeholder   = @"$";
-            //tf.keyboardType  = UIKeyboardTypeDecimalPad;
-            tf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-            tf.returnKeyType = UIReturnKeyNext;
+            tf.keyboardType  = UIKeyboardTypeDecimalPad;
+            //tf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            tf.returnKeyType  = UIReturnKeyNext;
+            tf.text = closetItem.value ? [NSString stringWithFormat:@"%@", closetItem.value] : @"";
             priceTextField    = tf;
         }
         else if([indexPath row] == 2) {
             tf.placeholder   = @"(Required)";
             tf.keyboardType  = UIKeyboardTypeDefault;
             tf.returnKeyType = UIReturnKeyNext;
+            tf.text          = closetItem.brand;
             brandTextField   = tf;
         }
         
@@ -404,16 +422,21 @@
         // 
         // CGRect textViewFrame = CGRectMake(10.0, 10.0, cell.frame.size.width-10.0, cell.frame.size.height-10.0);
         
-        CGRect textViewFrame = CGRectMake(10.0, 10.0, 300.0, 160.0);
+        CGRect textViewFrame = CGRectMake(15.0, 5.0, 295.0, 165.0);
         
-        UITextView *tv = [[UITextView alloc] initWithFrame:textViewFrame];        
-        tv.text = DEFAULT_NOTE_PLACEHOLDER;
+        UITextView *tv = [[UITextView alloc] initWithFrame:textViewFrame];
+        
+        if(!closetItem.note)
+            tv.text = DEFAULT_NOTE_PLACEHOLDER;
+        else
+            tv.text = closetItem.note;
+            
         tv.textColor = [UIColor lightGrayColor];
         tv.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
-        tv.scrollEnabled = NO;
+    //    tv.scrollEnabled = NO;
         tv.delegate = self;
         
-        [tv setFont:[UIFont systemFontOfSize:14.0]];
+        [tv setFont:[UIFont systemFontOfSize:18.0]];
         [tv setEditable:YES];
                 
         [cell addSubview:tv];
@@ -462,7 +485,17 @@
     }
 }
 
-#pragma mark - done input accessory view delegate  <InputAccessoryDoneDelegate>
+#pragma mark - <UIScrollViewDelegate>
+
+/*
+    Used to normalize how much we need to scroll/animate screen when clicking on a text field
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    verticalOffset = scrollView.contentOffset.y;
+}
+
+#pragma mark - <InputAccessoryDoneDelegate>!!!  (in Jeanome.h)
 
 -(void)accessoryNext
 {
@@ -528,12 +561,27 @@
         movementDistance = 180;
     else if(field == brandTextField)
         movementDistance = 220;
-    else if(field == noteTextView)
-        movementDistance = 240;
+    else if(field == noteTextView) {
+        movementDistance = 360;
+    }
     
     float movementDuration = movementDuration = 0.3f; // tweak as needed
     
+    /*
+    // Normalize based on how much the screen has scrolled
+    movementDistance -= verticalOffset;
+    
     int movement = (up ? -movementDistance : movementDistance);
+     
+     */
+    
+    int movement;    
+    if(up)
+        movement = -movementDistance + verticalOffset;
+    else
+        movement = movementDistance - verticalOffset;
+        
+    NSLog(@"ClosetItemDetailsViewController.m:577  animateTextField()  movement: %d   movementDistance: %d,   verticalOffset: %f", movement, movementDistance, verticalOffset);
     
     [UIView beginAnimations: @"anim" context: nil];
     [UIView setAnimationBeginsFromCurrentState: YES];

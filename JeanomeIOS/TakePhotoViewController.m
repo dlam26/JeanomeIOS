@@ -242,7 +242,7 @@
 
 - (void)displayFeatherWithImage:(UIImage *)image
 {
-    NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()");
+    NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()  closetItem retain count: %u", [closetItem retainCount]);
     
     if (image) {
         //
@@ -298,7 +298,7 @@
 {
     // Handle the result image here
     
-    NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
+    NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i   closet item retain count: %u",[UIImagePNGRepresentation(image) length], [closetItem retainCount]);
     
     closetItem.image = image;
     imageView.image = image;
@@ -461,7 +461,8 @@
         [alert release];
     }
     else {        
-        ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:closetItem];    
+        
+        ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:closetItem];         
         c.title = @"Item Details";
         c.delegate = self;    
         [[self navigationController] pushViewController:c animated:YES];    
@@ -482,7 +483,7 @@
     
     closetItem = c;
     
-    [c release];
+    // XXX    DONT RELEASE c HERE,  closetItem IS NOW POINTING TO IT!!!
 }
 
 @end

@@ -37,13 +37,14 @@
     self.brand = [imageDict objectForKey:@"brand"];
     self.value = [imageDict objectForKey:@"value"];
     self.time = [imageDict objectForKey:@"time"];   // TODO convert to NSDate
+    self.image = [imageDict objectForKey:@"image"];
     return self;
 }
 
 +(NSDictionary *)makeImageDict:(NSString *)itemId withNote:(NSString *)note 
                   withCategory:(NSString *)category withImageURL:(NSString *)imageURL
                      withBrand:(NSString *)brand withValue:(NSNumber *)value 
-                      withTime:(NSString *)time
+                      withTime:(NSString *)time withImage:(UIImage *)image
 {
 //    NSDictionary *toReturn = [NSDictionary dictionaryWithObjectsAndKeys:itemId, @"id", note, @"note", category, @"category", imageURL, @"image", brand, @"brand", time, @"time", nil];
     
@@ -55,6 +56,7 @@
     [toReturn setValue:brand forKey:@"brand"];
     [toReturn setValue:value forKey:@"value"];
     [toReturn setValue:time forKey:@"time"];
+    [toReturn setValue:image forKey:@"image"];
     
     return toReturn;
 }

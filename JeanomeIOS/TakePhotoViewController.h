@@ -24,7 +24,10 @@
     UIScrollView *scrollView;
 
     UIToolbar *myToolbar;
-    UIImagePickerController *imgPicker;
+    UIImagePickerController *imgPicker;    
+    
+    // Used to pass a UIImage to Aviary
+    UIImage *pickedImage;
     
     OverlayViewController *overlayViewController;
     
@@ -41,6 +44,7 @@
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property(nonatomic, retain) UIImagePickerController *imgPicker;
+@property(nonatomic, retain) UIImage *pickedImage;
 @property(nonatomic, retain) OverlayViewController *overlayViewController;
 
 @property(nonatomic, retain) NSString *facebookId;

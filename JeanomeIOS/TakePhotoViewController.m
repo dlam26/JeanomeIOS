@@ -28,7 +28,7 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, scrollView, myToolbar, imgPicker, overlayViewController;
+@synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;
 @synthesize fbRequest, fbResult, facebookId;
 @synthesize closetItem;
 
@@ -170,6 +170,11 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if([self pickedImage]) {
+        [self displayFeatherWithImage:[self pickedImage]];
+        [self setPickedImage:nil];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -199,8 +204,8 @@
     
     NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
     
+    [self setPickedImage:image]; // used for aviary 
     [self dismissModalViewControllerAnimated:NO];
-    
     closetItem.image = image;
     imageView.image = image;
 }

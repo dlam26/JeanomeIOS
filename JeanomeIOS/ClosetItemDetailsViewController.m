@@ -56,6 +56,8 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveDetails:)];
     
     self.navigationItem.rightBarButtonItem = doneButton;
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewDidUnload
@@ -109,7 +111,6 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     selectedField = textField;
-    [self animateTextField:textField up:YES];
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
@@ -123,7 +124,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [self animateTextField:textField up:NO];
+    selectedField = nil;
 }
 
 /*
@@ -210,8 +211,6 @@
         textView.text = @"";
     }
     
-    [self animateTextField:textView up:YES];
-    
     selectedField = textView;
 }
 
@@ -225,8 +224,6 @@
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
 //    NSLog(@"ClosetItemDetailsViewController.m:223   textViewDidEndEditing()");
-    
-    [self animateTextField:textView up:NO];
 }
 
 /*
@@ -314,50 +311,35 @@
 {
     NSLog(@"ClosetItemDetailsViewController.m:293   _showCategoryPicker()");
     
-    categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 270)];
+    [selectedField resignFirstResponder];
+    
+    categoryPicker = [[[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 270)] autorelease];
     categoryPicker.delegate = self;
     categoryPicker.dataSource = self;
     categoryPicker.showsSelectionIndicator = YES;
     
-    UIToolbar *tb = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UIView *toolbar = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_hideCategoryPicker)];
-    
-    // flexible space to position button on right
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    tb.items = [NSArray arrayWithObjects:space, doneButton, nil];
-    
-    
-    actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+    categoryActionSheet = [[[UIActionSheet alloc] initWithTitle:nil
                                               delegate:self
                                      cancelButtonTitle:nil
                                 destructiveButtonTitle:nil
-                                     otherButtonTitles:nil];
-    [actionSheet addSubview:tb];
-    [actionSheet addSubview:categoryPicker];
-    [actionSheet showInView:self.view.superview];
-    [actionSheet setBounds:CGRectMake(0,0,320, 400)];
+                                     otherButtonTitles:nil] autorelease];
+    [categoryActionSheet addSubview:toolbar];
+    [categoryActionSheet addSubview:categoryPicker];
+    [categoryActionSheet showInView:self.view.superview];
+    [categoryActionSheet setBounds:CGRectMake(0,0,320, 400)];
     
-    [categoryPicker release]; [actionSheet release]; [space release]; [doneButton release];
 
-    [self animateTextField:categoryPicker up:YES];
-
-
-    /*
-    UIViewController *vc = [[UIViewController alloc] init];
-    vc.view = categoryPicker;
-    [self presentModalViewController:vc animated:YES];
-     */
-}
-
--(void)_hideCategoryPicker
-{
-    NSLog(@"ClosetItemDetailsViewController.m:354   _hideCategoryPicker()");
-
-    [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-
-    [self animateTextField:categoryPicker up:NO];
+    selectedField = categoryTextField;
+    
+    if([[categoryTextField text] isEqualToString:@"Shoes"]) {
+        [categoryPicker selectRow:1 inComponent:0 animated:NO];
+    }
+    else if([[categoryTextField text] isEqualToString:@"Bags"]) {
+        [categoryPicker selectRow:2 inComponent:0 animated:NO];
+    }
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -383,11 +365,14 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if(section == 0) {
+        return nil;
+    }
     if(section == 1) {        
         return @"Details";
     }
     else {
-        return @"";
+        return nil;
     }
 
 }
@@ -530,6 +515,7 @@
 
 #pragma mark - <UITableViewDelegate>
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0) {
@@ -551,6 +537,8 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     verticalOffset = scrollView.contentOffset.y;
+
+    // NSLog(@"ClosetItemDetailsViewController.m:559  scrollViewDidScroll  %f", verticalOffset);
 }
 
 #pragma mark - <InputAccessoryDoneDelegate>!!!  (in Jeanome.h)
@@ -559,6 +547,7 @@
 {
     if(selectedField) { 
         if(selectedField == categoryTextField) {
+            [self accessoryDone];
             [self _accessoryActivate:priceTextField];
         }
         else if(selectedField == priceTextField) {
@@ -593,12 +582,27 @@
 
 -(void)accessoryDone
 {
+    if(selectedField == categoryTextField) {
+        // also need to get rid of the UIPicker if it's there
+
+        if(categoryActionSheet)
+            [categoryActionSheet dismissWithClickedButtonIndex:0 animated:YES];
+    }
+    
     [selectedField resignFirstResponder];
 }
 
 -(void)_accessoryActivate:(id)field 
 {
-    [field becomeFirstResponder];
+    if(field == categoryTextField) {
+        
+        [selectedField resignFirstResponder];
+        [self _showCategoryPicker];
+    }
+    else {
+        [field becomeFirstResponder];
+    }
+    
     selectedField = field;
 }
 
@@ -606,46 +610,59 @@
 #pragma mark - OTHER
 
 
-/*
- from http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-text-field
- */
-- (void)animateTextField:(id)field up:(BOOL)up
+- (void)registerForKeyboardNotifications
 {
-    int movementDistance;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
     
-    if(field == categoryTextField || field == categoryPicker) 
-        movementDistance = 140;
-    else if(field == priceTextField)
-        movementDistance = 180;
-    else if(field == brandTextField)
-        movementDistance = 220;
-    else if(field == noteTextView) {
-        movementDistance = 360;
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
     
-    float movementDuration = movementDuration = 0.3f; // tweak as needed
+}
+
+/*
+    from "Moving Content That Is Located Under the Keyboard"
+    http://developer.apple.com/library/ios/#documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html
+ */
+- (void)keyboardWasShown:(NSNotification*)aNotification {
     
-    /*
-    // Normalize based on how much the screen has scrolled
-    movementDistance -= verticalOffset;
+    NSLog(@"ClosetItemDetailsViewController.m:693   keyboardWasShown()");
     
-    int movement = (up ? -movementDistance : movementDistance);
-     
-     */
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    int movement;    
-    if(up)
-        movement = -movementDistance + verticalOffset;
-    else
-        movement = movementDistance - verticalOffset;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    editDetailsTable.contentInset = contentInsets;
+    editDetailsTable.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (CGRectContainsPoint(aRect, selectedField.frame.origin) ) {
         
-    NSLog(@"ClosetItemDetailsViewController.m:577  animateTextField()  movement: %d   movementDistance: %d,   verticalOffset: %f", movement, movementDistance, verticalOffset);
+        CGFloat adjustedY;
+        
+        adjustedY = selectedField.frame.origin.y + kbSize.height;
+        
+        if(selectedField == priceTextField)
+            adjustedY = adjustedY - 30;
+                
+        CGPoint scrollPoint = CGPointMake(0.0, adjustedY);
+        [editDetailsTable setContentOffset:scrollPoint animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSLog(@"ClosetItemDetailsViewController.m:715   keyboardWillBeHidden()");
     
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    editDetailsTable.contentInset = contentInsets;
+    editDetailsTable.scrollIndicatorInsets = contentInsets;
 }
 
 @end

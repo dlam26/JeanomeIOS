@@ -33,7 +33,14 @@
 }
 
 
-
+/*
+    Toolbar with 3 buttons:
+ 
+        Prev - Calls accessoryPrev()
+        Next - Calls accessoryNext()
+        Done - Calls accessoryDone()
+ 
+ */
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate
 {
     UIToolbar *prevNextDoneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 30.0)];

@@ -337,9 +337,13 @@
     // Get the access token
     NSString *accessToken = [[delegate facebook] accessToken];
     
+    NSString *jeanomeURLFromSettings = [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL];
+    
+    NSString *jeanomeURL = jeanomeURLFromSettings ? jeanomeURLFromSettings : JEANOME_URL;
+    
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
-    NSURL *postURL = [NSURL URLWithString:[[[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL] stringByAppendingFormat:@"/closet/add/"]];
+    NSURL *postURL = [NSURL URLWithString:[jeanomeURL stringByAppendingFormat:@"/closet/add/"]];
   
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];

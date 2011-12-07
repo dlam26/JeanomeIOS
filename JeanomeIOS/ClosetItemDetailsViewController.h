@@ -36,10 +36,10 @@
     UITextField *brandTextField;
     UITextView *noteTextView;    
 
-    id selectedField;   // set to one of the four things above when selected
+    UIView *selectedField;   // set to one of the four things above when selected
     
-    UIActionSheet *actionSheet;
     UIPickerView *categoryPicker;
+    UIActionSheet *categoryActionSheet;
 }
 
 @property(nonatomic,retain) id <PhotoDetailsDelegate> delegate;
@@ -58,9 +58,10 @@
 -(id)initWithClosetItem:(ClosetItem *)item;
 
 -(IBAction)saveDetails:(id)sender;
-
-- (void)animateTextField:(id)textField up:(BOOL)up;
-
+-(void)_showCategoryPicker;
 -(void)_accessoryActivate:(id)field;
+-(void)accessoryDone;
+
+- (void)registerForKeyboardNotifications;
 
 @end

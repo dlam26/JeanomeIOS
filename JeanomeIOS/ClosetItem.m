@@ -78,7 +78,7 @@
     else if ([categoryName isEqual:@"Electronics"])
         categoryAbbreviation = @"E";
     else 
-        categoryAbbreviation = @"S";
+        categoryAbbreviation = @"";
     
     return categoryAbbreviation;
 }

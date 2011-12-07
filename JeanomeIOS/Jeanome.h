@@ -29,6 +29,7 @@
 +(UIImageView *)getJeanomeLogoImageView;
 
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate;
++(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;
 +(UIView *)accessoryViewCreateDoneInput:(id)target withDelegate:(id)delegate;
 
 @end

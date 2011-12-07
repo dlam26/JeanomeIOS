@@ -26,8 +26,6 @@
     UIToolbar *myToolbar;
     UIImagePickerController *imgPicker;
     
-    UIImage *pickedImage;
-    
     OverlayViewController *overlayViewController;
     
     NSString *facebookId;   // the facebook id of the current user
@@ -44,7 +42,6 @@
 @property(nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property(nonatomic, retain) UIImagePickerController *imgPicker;
 @property(nonatomic, retain) OverlayViewController *overlayViewController;
-@property(nonatomic, retain) UIImage *pickedImage;
 
 @property(nonatomic, retain) NSString *facebookId;
 @property(retain,nonatomic) FBRequest *fbRequest;
@@ -64,7 +61,6 @@
 
 -(IBAction)showAviary:(id)sender;
 -(IBAction)uploadPic:(id)sender;
--(IBAction)savePicToCameraRoll:(id)sender;
 -(IBAction)editDetails:(id)sender;
 
 

@@ -1,4 +1,31 @@
 
+
+7. 11/30/2011   If the user has never logged into Jeanome, the api will return some bad JSON when looking at their closet page,  so it needs to create it somehow.
+
+
+9.  Show UIProgressView while uploading
+
+10. Use an action sheet somewhere ^^
+
+11. After taking a picture, and hitting 'Done', redirect to the 'Details' button if 
+it's not filled out yet
+
+12. Need activity indicator for photo upload
+
+13. After photo upload, it needs to redirect to RootViewController and show some sort of confirmation
+
+
+
+    
+3.    Get logged in users facebook id
+
+https://graph.facebook.com/me?fields=id&access_token=d6fbb26e9641b665b717120bc9fa0fe7
+
+4. On settings page input for URL, if there's a trailing slash, remove it 
+
+5. Do picture upload in a thread/block
+
+
 1. 11/9/2011    Sign in with facebook button using the sdk i git cloned
 
 2. 11/9/2011   Upload pictures somehow
@@ -7,22 +34,3 @@
 
     views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
     
-    
-3.    Get logged in users facebook id
-
-https://graph.facebook.com/me?fields=id&access_token=d6fbb26e9641b665b717120bc9fa0fe7
-
-
-4. On settings page input for URL, if there's a trailing slash, remove it 
-
-5. Do picture upload in a thread/block
-
-6. Show user facebook picture when logged in
-
-7. 11/30/2011   If the user has never logged into Jeanome, the api will return some bad JSON when looking at their closet page,  so it needs to create it somehow.
-
-8.  Fix facebook login stuff
-
-9.  Show UIProgressView while uploading
-
-10. Use an action sheet somewhere ^^

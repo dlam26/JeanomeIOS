@@ -18,8 +18,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
-
     }
     return self;
 }
@@ -36,15 +34,16 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"JeanomeViewController.m:38   viewDidLoad()   facebookId: %@", facebookId);
+    //NSLog(@"JeanomeViewController.m:38   viewDidLoad()   facebookId: %@", facebookId);
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    //logoutButton.hidden = YES;
+    logoutButton.hidden = NO;
     [self updateIsSessionValid];
     
     self.theNavigationBar.tintColor = [Jeanome getJeanomeColor]; 
+    self.theNavigationBar.topItem.titleView = [Jeanome getJeanomeLogoImageView];
 }
 
 - (void)viewDidUnload
@@ -89,12 +88,11 @@
     if(!self.fbResult) {
         // Need to be logged in, so redirect to it...
         
-        NSLog(@"JeanomeViewController.m:85   openCloset()  need to be logged in... so clicking the button");
+        //NSLog(@"JeanomeViewController.m:85   openCloset()  need to be logged in... so clicking the button");
         
         [loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
-    else {
-        
+    else {        
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Original version, kinda stalls for a sec while it loads the JSON from myjeanome.com/api
@@ -104,12 +102,10 @@
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
   
-        // Asynchrnous closet load,  but causes problems loading images initially 
+        // Asynchronous closet load,  but causes problems loading images initially 
         // in PictureTableViewCell in the table view image thingy
 //        [self performSelectorInBackground:@selector(__initClosetView:) withObject:@"notused"];
         
-        
-
     }
 }
 
@@ -157,7 +153,7 @@
         [[delegate facebook] authorize:nil];
     }
     else {
-        NSLog(@"JeanomeViewController.m:161   already logged in to facebook... so gogogogo!");
+        // NSLog(@"JeanomeViewController.m:161   already logged in to facebook... so gogogogo!");
         [delegate fbDidLogin];
     }
     
@@ -209,7 +205,7 @@
 
     isSessionValidLabel.text = [NSString stringWithFormat:@"Is session valid: %@", isSessionValid ? @"YES" : @"NO"];
     
-    logoutButton.hidden = !isSessionValid;
+//    logoutButton.hidden = !isSessionValid;
 }
 
 #pragma mark - <FBRequestDelegate> protocol

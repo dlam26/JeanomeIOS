@@ -28,7 +28,7 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;
+@synthesize imageView, scrollView, myToolbar, imgPicker, overlayViewController;
 @synthesize fbRequest, fbResult, facebookId;
 @synthesize closetItem;
 
@@ -170,11 +170,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if ([self pickedImage]) {
-        [self displayFeatherWithImage:[self pickedImage]];
-        [self setPickedImage:nil];
-    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -192,7 +187,7 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 /*
-    Called after you take a picture with the camera and hit 'Use'
+    Called after selecting a picture in the photo select page
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -204,8 +199,6 @@
     
     NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
     
-
-    [self setPickedImage:image];
     [self dismissModalViewControllerAnimated:NO];
     [imageView setImage:image];
 }
@@ -298,7 +291,7 @@
 {
     // Handle the result image here
     
-    NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i   closet item retain count: %u",[UIImagePNGRepresentation(image) length], [closetItem retainCount]);
+    NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i ",[UIImagePNGRepresentation(image) length]);
     
     closetItem.image = image;
     imageView.image = image;
@@ -433,22 +426,6 @@
 }
 
 
--(IBAction)savePicToCameraRoll:(id)sender
-{
-    NSLog(@"TakePhotoViewController.m:325   savePicToCameraRoll()");
-    
-    // Save image
-    UIImageWriteToSavedPhotosAlbum(self.pickedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" 
-                                       message:@"Image saved to Photo Album." 
-                                      delegate:self cancelButtonTitle:@"Ok" 
-                             otherButtonTitles:nil];
-    
-    [alert show];
-    [alert release];
-}
 
 /*
     Selector assigned to UIToolbar button in viewDidLoad() on line 136 above ^^
@@ -481,13 +458,12 @@
  */ 
 -(void)saveDetails:(NSDictionary *)details
 {
-    NSLog(@"TakePhotoViewController.m:452   saveDetails() <PhotoDetailsDelegate> method!" );
+    NSLog(@"TakePhotoViewController.m:484   saveDetails() <PhotoDetailsDelegate> method!" );
     
     ClosetItem *c = [[ClosetItem alloc] initWithImageDict:details andId:nil];
-    
     closetItem = c;
     
-    // XXX    DONT RELEASE c HERE,  closetItem IS NOW POINTING TO IT!!!
+    // XXX    DONT RELEASE OR AUTORELEASE c HERE,  closetItem IS NOW POINTING TO IT!!!
 }
 
 @end

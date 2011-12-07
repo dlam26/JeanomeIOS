@@ -40,10 +40,18 @@
         Next - Calls accessoryNext()
         Done - Calls accessoryDone()
  
+    12/6/2011  The width of 320.0 here is for the hacked inputAccessory
+    view for 'category'  (uses the UIActionSheet).  
+    It dosen't seem to affect the other fields.
  */
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate
 {
-    UIToolbar *prevNextDoneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 30.0)];
+    return [Jeanome accessoryViewCreatePrevNextDoneInput:delegate withFrame:CGRectMake(0.0, 0.0, 320.0, 30.0)];
+}
+
++(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;
+{
+    UIToolbar *prevNextDoneToolbar = [[UIToolbar alloc] initWithFrame:frame];
     
     UIBarButtonItem *b;
     NSMutableArray *buttons = [NSMutableArray array];

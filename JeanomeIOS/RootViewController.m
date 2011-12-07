@@ -25,7 +25,7 @@
         tableView.dataSource = self;
          */
         
-        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
+
         
     }
     return self;
@@ -60,6 +60,8 @@
     rootTableView.dataSource = self;
     rootTableView.delegate = self;
     rootTableView.separatorColor = [UIColor blackColor];
+    
+    self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
 
     [self.view addSubview:rootTableView];
 }

@@ -78,7 +78,7 @@
 //        [view removeFromSuperview];
 //    }
     
-    NSLog(@"PictureTableViewCell.m:52   cellForRowAtIndexPath()  %u   reuse: %@   cell subview count: %u", row, cell.reuseIdentifier, [[cell.contentView subviews] count]);
+    // NSLog(@"PictureTableViewCell.m:52   cellForRowAtIndexPath()  %u   reuse: %@   cell subview count: %u", row, cell.reuseIdentifier, [[cell.contentView subviews] count]);
     
     // 11/25/2011  This is weird but without this the cell frame isn't always the same size!
     //             Default view width is 320.  Default height is 1100.  106.66 is 320 / 3.0!

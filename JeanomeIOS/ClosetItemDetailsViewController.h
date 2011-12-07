@@ -57,7 +57,7 @@
 
 -(id)initWithClosetItem:(ClosetItem *)item;
 
--(IBAction)saveDetails:(id)sender;
+-(void)_saveClosetItemDetails:(id)sender;
 -(void)_showCategoryPicker;
 -(void)_accessoryActivate:(id)field;
 -(void)accessoryDone;

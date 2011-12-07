@@ -22,6 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
 
     }
     return self;
@@ -53,7 +54,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveDetails:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];
     
     self.navigationItem.rightBarButtonItem = doneButton;
     
@@ -74,26 +75,35 @@
 }
 
 
-#pragma mark - IBActions
-
 /*
-
     12/6/2011   hmm don't think need to pass withImageURL anything because its set 
                 from the Python code after you upload
  */
--(IBAction)saveDetails:(id)sender
+-(void)_saveClosetItemDetails:(id)sender
 {
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     
-    NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
-                                           withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image];
-    [self.delegate saveDetails:imageDict];
-    
-    [df release]; [nf release];
+    if ([self.categoryTextField.text length] == 0 || [self.brandTextField.text length] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Doh!" 
+                                                        message:@"Category and brand are required." 
+                                                       delegate:self cancelButtonTitle:@"Ok" 
+                                              otherButtonTitles:nil];
         
-    // Now, with everthing saved, go back to the TakePhotoViewController    
-    [self.navigationController popViewControllerAnimated:YES];
+        [alert show];
+        [alert release];        
+    }
+    else {
+        
+        NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
+                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image];
+        [self.delegate saveDetails:imageDict];
+        
+        [df release]; [nf release];
+            
+        // Now, with everthing saved, go back to the TakePhotoViewController    
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - <UITextFieldDelegate>
@@ -277,8 +287,6 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSLog(@"ClosetItemDetailsViewController.m:283  didSelectRow");
-    
     categoryTextField.text = [self pickerView:pickerView titleForRow:row forComponent:component];
     [categoryTextField resignFirstResponder];
 }
@@ -369,7 +377,7 @@
         return nil;
     }
     if(section == 1) {        
-        return @"Details";
+        return @"Item Details";
     }
     else {
         return nil;
@@ -421,8 +429,9 @@
             /*
             tf.keyboardType  = UIKeyboardTypeDefault;
             tf.returnKeyType = UIReturnKeyNext;
-            tf.text = closetItem.category;
              */
+            tf.text = closetItem.category;
+            
             categoryTextField = tf;
             
             //  use a category select picker instead of a text field
@@ -469,14 +478,16 @@
         
         UITextView *tv = [[UITextView alloc] initWithFrame:textViewFrame];
         
-        if(!closetItem.note)
+        if(!closetItem.note) {
             tv.text = DEFAULT_NOTE_PLACEHOLDER;
-        else
+            tv.textColor = [UIColor lightGrayColor];
+        }
+        else {
             tv.text = closetItem.note;
-            
-        tv.textColor = [UIColor lightGrayColor];
+        }            
+
         tv.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
-    //    tv.scrollEnabled = NO;
+        // tv.scrollEnabled = NO;
         tv.delegate = self;
         
         [tv setFont:[UIFont systemFontOfSize:18.0]];
@@ -566,6 +577,7 @@
 {
     if(selectedField) {        
         if(selectedField == categoryTextField) {
+            [self accessoryDone];
             [self _accessoryActivate:noteTextView];
         }
         else if(selectedField == priceTextField) {
@@ -609,7 +621,6 @@
 
 #pragma mark - OTHER
 
-
 - (void)registerForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -628,7 +639,7 @@
  */
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     
-    NSLog(@"ClosetItemDetailsViewController.m:693   keyboardWasShown()");
+//    NSLog(@"ClosetItemDetailsViewController.m:693   keyboardWasShown()");
     
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
@@ -648,7 +659,10 @@
         adjustedY = selectedField.frame.origin.y + kbSize.height;
         
         if(selectedField == priceTextField)
-            adjustedY = adjustedY - 30;
+            adjustedY -= 30;
+        else if(selectedField == noteTextView)
+            adjustedY += 70;
+                
                 
         CGPoint scrollPoint = CGPointMake(0.0, adjustedY);
         [editDetailsTable setContentOffset:scrollPoint animated:YES];
@@ -658,7 +672,7 @@
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    NSLog(@"ClosetItemDetailsViewController.m:715   keyboardWillBeHidden()");
+//    NSLog(@"ClosetItemDetailsViewController.m:715   keyboardWillBeHidden()");
     
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     editDetailsTable.contentInset = contentInsets;

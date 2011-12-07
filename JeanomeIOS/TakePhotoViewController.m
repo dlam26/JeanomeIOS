@@ -200,7 +200,9 @@
     NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
     
     [self dismissModalViewControllerAnimated:NO];
-    [imageView setImage:image];
+    
+    closetItem.image = image;
+    imageView.image = image;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

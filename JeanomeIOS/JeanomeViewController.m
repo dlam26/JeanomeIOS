@@ -44,6 +44,13 @@
     
     self.theNavigationBar.tintColor = [Jeanome getJeanomeColor]; 
     self.theNavigationBar.topItem.titleView = [Jeanome getJeanomeLogoImageView];
+    
+    UIActivityIndicatorView  *av = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    av.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 100, 100);
+    av.tag  = 1;
+    [self.view addSubview:av];
+    [av startAnimating];
+
 }
 
 - (void)viewDidUnload

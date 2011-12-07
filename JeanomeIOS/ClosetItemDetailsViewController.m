@@ -28,7 +28,7 @@
     return self;
 }
 
-// see TakePhotoViewController.m:438 in editDetails()
+// see TakePhotoViewController.m:446 in editDetails()
 -(id)initWithClosetItem:(ClosetItem *)item
 {
     self = [super init];

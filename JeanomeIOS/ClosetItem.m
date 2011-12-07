@@ -33,11 +33,11 @@
     self.note = [imageDict objectForKey:@"note"];
     self.category = [imageDict objectForKey:@"category"];
     self.imageURL = [imageDict objectForKey:@"image"];
-    // self.image = SET ELSEWHERE
+    // self.image = SET ELSEWHERE,  e.g. PictureDownloader.m:109
     self.brand = [imageDict objectForKey:@"brand"];
     self.value = [imageDict objectForKey:@"value"];
     self.time = [imageDict objectForKey:@"time"];   // TODO convert to NSDate
-    self.image = [imageDict objectForKey:@"image"];
+    self.image = [imageDict objectForKey:@"imageBinary"];
     return self;
 }
 
@@ -56,7 +56,7 @@
     [toReturn setValue:brand forKey:@"brand"];
     [toReturn setValue:value forKey:@"value"];
     [toReturn setValue:time forKey:@"time"];
-    [toReturn setValue:image forKey:@"image"];
+    [toReturn setValue:image forKey:@"imageBinary"];
     
     return toReturn;
 }

@@ -132,41 +132,6 @@
     [cell addGestureRecognizer:tgr];
     
     [tgr release];
-                                   
-    
-    // SLOW NON-ASYNCHRONOUS IMAGE LOADING 
-    /*
-    // Fetch images from Jeanome/facebook to show
-    NSArray *keys = [items allKeys];
-     
-    if (indexPath.row < [keys count]) {
-        
-        NSString *currKey = [keys objectAtIndex:indexPath.row];
-        NSDictionary *imageDict = [items objectForKey:currKey];
-        
-        NSURL *imageURL = [NSURL URLWithString:[imageDict objectForKey:@"image"]];
-        
-        NSLog(@"PictureTableViewCell.m:70  downloading from imageURL: %@   cell.frame: %@   itemcount: %@", imageURL, NSStringFromCGRect(cell.frame), itemcount); 
-        
-        UIImage *closetItemImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
-        
-        // DOSENT WORK
-        //  UIImageView *iv = [[UIImageView alloc] initWithFrame:cell.frame]; 
-        //iv.image = closetItemImage;        
-
-        UIImageView *iv = [[UIImageView alloc] initWithImage:closetItemImage];
-        
-        iv.frame = cell.frame;
-        
-        // picture will be on its side, so rotate it up
-        iv.transform = CGAffineTransformMakeRotation(degreesToRadians(90));     
-        iv.contentMode = UIViewContentModeScaleToFill;
-        
-        [cell.contentView addSubview:iv];
-        [iv release];
-    }
-     */
-
         
     return cell;
 }

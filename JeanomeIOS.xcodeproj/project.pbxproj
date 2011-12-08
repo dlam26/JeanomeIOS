@@ -318,6 +318,8 @@
 				647DFFDE146B560600E25B9C /* TODO */,
 				649ED3B7146A082A00E558EC /* AppDelegate.h */,
 				649ED3B8146A082A00E558EC /* AppDelegate.m */,
+				1A97B5DF149098A00046354D /* Category.h */,
+				1A97B5E0149098A00046354D /* Category.m */,
 				64D65BAE14735EA8007F4A49 /* ClosetViewController.h */,
 				64D65BAF14735EA9007F4A49 /* ClosetViewController.m */,
 				64D65BB014735EA9007F4A49 /* ClosetViewController.xib */,
@@ -357,8 +359,6 @@
 				649ED3AF146A082A00E558EC /* Supporting Files */,
 				64BF1DA4146D376E00640419 /* ASIHttpRequest */,
 				649ED46C146A10D600E558EC /* AviarySDK */,
-				1A97B5DF149098A00046354D /* Category.h */,
-				1A97B5E0149098A00046354D /* Category.m */,
 			);
 			path = JeanomeIOS;
 			sourceTree = "<group>";

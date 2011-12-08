@@ -736,16 +736,17 @@
 {   
     NSLog(@"ClosetItemDetailsViewController.m:735     showCategorySelect()");
     
+  
     // Show a modal table view of all the categories to pick from
     UITableViewController *categorySelect = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-    UITableView *ctv = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
-    
+    //UITableView *ctv = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
+    UITableView *ctv = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-44)];
+
     category = [[Category alloc] init];  // dont release this here or else crash
     category.selectedCategory = categoryTextField.text;
     ctv.delegate = category;
     ctv.dataSource = category;            
     categorySelect.tableView = ctv;
-
     
     UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
     
@@ -757,12 +758,19 @@
     navItem.rightBarButtonItem = doneButton;    
     [bar pushNavigationItem:navItem animated:NO];
     
-    [categorySelect.view addSubview:bar];
+    UIViewController *wrapperController = [[UIViewController alloc] init];
+    UIView *wrapper = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];    
     
-    [self presentModalViewController:categorySelect animated:YES];
+    [wrapper addSubview:bar];
+    [wrapper addSubview:categorySelect.view];
+    
+    wrapperController.view = wrapper;
+    
+    [self presentModalViewController:wrapperController animated:YES];
     
     [categorySelect release]; [cancelButton release]; [doneButton release]; 
-    [bar release]; [navItem release];
+    [bar release]; [navItem release]; 
+    [wrapperController release]; [wrapper release];
 }
 
 -(void)categorySelectCancel

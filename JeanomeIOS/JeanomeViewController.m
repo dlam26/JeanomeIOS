@@ -12,6 +12,7 @@
 
 @synthesize facebookId, fbResult, fbRequest;
 @synthesize theNavigationBar;
+@synthesize jeanome;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -81,7 +82,7 @@
 //#if (TARGET_IPHONE_SIMULATOR)
     
 //#else 
-    tpvc = [[TakePhotoViewController alloc] initWithFacebookRequest:fbRequest andResponse:fbResult andFacebookId:facebookId];
+    tpvc = [[TakePhotoViewController alloc] initWithJeanome:jeanome];
     
     // tpvc.title = @"How's it look?";
     
@@ -160,13 +161,14 @@
         [[delegate facebook] authorize:nil];
     }
     else {
-        // NSLog(@"JeanomeViewController.m:161   already logged in to facebook... so gogogogo!");
+        NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
+        // Get the users facebook id
+        [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self]; 
+        
+        NSLog(@"JeanomeViewController.m:161   already logged in to facebook... so gogogogo!");
         [delegate fbDidLogin];
     }
     
-    NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
-    // Get the users facebook id
-    [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self]; 
 
 //    loginButton.hidden  = YES;
     logoutButton.hidden = NO;
@@ -263,7 +265,17 @@
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     delegate.facebookId = [dict objectForKey:@"id"];
     delegate.facebookLoginDict = result;
+ 
+    UINavigationController *newNav = [[UINavigationController alloc] init];
+    newNav.navigationBar.tintColor = [Jeanome getJeanomeColor];
     
+    //  12/7/2011  Create a Jeanome object to hold facebook session info
+    jeanome = [[Jeanome alloc] initWithFacebook:self.facebookId andDict:self.fbResult];
+    
+    RootViewController *rvc = [[RootViewController alloc] initWithJeanome:jeanome];
+    [newNav pushViewController:rvc animated:NO];
+    
+    delegate.window.rootViewController = newNav;
 }
 
 /**

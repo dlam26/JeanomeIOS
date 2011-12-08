@@ -115,16 +115,21 @@
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];    
-        
+
+    /*
     UINavigationController *newNav = [[UINavigationController alloc] init];
     newNav.navigationBar.tintColor = [Jeanome getJeanomeColor];
+    
+    //  12/7/2011  Create a Jeanome object to hold facebook session info
+    Jeanome *jeanome = [[Jeanome alloc] initWithFacebook:facebookId andDict:facebookLoginDict];
 
-    RootViewController *rvc = [[RootViewController alloc] init];
+    RootViewController *rvc = [[RootViewController alloc] initWithJeanome:jeanome];
     [newNav pushViewController:rvc animated:NO];
     
     self.window.rootViewController = newNav;
-    
-    [rvc release]; [newNav release];
+         
+    [rvc release]; [newNav release]; [jeanome release];
+     */
 }
 
 

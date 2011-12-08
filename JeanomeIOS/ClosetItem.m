@@ -10,10 +10,11 @@
 
 @implementation ClosetItem
 
-@synthesize itemId, note, category, imageURL, brand, value, time;
+@synthesize userId, itemId, note, category, imageURL, brand, value, time;
 @synthesize image, imageView;
 
 - (void)dealloc {
+    [userId release];
     [itemId release];
     [note release];
     [category release];
@@ -45,10 +46,12 @@
                   withCategory:(NSString *)category withImageURL:(NSString *)imageURL
                      withBrand:(NSString *)brand withValue:(NSNumber *)value 
                       withTime:(NSString *)time withImage:(UIImage *)image
+                     forUserId:(NSString *)userId
 {
 //    NSDictionary *toReturn = [NSDictionary dictionaryWithObjectsAndKeys:itemId, @"id", note, @"note", category, @"category", imageURL, @"image", brand, @"brand", time, @"time", nil];
     
     NSDictionary *toReturn = [NSMutableDictionary dictionary];
+    [toReturn setValue:userId forKey:@"userid"];
     [toReturn setValue:itemId forKey:@"id"];
     [toReturn setValue:note forKey:@"note"];
     [toReturn setValue:category forKey:@"category"];

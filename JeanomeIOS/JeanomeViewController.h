@@ -35,13 +35,17 @@
     IBOutlet UINavigationBar *theNavigationBar;
     
     ClosetViewController *closetViewController;
-    TakePhotoViewController *tpvc;
+    TakePhotoViewController *tpvc;    
+
+    Jeanome *jeanome;  // set in request:(FBRequest *) didLoad
 }
 
 @property(retain,nonatomic) NSString *facebookId;
 @property(retain,nonatomic) FBRequest *fbRequest;
 @property(copy, nonatomic) id fbResult;
 @property(retain,nonatomic) IBOutlet UINavigationBar *theNavigationBar;
+
+@property(retain,nonatomic) Jeanome *jeanome;
 
 -(IBAction)startTakingPhoto:(id)sender;
 -(IBAction)openCloset:(id)sender;

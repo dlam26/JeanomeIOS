@@ -54,9 +54,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];
+    // UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];    
+    //self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.navigationItem.rightBarButtonItem = doneButton;
+    /*
+        12/7/2011  After edit details of an image, it should upload the image.     
+    */    
+    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(_saveClosetItemDetails:)];    
+    self.navigationItem.rightBarButtonItem = uploadButton;
+
     
     [self registerForKeyboardNotifications];
 }
@@ -78,6 +84,10 @@
 /*
     12/6/2011   hmm don't think need to pass withImageURL anything because its set 
                 from the Python code after you upload
+ 
+    12/7/2011  This now uploads the photo to Jeanome, so that it immediatley uploads
+    right after you enter in details.
+
  */
 -(void)_saveClosetItemDetails:(id)sender
 {
@@ -94,16 +104,27 @@
         [alert release];        
     }
     else {
+//        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
         
         NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
-                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image];
+                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
         [self.delegate saveDetails:imageDict];
+
+        // NEW CODE 12/7/2011    (upload to facebook)
         
-        [df release]; [nf release];
+        ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
+        
+        [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image];
+        
+        
+        // END OF NEW CODE 12/7/2011    (upload to facebook)
+
             
         // Now, with everthing saved, go back to the TakePhotoViewController    
         [self.navigationController popViewControllerAnimated:YES];
     }
+    
+    [df release]; [nf release];
 }
 
 #pragma mark - <UITextFieldDelegate>
@@ -437,6 +458,8 @@
             //  use a category select picker instead of a text field
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_showCategoryPicker)];            
             [tf addGestureRecognizer:tap];
+            
+            tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
         }
         else if([indexPath row] == 1) {
             tf.placeholder   = @"$";
@@ -459,7 +482,7 @@
         tf.textAlignment = UITextAlignmentLeft;
         tf.tag = 0;
         tf.clearButtonMode = UITextFieldViewModeNever;
-        tf.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+        //tf.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
         tf.delegate = self;
 
         [tf setEnabled:YES];
@@ -486,7 +509,9 @@
             tv.text = closetItem.note;
         }            
 
-        tv.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+              // 12/7/2011 Mercedes no like buttons
+        // tv.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+        
         // tv.scrollEnabled = NO;
         tv.delegate = self;
         
@@ -505,7 +530,7 @@
             cell.textLabel.text = @"Category";
         }
         else if ([indexPath row] == 1) {
-            cell.textLabel.text = @"Price";
+            cell.textLabel.text = @"Cost";
         }
         else if([indexPath row] == 2) {
             cell.textLabel.text = @"Brand";

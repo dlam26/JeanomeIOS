@@ -31,9 +31,7 @@
     
     OverlayViewController *overlayViewController;
     
-    NSString *facebookId;   // the facebook id of the current user
-    FBRequest *fbRequest;
-    id fbResult;
+    Jeanome *jeanome;
     
     // stores info about the new closet item that'll be created from the picked image
     ClosetItem *closetItem;
@@ -47,20 +45,14 @@
 @property(nonatomic, retain) UIImage *pickedImage;
 @property(nonatomic, retain) OverlayViewController *overlayViewController;
 
-@property(nonatomic, retain) NSString *facebookId;
-@property(retain,nonatomic) FBRequest *fbRequest;
-@property(copy, nonatomic) id fbResult;
+@property(nonatomic, retain) Jeanome *jeanome;
+
 
 @property(nonatomic, retain) ClosetItem *closetItem;
 
-- (id)initWithFacebookRequest:(FBRequest *)req 
-                  andResponse:(id)result
-                andFacebookId:(NSString *)fbid;
+- (id)initWithJeanome:(Jeanome *)j;
 
 - (void)displayFeatherWithImage:(UIImage *)image;
-
--(NSHTTPCookie *)__createUploadCookie:(NSString *)name 
-                            withValue:(NSString *)value;
 
 
 -(IBAction)showAviary:(id)sender;

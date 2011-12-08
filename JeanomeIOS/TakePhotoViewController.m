@@ -29,8 +29,9 @@
 @implementation TakePhotoViewController
 
 @synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;
-@synthesize fbRequest, fbResult, facebookId;
+
 @synthesize closetItem;
+@synthesize jeanome;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,14 +44,10 @@
     return self;
 }
 
-- (id)initWithFacebookRequest:(FBRequest *)req 
-                  andResponse:(id)result
-                andFacebookId:(NSString *)fbid {
+- (id)initWithJeanome:(Jeanome *)j {
     self = [super init];
     if (self) {
-        self.fbRequest = req;
-        self.fbResult = result;
-        self.facebookId = fbid;
+        self.jeanome = j;
     }
     return self;
 }
@@ -301,6 +298,8 @@
     NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i ",[UIImagePNGRepresentation(image) length]);
     
     closetItem.image = image;
+    closetItem.userId = jeanome.facebookId;
+    
     imageView.image = image;
     
     [self editDetails:nil];
@@ -321,115 +320,11 @@
 }
 
 
-/*
-    Do a POST to http://myjeanome.com/closet/<user facebook id>
- 
-    Ex. how to get facebook user id in JSON  
- https://graph.facebook.com/me?fields=id&access_token=AAAAAAITEghMBAN7gLcD9XHm2exWasKkBJd3A1qMhZCOCQLSucM3P3LGYPEOoepSpJsKkK9fP5yWZCzT8XGWcYOM79X3yB01UZCW1QAOaQZDZD
- 
-    FIXME,  need to be logged into facebook for this to work  (it uses self.facebookId)
- 
- */ 
+// Called from UIToolbar on line 123
 -(IBAction)uploadPic:(id)sender
 {    
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-
-    // Get the access token
-    NSString *accessToken = [[delegate facebook] accessToken];
-    
-    NSString *jeanomeURLFromSettings = [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL];
-    
-    NSString *jeanomeURL = jeanomeURLFromSettings ? jeanomeURLFromSettings : JEANOME_URL;
-    
-    // important!  needs to have trailing slash or Django complains about 
-    // the APPEND_SLASH setting not being set...
-    NSURL *postURL = [NSURL URLWithString:[jeanomeURL stringByAppendingFormat:@"/closet/add/"]];
-  
-    NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:self.facebookId];    
-    NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:accessToken];
-        
-    NSLog(@"TakePhotoViewController.m:348   postURL: %@ ", postURL);
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
-    
-    // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
-    
-    // Can only have 2 decimal digits!
-    NSNumberFormatter *twoDecimalDigitsFormatter = [[NSNumberFormatter alloc] init];
-    [twoDecimalDigitsFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [twoDecimalDigitsFormatter setMaximumFractionDigits:2];
-    NSNumber *truncatedValue = [twoDecimalDigitsFormatter numberFromString:[twoDecimalDigitsFormatter stringFromNumber:closetItem.value]];
-
-
-    [request setPostValue:closetItem.brand forKey:@"brand"];
-    [request setPostValue:truncatedValue forKey:@"value"];
-    [request setPostValue:[closetItem getCategoryIdentifier] forKey:@"category"];    
-    [request setPostValue:closetItem.note forKey:@"note"];
-
-    // 12/3/2011  I think this is for the ghetto hidden form thing thats used 
-    // when creating a closet item
-    [request setPostValue:@"Submit" forKey:@"do_add_item"];   
-    
-    // IMPORTANT:  The edited photo after Aviary is set to imageView.image
-    [request addData:UIImageJPEGRepresentation(imageView.image, 1.0) forKey:@"picture"];
-    [request setUseCookiePersistence:NO];
-    [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
-    
-    [request startSynchronous];
-    
-    /*
-    
-    [request setCompletionBlock:^{
-        NSString *responseString = [request responseString];
-        NSLog(@"TakePhotoViewController.m:372   Response: %@", responseString);
-    }];
-    
-    [request setFailedBlock:^{
-        NSError *error = [request error];
-        NSLog(@"TakePhotoViewController.m:377   Error: %@", error.localizedDescription);
-    }];
-
-    //UIProgressView *progressView  = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];  
-    
-    UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(100, 100, 200, 50)];
-    progressView.progressViewStyle = UIProgressViewStyleBar;
-    
-    [request setUploadProgressDelegate:progressView];
-	[request startSynchronous];
-    
-    NSLog(@"TakePhotoViewController.m:382   progress: %f",[progressView progress]);
-
-     */
-
-    // TODO set network activity indicator
-}
-
-
-
-/*
-    Create a cookie because the python code in closet/views.py fetches info from it
- 
-    http://allseeing-i.com/ASIHTTPRequest/How-to-use#persistent_cookies
- 
-    also see ASIHTTPRequestsTests.m in its source folder
- */
--(NSHTTPCookie *)__createUploadCookie:(NSString *)name 
-                      withValue:(NSString *)value
-{
-    NSDictionary *cookieProperties = [[[NSMutableDictionary alloc] init] autorelease];
-    
-    // How to make a cookie from the test file
-    [cookieProperties setValue:value forKey:NSHTTPCookieValue];
-    [cookieProperties setValue:name forKey:NSHTTPCookieName];
-    [cookieProperties setValue:@"myjeanome.com" forKey:NSHTTPCookieDomain];
-    [cookieProperties setValue:[NSDate dateWithTimeIntervalSinceNow:60*60*4] forKey:NSHTTPCookieExpires];
-    [cookieProperties setValue:@"/JeanomeIOS" forKey:NSHTTPCookiePath];
-    
-    NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
-    
-    // NSLog(@"__createUploadCookie():  %@", cookie);
-    
-    return cookie;
+    closetItem.userId = jeanome.facebookId;
+    [Jeanome uploadToJeanome:closetItem withImage:imageView.image];
 }
 
 

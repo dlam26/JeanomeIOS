@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Constants.h"
+#import "ClosetItem.h"
+#import "ASIFormDataRequest.h"
+
+
 @protocol InputAccessoryDoneDelegate <NSObject>
 
 @required
@@ -21,15 +26,26 @@
 
 
 @interface Jeanome : NSObject {
-    
-    
+        
+    NSString *facebookId;             // The current logged in users facebook id
+    NSDictionary *facebookLoginDict;  // Dict storing the logged in users info
 }
+
+@property(nonatomic,retain) NSString *facebookId;
+@property(nonatomic,retain) NSDictionary *facebookLoginDict;
+
+-(id)initWithFacebook:(NSString *)id andDict:(NSDictionary *)dict;
 
 +(UIColor *)getJeanomeColor;
 +(UIImageView *)getJeanomeLogoImageView;
 
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate;
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;
-+(UIView *)accessoryViewCreateDoneInput:(id)target withDelegate:(id)delegate;
++(UIView *)accessoryViewCreateDoneInput:(id)delegate;
+
++(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img;
++(NSHTTPCookie *)__createUploadCookie:(NSString *)name withValue:(NSString *)value;
+
++(NSString *)getAccessToken;
 
 @end

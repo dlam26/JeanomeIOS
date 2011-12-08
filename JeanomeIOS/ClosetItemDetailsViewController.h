@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Jeanome.h"
 #import "ClosetItem.h"
+//#import "AppDelegate.h"
 
 #define DEFAULT_NOTE_PLACEHOLDER @"Say something"
 

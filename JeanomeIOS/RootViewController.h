@@ -16,9 +16,15 @@
     
     UINavigationController *nav;    
     UITableView *rootTableView;
+    
+    Jeanome *jeanome;
 }
 
 @property (strong, nonatomic) UINavigationController *nav;
 @property (strong, nonatomic) UITableView *rootTableView;
+
+@property(nonatomic,retain) Jeanome *jeanome;
+
+- (id)initWithJeanome:(Jeanome *)j;
 
 @end

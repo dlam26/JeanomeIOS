@@ -18,7 +18,8 @@
     
     UINavigationController *nav;
     Facebook *facebook;
-    
+
+    // Set in JeanomeViewController.m:257
     NSString *facebookId;             // The current logged in users facebook id
     NSDictionary *facebookLoginDict;  // Dict storing the logged in users info
     

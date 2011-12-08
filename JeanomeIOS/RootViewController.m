@@ -10,7 +10,17 @@
 
 @implementation RootViewController
 
-@synthesize nav, rootTableView;
+@synthesize nav, rootTableView, jeanome;
+
+- (id)initWithJeanome:(Jeanome *)j
+{
+    self = [super init];
+    if (self) {
+        self.jeanome = j;
+    }
+    return self;
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,9 +34,6 @@
         tableView.delegate = self;
         tableView.dataSource = self;
          */
-        
-
-        
     }
     return self;
 }
@@ -92,11 +99,7 @@
     
     [myIndicator startAnimating];
     
-    
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] initWithFacebookRequest:nil andResponse:delegate.facebookLoginDict andFacebookId:delegate.facebookId];
-    
+    TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] initWithJeanome:jeanome];
     // tpvc.title = @"How's it look?";
     
     [self.navigationController pushViewController:tpvc animated:YES];

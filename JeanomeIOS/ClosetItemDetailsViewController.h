@@ -33,7 +33,7 @@
     
     UIImageView *itemImageView;
     UITextField *categoryTextField;
-    UITextField *priceTextField;
+    UITextField *costTextField;
     UITextField *brandTextField;
     UITextView *noteTextView;    
 
@@ -50,11 +50,12 @@
 
 
 @property(nonatomic,retain) UITextField *categoryTextField;
-@property(nonatomic,retain) UITextField *priceTextField;
+@property(nonatomic,retain) UITextField *costTextField;
 @property(nonatomic,retain) UITextField *brandTextField;
 @property(nonatomic,retain) UITextView *noteTextView;
 
 @property(nonatomic,retain) UIPickerView *categoryPicker;
+@property(nonatomic,retain) UIActionSheet *categoryActionSheet;
 
 -(id)initWithClosetItem:(ClosetItem *)item;
 
@@ -64,5 +65,8 @@
 -(void)accessoryDone;
 
 - (void)registerForKeyboardNotifications;
+
+// selectors
+-(void)hideInputs;
 
 @end

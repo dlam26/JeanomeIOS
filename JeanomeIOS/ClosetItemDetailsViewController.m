@@ -13,9 +13,10 @@
 @synthesize delegate;
 @synthesize editDetailsTable;
 @synthesize closetItem;
-@synthesize categoryTextField, priceTextField, brandTextField;
+@synthesize categoryTextField, costTextField, brandTextField;
 @synthesize categoryPicker;
 @synthesize noteTextView;
+@synthesize categoryActionSheet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,13 +57,17 @@
 
     // UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];    
     //self.navigationItem.rightBarButtonItem = doneButton;
-    
-    /*
-        12/7/2011  After edit details of an image, it should upload the image.     
-    */    
+
+    //  12/7/2011  After edit details of an image, it should upload the image.     
     UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(_saveClosetItemDetails:)];    
     self.navigationItem.rightBarButtonItem = uploadButton;
 
+    //  12/7/2011  Hide keyboard if tapping off from textbox  
+    //  http://stackoverflow.com/questions/2321038/dismiss-keyboard-by-touching-background-of-uitableview    
+    //
+    UITapGestureRecognizer *tapOnTableViewGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputs)];
+    [self.editDetailsTable addGestureRecognizer:tapOnTableViewGestureRecognizer];
+    
     
     [self registerForKeyboardNotifications];
 }
@@ -107,7 +112,7 @@
 //        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
         
         NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
-                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.priceTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
+                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
         [self.delegate saveDetails:imageDict];
 
         // NEW CODE 12/7/2011    (upload to facebook)
@@ -166,7 +171,7 @@
 {
     //  cost/value field can have at most 7 digits:  `value` decimal(7,2) NOT NULL
     // 
-    if([textField isEqual:priceTextField]) {
+    if([textField isEqual:costTextField]) {
         
         NSString *newCost = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
@@ -209,9 +214,9 @@
     //  When hitting 'Next' on the keyboard, it should go to the next field
     // 
     if (textField == categoryTextField) {
-        [priceTextField becomeFirstResponder];
+        [costTextField becomeFirstResponder];
     }
-    else if(textField == priceTextField) {
+    else if(textField == costTextField) {
         [brandTextField becomeFirstResponder];
     }
     else if(textField == brandTextField) {
@@ -297,13 +302,13 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if(row == 0) {
-        return @"";
-    }
-    else if(row == 1) {
         return @"Shoes";
     }
-    else {
+    else if(row == 1) {
         return @"Bags";
+    }
+    else {
+        return @"";
     }
 }
 
@@ -324,7 +329,7 @@
  */ 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 3;
+    return 2;
 }
 
 
@@ -359,7 +364,7 @@
     
     [categoryActionSheet addSubview:categoryPicker];
     [categoryActionSheet showInView:self.view.superview];
-    [categoryActionSheet setBounds:CGRectMake(0,0,320, 400)];
+    [categoryActionSheet setBounds:CGRectMake(0, 0, 320, 400)];
     
     selectedField = categoryTextField;
     
@@ -468,7 +473,7 @@
             //tf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             tf.returnKeyType  = UIReturnKeyNext;
             tf.text = closetItem.value ? [NSString stringWithFormat:@"%@", closetItem.value] : @"";
-            priceTextField    = tf;
+            costTextField    = tf;
         }
         else if([indexPath row] == 2) {
             tf.placeholder   = @"(Required)";
@@ -483,8 +488,10 @@
         tf.textAlignment = UITextAlignmentLeft;
         tf.tag = 0;
         tf.clearButtonMode = UITextFieldViewModeNever;
+        
         //tf.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
-        tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
+        // tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
+        
         tf.delegate = self;
 
         [tf setEnabled:YES];
@@ -586,9 +593,9 @@
     if(selectedField) { 
         if(selectedField == categoryTextField) {
             [self accessoryDone];
-            [self _accessoryActivate:priceTextField];
+            [self _accessoryActivate:costTextField];
         }
-        else if(selectedField == priceTextField) {
+        else if(selectedField == costTextField) {
             [self _accessoryActivate:brandTextField];
         }
         else if(selectedField == brandTextField) {
@@ -607,11 +614,11 @@
             [self accessoryDone];
             [self _accessoryActivate:noteTextView];
         }
-        else if(selectedField == priceTextField) {
+        else if(selectedField == costTextField) {
             [self _accessoryActivate:categoryTextField];
         }
         else if(selectedField == brandTextField) {
-            [self _accessoryActivate:priceTextField];
+            [self _accessoryActivate:costTextField];
         }
         else if(selectedField == noteTextView) {
             [self _accessoryActivate:brandTextField];
@@ -685,7 +692,7 @@
         
         adjustedY = selectedField.frame.origin.y + kbSize.height;
         
-        if(selectedField == priceTextField)
+        if(selectedField == costTextField)
             adjustedY -= 30;
         else if(selectedField == noteTextView)
             adjustedY += 70;
@@ -704,6 +711,18 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     editDetailsTable.contentInset = contentInsets;
     editDetailsTable.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - @selector's
+
+/*
+    see line 68
+ */
+-(void)hideInputs
+{
+    [costTextField resignFirstResponder];
+    [brandTextField resignFirstResponder];
+    [noteTextView resignFirstResponder];    
 }
 
 @end

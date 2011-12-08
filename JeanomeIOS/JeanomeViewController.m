@@ -45,13 +45,6 @@
     
     self.theNavigationBar.tintColor = [Jeanome getJeanomeColor]; 
     self.theNavigationBar.topItem.titleView = [Jeanome getJeanomeLogoImageView];
-    
-    UIActivityIndicatorView  *av = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
-    av.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 100, 100);
-    av.tag  = 1;
-    [self.view addSubview:av];
-    [av startAnimating];
-
 }
 
 - (void)viewDidUnload
@@ -158,7 +151,23 @@
     
 
     if (![[delegate facebook] isSessionValid]) {
+
+        // NOTE- this will perform a request which when done, will call 
+        // the facebook delegate method request:didLoad() below which 
+        // pushes root view controller
+        
         [[delegate facebook] authorize:nil];
+        
+        /*        
+        //  Show activity indicator while loading... may need to do in block
+        // 
+        UIActivityIndicatorView  *av = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        av.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 100, 100);
+        av.tag  = 1;
+        [self.view addSubview:av];
+        [av startAnimating];
+        */
+        
     }
     else {
         NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
@@ -276,6 +285,8 @@
     [newNav pushViewController:rvc animated:NO];
     
     delegate.window.rootViewController = newNav;
+    
+    [rvc release]; [newNav release];
 }
 
 /**

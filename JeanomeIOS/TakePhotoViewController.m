@@ -144,9 +144,11 @@
     
     [buttons release];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toolbar];
+    UIBarButtonItem *rb = [[UIBarButtonItem alloc] initWithCustomView:toolbar];
     
-    [toolbar release];    
+    self.navigationItem.rightBarButtonItem = rb;
+    
+    [toolbar release]; [rb release];
 }
 
 - (void)viewDidUnload
@@ -193,13 +195,13 @@
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"TakePhotoViewController.m:192  didFinishPickingMediaWithInfo()");
+    // NSLog(@"TakePhotoViewController.m:192  didFinishPickingMediaWithInfo()");
     
     // NSParameterAssert(image);
     
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     
-    NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
+    // NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
     
     [self setPickedImage:image]; // used for aviary 
     [self dismissModalViewControllerAnimated:NO];
@@ -240,7 +242,7 @@
 
 - (void)displayFeatherWithImage:(UIImage *)image
 {
-    NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()  closetItem retain count: %u", [closetItem retainCount]);
+    //NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()  closetItem retain count: %u", [closetItem retainCount]);
     
     if (image) {
         //

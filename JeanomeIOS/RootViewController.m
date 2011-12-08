@@ -58,7 +58,7 @@
     
     UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(startTakingPhoto:)];    
     
-    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile_20" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:self action:@selector(openCloset:)];
+    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:self action:@selector(openCloset:)];
  
     self.navigationItem.leftBarButtonItem = cameraBarButton;
     self.navigationItem.rightBarButtonItem = myClosetBarButton;
@@ -71,6 +71,8 @@
     self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
 
     [self.view addSubview:rootTableView];
+    
+    [cameraBarButton release]; [myClosetBarButton release];
 }
 
 - (void)viewDidUnload
@@ -91,7 +93,7 @@
 
 -(IBAction)startTakingPhoto:(id)sender
 {   
-    NSLog(@"RootViewController.m:83   startTakingPhoto()");
+    //NSLog(@"RootViewController.m:83   startTakingPhoto()");
     
     UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	myIndicator.center = CGPointMake(160, 240);
@@ -103,7 +105,8 @@
     // tpvc.title = @"How's it look?";
     
     [self.navigationController pushViewController:tpvc animated:YES];
-    [tpvc release];
+
+    [tpvc release]; [myIndicator release];
 }
 
 
@@ -234,7 +237,7 @@
     cell.contentView.backgroundColor = [UIColor grayColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    [bigCameraIcon release]; [blurb release];
+    [bigCameraIcon release]; [blurb release]; [wrapper release];
     
     return cell;
 }
@@ -264,10 +267,10 @@
     // UIView *defaultTableHeaderView = tableView.tableHeaderView;
     // CGRect f = defaultTableHeaderView.frame;
     
-    UIView *customHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, [self tableView:tableView heightForHeaderInSection:section])];
+    UIView *customHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, [self tableView:tableView heightForHeaderInSection:section])] autorelease];
     
     // Label spans about 40% across the screen
-    UILabel *styledHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 4.0, 320.0 * 0.45, [self tableView:tableView heightForHeaderInSection:section])];
+    UILabel *styledHeaderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0, 4.0, 320.0 * 0.45, [self tableView:tableView heightForHeaderInSection:section])] autorelease];
                                                                            
     styledHeaderLabel.backgroundColor = [UIColor grayColor];
     styledHeaderLabel.text = [title uppercaseString];

@@ -14,8 +14,8 @@
 @synthesize editDetailsTable;
 @synthesize closetItem;
 @synthesize categoryTextField, costTextField, brandTextField;
-@synthesize categoryPicker;
 @synthesize noteTextView;
+@synthesize categoryPicker;
 @synthesize categoryActionSheet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -65,11 +65,13 @@
     //  12/7/2011  Hide keyboard if tapping off from textbox  
     //  http://stackoverflow.com/questions/2321038/dismiss-keyboard-by-touching-background-of-uitableview    
     //
-    UITapGestureRecognizer *tapOnTableViewGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputs)];
-    [self.editDetailsTable addGestureRecognizer:tapOnTableViewGestureRecognizer];
-    
-    
+    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputs)];
+    tapGr.cancelsTouchesInView = NO;
+    [self.editDetailsTable addGestureRecognizer:tapGr];
+        
     [self registerForKeyboardNotifications];
+    
+    [uploadButton release]; [tapGr release];
 }
 
 - (void)viewDidUnload
@@ -121,8 +123,8 @@
         
         [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image];
         
+        [newClosetItem release];
         
-            
         // END OF NEW CODE 12/7/2011    (upload to facebook)
 
             
@@ -175,8 +177,8 @@
         
         NSString *newCost = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
-        NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-        NSLocale *l_en = [[NSLocale alloc] initWithLocaleIdentifier: @"en_US"];
+        NSNumberFormatter *nf = [[[NSNumberFormatter alloc] init] autorelease];
+        NSLocale *l_en = [[[NSLocale alloc] initWithLocaleIdentifier: @"en_US"] autorelease];
         [nf setLocale:l_en];
                         
         if([string length] == 0) {
@@ -461,8 +463,12 @@
             categoryTextField = tf;
             
             //  use a category select picker instead of a text field
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_showCategoryPicker)];            
-            [tf addGestureRecognizer:tap];
+            // UITapGestureRecognizer *tapCategory = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_showCategoryPicker)];            
+            
+            UITapGestureRecognizer *tapCategory = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCategorySelect)];
+            
+            [tf addGestureRecognizer:tapCategory];
+            [tapCategory release];
             
             // INPUT ACCESSORY VIEW NOT SET HERE, GO TO  line 339  in  _showCategoryPicker()            
             // tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
@@ -713,7 +719,7 @@
     editDetailsTable.scrollIndicatorInsets = contentInsets;
 }
 
-#pragma mark - @selector's
+#pragma mark - methods used as @selector's
 
 /*
     see line 68
@@ -724,5 +730,51 @@
     [brandTextField resignFirstResponder];
     [noteTextView resignFirstResponder];    
 }
+
+
+-(void)showCategorySelect
+{   
+    NSLog(@"ClosetItemDetailsViewController.m:735     showCategorySelect()");
+    
+    // Show a modal table view of all the categories to pick from
+    UITableViewController *categorySelect = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UITableView *ctv = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
+    
+    category = [[Category alloc] init];  // dont release this here or else crash
+    category.selectedCategory = categoryTextField.text;
+    ctv.delegate = category;
+    ctv.dataSource = category;            
+    categorySelect.tableView = ctv;
+
+    
+    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
+    
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"Category"];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(categorySelectCancel)];    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(categorySelectDone)];    
+    navItem.leftBarButtonItem  = cancelButton;
+    navItem.rightBarButtonItem = doneButton;    
+    [bar pushNavigationItem:navItem animated:NO];
+    
+    [categorySelect.view addSubview:bar];
+    
+    [self presentModalViewController:categorySelect animated:YES];
+    
+    [categorySelect release]; [cancelButton release]; [doneButton release]; 
+    [bar release]; [navItem release];
+}
+
+-(void)categorySelectCancel
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+-(void)categorySelectDone
+{
+    categoryTextField.text = category.selectedCategory;
+    [self dismissModalViewControllerAnimated:YES];
+}
+                                             
 
 @end

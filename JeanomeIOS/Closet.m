@@ -15,27 +15,31 @@
     
 @synthesize closetInfo, closetItems;
 
+
 -(id)initWithJSON:(NSString *)json
 {    
     // NSLog(@"Closet.m:20   initWithJSON(): %@", json);
     
-    self.closetInfo = [json JSONValue];
-    
-    //  From the JSON dict in closetInfo, store a dict of the ClosetItem objects so we 
-    //  can store fetched images in it
-    self.closetItems = [NSMutableDictionary dictionary];
-    
-    NSDictionary *itemsFromJSON = [self.closetInfo objectForKey:@"items"];
-    
-    // NSDecimalNumber *itemCount = [self.closetInfo objectForKey:@"itemcount"];
-    
-    if(itemsFromJSON) {        
-        // Translate the dict made from JSON into ClosetItem objects
-        for(NSString* itemId in [itemsFromJSON allKeys]) {
-            NSDictionary *imageDict = [itemsFromJSON objectForKey:itemId];
-            ClosetItem *ci = [[ClosetItem alloc] initWithImageDict:imageDict andId:itemId];
-            [self.closetItems setObject:ci forKey:itemId];
-            [ci release];
+    self = [super init];    
+    if(self) {    
+        self.closetInfo = [json JSONValue];
+        
+        //  From the JSON dict in closetInfo, store a dict of the ClosetItem objects so we 
+        //  can store fetched images in it
+        self.closetItems = [NSMutableDictionary dictionary];
+        
+        NSDictionary *itemsFromJSON = [self.closetInfo objectForKey:@"items"];
+        
+        // NSDecimalNumber *itemCount = [self.closetInfo objectForKey:@"itemcount"];
+        
+        if(itemsFromJSON) {        
+            // Translate the dict made from JSON into ClosetItem objects
+            for(NSString* itemId in [itemsFromJSON allKeys]) {
+                NSDictionary *imageDict = [itemsFromJSON objectForKey:itemId];
+                ClosetItem *ci = [[ClosetItem alloc] initWithImageDict:imageDict andId:itemId];
+                [self.closetItems setObject:ci forKey:itemId];
+                [ci release];
+            }
         }
     }
     
@@ -103,7 +107,7 @@
 -(NSArray *)getClosetItemsArray
 {
     NSArray *itemIds = [closetItems allKeys];    
-    NSMutableArray *closetItemsArray = [[NSMutableArray alloc] init];
+    NSMutableArray *closetItemsArray = [[[NSMutableArray alloc] init] autorelease];
     
     for(NSString* itemId in itemIds)
         [closetItemsArray addObject:[closetItems objectForKey:itemId]];

@@ -14,11 +14,12 @@
 @synthesize nav;
 @synthesize facebook;
 
-@synthesize facebookId, facebookLoginDict;
+@synthesize facebookId, facebookLoginDict, jc;
 
 - (void)dealloc
 {
     [_window release];
+    [jc release];
     [super dealloc];
 }
 
@@ -27,30 +28,14 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    
-    JeanomeViewController *jc = [[JeanomeViewController alloc] init];
-    
-    /*
-    UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:jc action:@selector(startTakingPhoto:)];    
-    
-    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile_20" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:jc action:@selector(openCloset:)];
-    
-    jc.navigationItem.leftBarButtonItem = cameraBarButton;
-    jc.navigationItem.rightBarButtonItem = myClosetBarButton;
-     */
-
-    // [nav pushViewController:jc animated:YES];
-    //    [self.window addSubview:nav.view];
+        
+    jc = [[JeanomeViewController alloc] init];   // XXX  DONT RELEASE THIS OR CRASH   XXX
   
     [self.window addSubview:jc.view];
     [self.window makeKeyAndVisible];
     
     // from https://developers.facebook.com/docs/mobile/ios/build/#linktoapp
     facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:self];
-    
-    //[cameraBarButton release]; [myClosetBarButton release]; [jc release];
-
     
     return YES;
 }

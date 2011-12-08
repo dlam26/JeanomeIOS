@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Jeanome.h"
 #import "ClosetItem.h"
-//#import "AppDelegate.h"
+#import "Category.h"
 
 #define DEFAULT_NOTE_PLACEHOLDER @"Say something"
 
@@ -27,6 +27,7 @@
 {
     id <PhotoDetailsDelegate> delegate;
     ClosetItem *closetItem;
+    Category *category;   //  just here as a modal when you open the modal category select
     
     IBOutlet UITableView *editDetailsTable;
     CGFloat verticalOffset;
@@ -64,7 +65,9 @@
 -(void)_accessoryActivate:(id)field;
 -(void)accessoryDone;
 
-- (void)registerForKeyboardNotifications;
+-(void)registerForKeyboardNotifications;
+
+-(void)showCategorySelect;
 
 // selectors
 -(void)hideInputs;

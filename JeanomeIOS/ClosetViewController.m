@@ -31,31 +31,39 @@
     return self;
 }
 
+//  FIXME   make URL request asynchronous
+// 
 -(id)initWithFbResult:(id)result
 {
-    self.fbResult = result;
-    self.fbResultDict = result;
+    NSLog(@"ClosetViewController.m:36   initWithFbResult()");
     
-    // 1.  Set up the navigation bar
-
-    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettingsPage)];       
-
-    self.navigationItem.rightBarButtonItem = settingsBarButton;
-    
-    // 2.  Fetch JSON from the server about the details.
-    
-    NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL], [self.fbResultDict objectForKey:@"id"]];
+    self = [super init];
+    if (self) {
+        self.fbResult = result;
+        self.fbResultDict = result;
         
-//    NSLog(@"ClosetViewController.m:36  initWithFBResult() Fetching from URL... %@", closetUrlString);
-    
-    //  TODO  replace with NSURLRequest, or some asynchronous call so i can show network activity indicator
-    //
-    NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
+        // 1.  Set up the navigation bar
 
-    self.closet = [[Closet alloc] initWithJSON:closetJSON];
-    
-    // self.title = [NSString stringWithFormat:@"%@'s Closet", [self.closet getName]];
-    
+        UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"transparent_settings_gear_icon" ofType:@"png"]] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettingsPage)];       
+
+        self.navigationItem.rightBarButtonItem = settingsBarButton;
+        [settingsBarButton release];
+        
+        // 2.  Fetch JSON from the server about the details.
+        
+        NSString *closetUrlString = [NSString stringWithFormat:@"%@/api/closet/%@/", [[NSUserDefaults standardUserDefaults] stringForKey:SETTING_JEANOME_URL], [self.fbResultDict objectForKey:@"id"]];
+            
+    //    NSLog(@"ClosetViewController.m:36  initWithFBResult() Fetching from URL... %@", closetUrlString);
+        
+        //  TODO  replace with NSURLRequest, or some asynchronous call so i can show network activity indicator
+        //
+        NSString *closetJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:closetUrlString] encoding:NSUTF8StringEncoding error:nil];
+
+        self.closet = [[[Closet alloc] initWithJSON:closetJSON] autorelease];
+        
+        // self.title = [NSString stringWithFormat:@"%@'s Closet", [self.closet getName]];
+        
+    }
     return self;
 }
 

@@ -14,6 +14,8 @@
 #import "FBConnect.h"
 #import "Jeanome.h"
 
+@class JeanomeViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate> {
     
     UINavigationController *nav;
@@ -23,13 +25,16 @@
     NSString *facebookId;             // The current logged in users facebook id
     NSDictionary *facebookLoginDict;  // Dict storing the logged in users info
     
+    JeanomeViewController *jc;
 }
 
-@property (nonatomic, retain) Facebook *facebook;
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UINavigationController *nav;
+@property(nonatomic,retain) Facebook *facebook;
+@property(strong,nonatomic) UIWindow *window;
+@property(strong,nonatomic) UINavigationController *nav;
 
 @property(nonatomic,retain) NSString *facebookId;
 @property(nonatomic,retain) NSDictionary *facebookLoginDict;
+
+@property(nonatomic,retain) JeanomeViewController *jc;
 
 @end

@@ -38,7 +38,7 @@
     UIImage *logo = [UIImage imageNamed:@"iphone_logo_toolbar"];
 //    UIImage *logo = [UIImage imageNamed:@"iphone_logo_toolbar-smaller"];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, logo.size.width, logo.size.height)];    
+    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, logo.size.width, logo.size.height)] autorelease];    
     imageView.image = logo;
     
     //    UIImageView *imageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iphone_logo_toolbar"]] autorelease];
@@ -66,7 +66,7 @@
 
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;
 {
-    UIToolbar *prevNextDoneToolbar = [[UIToolbar alloc] initWithFrame:frame];
+    UIToolbar *prevNextDoneToolbar = [[[UIToolbar alloc] initWithFrame:frame] autorelease];
     
     UIBarButtonItem *b;
     NSMutableArray *buttons = [NSMutableArray array];
@@ -103,7 +103,7 @@
 
 +(UIView *)accessoryViewCreateDoneInput:(id)delegate
 {
-    UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 30.0)];
+    UIToolbar *doneToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 30.0)] autorelease];
     
     UIBarButtonItem *b;
     NSMutableArray *buttons = [NSMutableArray array];
@@ -153,6 +153,7 @@
     [twoDecimalDigitsFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [twoDecimalDigitsFormatter setMaximumFractionDigits:2];
     NSNumber *truncatedValue = [twoDecimalDigitsFormatter numberFromString:[twoDecimalDigitsFormatter stringFromNumber:closetItem.value]];
+    [twoDecimalDigitsFormatter release];
     
     
     [request setPostValue:closetItem.brand forKey:@"brand"];

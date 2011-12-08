@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "JeanomeIOS/JeanomeViewController.m"
-         timestampString = "345006513.248797"
+         timestampString = "345023271.258358"
          startingColumnNumber = "2147483647"
          endingColumnNumber = "2147483647"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
+         startingLineNumber = "94"
+         endingLineNumber = "94"
          landmarkName = "-openCloset:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -23,11 +23,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "JeanomeIOS/JeanomeViewController.m"
-         timestampString = "345006513.248797"
+         timestampString = "345023271.258358"
          startingColumnNumber = "2147483647"
          endingColumnNumber = "2147483647"
-         startingLineNumber = "104"
-         endingLineNumber = "104"
+         startingLineNumber = "97"
+         endingLineNumber = "97"
          landmarkName = "-openCloset:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -37,40 +37,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "JeanomeIOS/TakePhotoViewController.m"
-         timestampString = "345010233.514398"
+         timestampString = "345033184.306707"
          startingColumnNumber = "2147483647"
          endingColumnNumber = "2147483647"
-         startingLineNumber = "328"
-         endingLineNumber = "328"
+         startingLineNumber = "330"
+         endingLineNumber = "330"
          landmarkName = "-uploadPic:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "JeanomeIOS/Jeanome.m"
-         timestampString = "345010105.885891"
-         startingColumnNumber = "2147483647"
-         endingColumnNumber = "2147483647"
-         startingLineNumber = "142"
-         endingLineNumber = "142"
-         landmarkName = "+uploadToJeanome:withImage:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "JeanomeIOS/ClosetItemDetailsViewController.m"
-         timestampString = "345010799.271565"
-         startingColumnNumber = "2147483647"
-         endingColumnNumber = "2147483647"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
-         landmarkName = "-_saveClosetItemDetails:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

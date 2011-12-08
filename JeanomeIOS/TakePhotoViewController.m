@@ -204,6 +204,7 @@
     [self setPickedImage:image]; // used for aviary 
     [self dismissModalViewControllerAnimated:NO];
     closetItem.image = image;
+    closetItem.userId = jeanome.facebookId;
     imageView.image = image;
 }
 
@@ -343,7 +344,9 @@
         [alert show];
         [alert release];
     }
-    else {        
+    else {
+
+        closetItem.userId = jeanome.facebookId;
         
         ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:closetItem];         
         c.title = @"Item Details";

@@ -30,6 +30,7 @@
  */
 -(id)initWithImageDict:(NSDictionary *)imageDict andId:(NSString *)theId
 {
+    self.userId = [imageDict objectForKey:@"userid"];
     self.itemId = theId;
     self.note = [imageDict objectForKey:@"note"];
     self.category = [imageDict objectForKey:@"category"];

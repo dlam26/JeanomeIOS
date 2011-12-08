@@ -129,6 +129,9 @@
  which is subsequently posted to facebook!
  
  Returns the response string 
+ 
+ 
+        closetItem.userId SET IN
  */
 +(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img
 {

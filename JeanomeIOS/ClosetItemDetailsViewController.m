@@ -117,6 +117,7 @@
         [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image];
         
         
+            
         // END OF NEW CODE 12/7/2011    (upload to facebook)
 
             
@@ -347,20 +348,19 @@
     categoryPicker.dataSource = self;
     categoryPicker.showsSelectionIndicator = YES;
     
-    UIView *toolbar = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
-
-    
     categoryActionSheet = [[[UIActionSheet alloc] initWithTitle:nil
                                               delegate:self
                                      cancelButtonTitle:nil
                                 destructiveButtonTitle:nil
                                      otherButtonTitles:nil] autorelease];
-    [categoryActionSheet addSubview:toolbar];
+    
+    // Hack for UIActionSheet inputAccessoryView
+    [categoryActionSheet addSubview:[Jeanome accessoryViewCreateDoneInput:self]];
+    
     [categoryActionSheet addSubview:categoryPicker];
     [categoryActionSheet showInView:self.view.superview];
     [categoryActionSheet setBounds:CGRectMake(0,0,320, 400)];
     
-
     selectedField = categoryTextField;
     
     if([[categoryTextField text] isEqualToString:@"Shoes"]) {
@@ -459,7 +459,8 @@
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_showCategoryPicker)];            
             [tf addGestureRecognizer:tap];
             
-            tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
+            // INPUT ACCESSORY VIEW NOT SET HERE, GO TO  line 339  in  _showCategoryPicker()            
+            // tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
         }
         else if([indexPath row] == 1) {
             tf.placeholder   = @"$";
@@ -483,6 +484,7 @@
         tf.tag = 0;
         tf.clearButtonMode = UITextFieldViewModeNever;
         //tf.inputAccessoryView = [Jeanome accessoryViewCreatePrevNextDoneInput:self];
+        tf.inputAccessoryView = [Jeanome accessoryViewCreateDoneInput:self];
         tf.delegate = self;
 
         [tf setEnabled:YES];

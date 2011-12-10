@@ -126,7 +126,6 @@
         [newClosetItem release];
         
         // END OF NEW CODE 12/7/2011    (upload to facebook)
-
             
         // Now, with everthing saved, go back to the TakePhotoViewController    
         [self.navigationController popViewControllerAnimated:YES];

@@ -28,26 +28,23 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage, overlayViewController;
+@synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage;
 
 @synthesize closetItem;
 @synthesize jeanome;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-        closetItem = [[ClosetItem alloc] init];   // important!
-    }
-    return self;
+
+- (void)dealloc {
+    [self.closetItem release];
+    [imageView release];
+    [super dealloc];
 }
 
 - (id)initWithJeanome:(Jeanome *)j {
     self = [super init];
     if (self) {
         self.jeanome = j;
+        self.closetItem = [[ClosetItem alloc] init];
     }
     return self;
 }
@@ -156,13 +153,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (void)dealloc {
-    
-    [super dealloc];
-//    [overlayViewController release];
-    [imageView release];
 }
 
 
@@ -311,7 +301,7 @@
 - (void)featherCanceled:(AFFeatherController *)featherController
 {
     // Handle cancelation here    
-    NSLog(@"TakePhotoViewController.m:136   featherCancelled()");
+    NSLog(@"TakePhotoViewController.m:305   featherCancelled()");
 }
 
 
@@ -365,7 +355,7 @@
  */ 
 -(void)saveDetails:(NSDictionary *)details
 {
-    NSLog(@"TakePhotoViewController.m:484   saveDetails() <PhotoDetailsDelegate> method!" );
+    NSLog(@"TakePhotoViewController.m:359   saveDetails() <PhotoDetailsDelegate> method!" );
     
     ClosetItem *c = [[ClosetItem alloc] initWithImageDict:details andId:nil];
     closetItem = c;

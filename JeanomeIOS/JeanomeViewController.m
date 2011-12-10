@@ -35,16 +35,25 @@
 
 - (void)viewDidLoad
 {
-    //NSLog(@"JeanomeViewController.m:38   viewDidLoad()   facebookId: %@", facebookId);
+    // NSLog(@"JeanomeViewController.m:38   viewDidLoad()   facebookId: %@", facebookId);
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    logoutButton.hidden = NO;
-    [self updateIsSessionValid];
     
-    self.theNavigationBar.tintColor = [Jeanome getJeanomeColor]; 
-    self.theNavigationBar.topItem.titleView = [Jeanome getJeanomeLogoImageView];
+    theNavigationBar.tintColor = [Jeanome getJeanomeColor]; 
+    theNavigationBar.topItem.titleView = [Jeanome getJeanomeLogoImageView];
+    
+    
+    /*
+    theNavigationBar = [[UINavigationBar alloc] initWithFrame:[Jeanome getNavigationBarFrame]];
+
+    UINavigationItem *item = [[UINavigationItem alloc] init];
+    [theNavigationBar pushNavigationItem:item animated:NO];
+    
+    [self.view addSubview:self.theNavigationBar];
+    [item release];
+    */
 }
 
 - (void)viewDidUnload
@@ -56,12 +65,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-//     NSLog(@"JeanomeViewController.m:72   viewWillAppear()");
+     //NSLog(@"JeanomeViewController.m:59   viewWillAppear()");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-///     NSLog(@"JeanomeViewController.m:77   viewDidAppear()");
+    /*
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+
+    BOOL isSessionValid = [[delegate facebook] isSessionValid];
+    NSLog(@"JeanomeViewController.m:64   viewDidAppear()  isSessionValid: %d", isSessionValid);
+    */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -170,61 +184,32 @@
         
     }
     else {
-        NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id" forKey:@"fields"];
+        NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id,name" forKey:@"fields"];
         // Get the users facebook id
         [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self]; 
         
-        NSLog(@"JeanomeViewController.m:161   already logged in to facebook... so gogogogo!");
-        [delegate fbDidLogin];
+        NSLog(@"JeanomeViewController.m:192  facebookLogin() already logged in to facebook... so gogogogo!");
+//        [delegate fbDidLogin];
     }
     
-
-//    loginButton.hidden  = YES;
-    logoutButton.hidden = NO;
-    
-    [self updateIsSessionValid];
 }
 
 -(IBAction)facebookLogout:(id)sender
 {
     // NSLog(@"JeanomeViewController.m:107   facebookLogout()");
     
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+//    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
-    [[delegate facebook] logout:delegate];
+//    [[delegate facebook] logout:delegate];
     
     // loginButton.hidden = NO;
-    logoutButton.hidden = YES;
     
     facebookId = nil;
     fbRequest = nil;
     fbResult = nil;
-    
-    [self updateIsSessionValid];
-}
-
--(IBAction)printFacebookId:(id)sender
-{
-    NSLog(@"JeanomeViewController.m:135   printFacebookId: %@", self.facebookId);
-    
-    // [fb retain];   //why it's crashing when u click on it twice is beyond me
 }
 
 
-
-
--(void)updateIsSessionValid
-{
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
-    BOOL isSessionValid = [[delegate facebook] isSessionValid];
-                           
-   //  NSLog(@"JeanomeViewController.m:118   updateIsSessionValid()!  %@", isSessionValid ? @"YES" : @"NO");
-
-    isSessionValidLabel.text = [NSString stringWithFormat:@"Is session valid: %@", isSessionValid ? @"YES" : @"NO"];
-    
-//    logoutButton.hidden = !isSessionValid;
-}
 
 #pragma mark - <FBRequestDelegate> protocol
 
@@ -233,7 +218,7 @@
  */
 - (void)requestLoading:(FBRequest *)request;
 {
-    
+    // NSLog(@"JeanomeViewController.m:219   requestLoading()");
 }
 
 /**
@@ -241,7 +226,7 @@
  */
 - (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response
 {
-//    NSLog(@"JeanomeViewController.m:151  didReceiveResponse()");
+    // NSLog(@"JeanomeViewController.m:227  didReceiveResponse()");
 }
 
 /**
@@ -249,7 +234,7 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error
 {
-//    NSLog(@"JeanomeViewController.m:160  didFailWithError()  %@", error);    
+    // NSLog(@"JeanomeViewController.m:235  didFailWithError()  %@", error);    
 }
 
 /**
@@ -261,7 +246,7 @@
  */
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
-    // NSLog(@"JeanomeViewController.m:163  didLoad()");
+    NSLog(@"JeanomeViewController.m:247  FBRequest  didLoad()");
     
     NSDictionary *dict = result;
     
@@ -296,9 +281,8 @@
  */
 - (void)request:(FBRequest *)request didLoadRawResponse:(NSData *)data
 {
-//    NSLog(@"JeanomeViewController.m:173  didLoadRawResponse()");
+    //NSLog(@"JeanomeViewController.m:282  didLoadRawResponse()");
 
 }
-
 
 @end

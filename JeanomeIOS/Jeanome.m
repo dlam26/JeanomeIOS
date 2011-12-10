@@ -47,6 +47,11 @@
     return imageView;
 }
 
++(CGRect)getNavigationBarFrame
+{
+    return CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 66);
+}
+
 
 /*
     Toolbar with 3 buttons:
@@ -172,7 +177,15 @@
     
     [request startSynchronous];
     
-    return [request responseString];
+    NSError *error = [request error];
+    
+    if(!error) {    
+        return [request responseString];
+    }
+    else {
+        NSLog(@"Jeanome.m:186   Error occurred while uploading pic!  %@", [error localizedDescription]);
+        return nil;
+    }
 }
 
 

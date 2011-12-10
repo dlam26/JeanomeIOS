@@ -13,7 +13,6 @@
 #import "FBRequest.h"
 
 #import "AppDelegate.h"
-#import "OverlayViewController.h"
 #import "ClosetItemDetailsViewController.h"
 #import "ClosetItem.h"
 
@@ -29,8 +28,6 @@
     // Used to pass a UIImage to Aviary
     UIImage *pickedImage;
     
-    OverlayViewController *overlayViewController;
-    
     Jeanome *jeanome;
     
     // stores info about the new closet item that'll be created from the picked image
@@ -43,7 +40,6 @@
 @property(nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property(nonatomic, retain) UIImagePickerController *imgPicker;
 @property(nonatomic, retain) UIImage *pickedImage;
-@property(nonatomic, retain) OverlayViewController *overlayViewController;
 
 @property(nonatomic, retain) Jeanome *jeanome;
 

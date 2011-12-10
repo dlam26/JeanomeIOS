@@ -30,8 +30,6 @@
     id fbResult;
     
     IBOutlet UIButton *loginButton;
-    IBOutlet UIButton *logoutButton;
-    IBOutlet UILabel *isSessionValidLabel;
     IBOutlet UINavigationBar *theNavigationBar;
     
     ClosetViewController *closetViewController;
@@ -49,8 +47,9 @@
 
 -(IBAction)startTakingPhoto:(id)sender;
 -(IBAction)openCloset:(id)sender;
--(void)updateIsSessionValid;
 //-(void)__initClosetView;
 -(void)__initClosetView:(NSString *)notused;
+
+-(IBAction)facebookLogout:(id)sender;
 
 @end

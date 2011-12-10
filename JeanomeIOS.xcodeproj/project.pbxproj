@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A247EE8149169CE00EFDDC1 /* iphone_wallpaper_instruction.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A247EE4149169CE00EFDDC1 /* iphone_wallpaper_instruction.png */; };
+		1A247EE9149169CE00EFDDC1 /* iphone_wallpaper_instruction@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A247EE5149169CE00EFDDC1 /* iphone_wallpaper_instruction@2x.png */; };
+		1A247EEE1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A247EEC1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png */; };
+		1A247EEF1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A247EED1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png */; };
 		1A33313B148D7599005E7B50 /* Jeanome.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A33313A148D7598005E7B50 /* Jeanome.m */; };
 		1A33313D148D9253005E7B50 /* iphone_logo_toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33313C148D9253005E7B50 /* iphone_logo_toolbar.png */; };
 		1A33313F148D96A5005E7B50 /* iphone_logo_toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33313E148D96A5005E7B50 /* iphone_logo_toolbar@2x.png */; };
@@ -22,9 +26,6 @@
 		1A9FD515148C9DD10029BC43 /* icon_camera_95.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD514148C9DD00029BC43 /* icon_camera_95.png */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
-		1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */; };
-		1ABA437B1485A13100D809D7 /* IMG_20111030_232021.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */; };
-		1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */; };
 		1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0F148596CE0032D2E7 /* newlogo.png */; };
 		1AC08B12148596D70032D2E7 /* icon_happy_smiley_300.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */; };
 		647DFFDF146B560600E25B9C /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = 647DFFDE146B560600E25B9C /* TODO */; };
@@ -48,8 +49,6 @@
 		649ED47A146A112500E558EC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649ED479146A112500E558EC /* CoreText.framework */; };
 		649ED48E146A845F00E558EC /* JeanomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649ED48C146A845F00E558EC /* JeanomeViewController.m */; };
 		649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 649ED48D146A845F00E558EC /* JeanomeViewController.xib */; };
-		64A5F182146B39610051C718 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A5F180146B39600051C718 /* OverlayViewController.m */; };
-		64A5F183146B39610051C718 /* OverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F181146B39600051C718 /* OverlayViewController.xib */; };
 		64A5F187146B479D0051C718 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A5F186146B479D0051C718 /* logo.png */; };
 		64BF1DF7146D376E00640419 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DA6146D376E00640419 /* ASIAuthenticationDialog.m */; };
 		64BF1DF8146D376E00640419 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BF1DA9146D376E00640419 /* ASIDataCompressor.m */; };
@@ -102,6 +101,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A247EE4149169CE00EFDDC1 /* iphone_wallpaper_instruction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_wallpaper_instruction.png; sourceTree = "<group>"; };
+		1A247EE5149169CE00EFDDC1 /* iphone_wallpaper_instruction@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone_wallpaper_instruction@2x.png"; sourceTree = "<group>"; };
+		1A247EEC1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_wallpaper_tookphoto.png; sourceTree = "<group>"; };
+		1A247EED1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone_wallpaper_tookphoto@2x.png"; sourceTree = "<group>"; };
 		1A333139148D7597005E7B50 /* Jeanome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Jeanome.h; sourceTree = "<group>"; };
 		1A33313A148D7598005E7B50 /* Jeanome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Jeanome.m; sourceTree = "<group>"; };
 		1A33313C148D9253005E7B50 /* iphone_logo_toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_logo_toolbar.png; sourceTree = "<group>"; };
@@ -124,9 +127,6 @@
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
 		1AA6D80B148395B600525AB0 /* PictureDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureDownloader.h; sourceTree = "<group>"; };
 		1AA6D80C148395B600525AB0 /* PictureDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureDownloader.m; sourceTree = "<group>"; };
-		1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_20111030_233250.jpg; sourceTree = "<group>"; };
-		1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_20111030_232021.jpg; sourceTree = "<group>"; };
-		1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ColorTouch-1322004372315.jpeg"; sourceTree = "<group>"; };
 		1AC08B0C1485947D0032D2E7 /* jeanome_logo_new_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jeanome_logo_new_114.png; sourceTree = "<group>"; };
 		1AC08B0F148596CE0032D2E7 /* newlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newlogo.png; sourceTree = "<group>"; };
 		1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_happy_smiley_300.png; sourceTree = "<group>"; };
@@ -160,9 +160,6 @@
 		649ED48B146A845F00E558EC /* JeanomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JeanomeViewController.h; sourceTree = "<group>"; };
 		649ED48C146A845F00E558EC /* JeanomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JeanomeViewController.m; sourceTree = "<group>"; };
 		649ED48D146A845F00E558EC /* JeanomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JeanomeViewController.xib; sourceTree = "<group>"; };
-		64A5F17F146B39600051C718 /* OverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayViewController.h; sourceTree = "<group>"; };
-		64A5F180146B39600051C718 /* OverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayViewController.m; sourceTree = "<group>"; };
-		64A5F181146B39600051C718 /* OverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayViewController.xib; sourceTree = "<group>"; };
 		64A5F184146B43560051C718 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		64A5F186146B479D0051C718 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../Jeanome/static/images/logo.png; sourceTree = "<group>"; };
 		64BF1DA5146D376E00640419 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -266,16 +263,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1ABA43751485A0E500D809D7 /* demophotos */ = {
-			isa = PBXGroup;
-			children = (
-				1ABA43771485A13100D809D7 /* IMG_20111030_233250.jpg */,
-				1ABA43781485A13100D809D7 /* IMG_20111030_232021.jpg */,
-				1ABA43791485A13100D809D7 /* ColorTouch-1322004372315.jpeg */,
-			);
-			name = demophotos;
-			sourceTree = "<group>";
-		};
 		649ED399146A082A00E558EC = {
 			isa = PBXGroup;
 			children = (
@@ -341,9 +328,6 @@
 				1A9E62A5147CC593002566DA /* PictureTableViewCell.h */,
 				1A9E62A6147CC594002566DA /* PictureTableViewCell.m */,
 				1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */,
-				64A5F17F146B39600051C718 /* OverlayViewController.h */,
-				64A5F180146B39600051C718 /* OverlayViewController.m */,
-				64A5F181146B39600051C718 /* OverlayViewController.xib */,
 				1A9FD50A148B82910029BC43 /* RootViewController.h */,
 				1A9FD50B148B82910029BC43 /* RootViewController.m */,
 				1A9FD50C148B82930029BC43 /* RootViewController.xib */,
@@ -424,6 +408,10 @@
 		64A5F185146B477B0051C718 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1A247EEC1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png */,
+				1A247EED1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png */,
+				1A247EE4149169CE00EFDDC1 /* iphone_wallpaper_instruction.png */,
+				1A247EE5149169CE00EFDDC1 /* iphone_wallpaper_instruction@2x.png */,
 				1A97B5E31490D85F0046354D /* icon_profile.png */,
 				1A97B5E41490D85F0046354D /* icon_profile@2x.png */,
 				1A33313E148D96A5005E7B50 /* iphone_logo_toolbar@2x.png */,
@@ -432,7 +420,6 @@
 				1A9FD4EF148AEE4A0029BC43 /* Default.png */,
 				1A9FD4EC148AEE460029BC43 /* Default@2x.png */,
 				64F280BE14890E4C00490236 /* jeanome_logo_new_114.png */,
-				1ABA43751485A0E500D809D7 /* demophotos */,
 				1AC08B11148596D70032D2E7 /* icon_happy_smiley_300.png */,
 				1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */,
 				1AC08B0F148596CE0032D2E7 /* newlogo.png */,
@@ -591,7 +578,6 @@
 				649ED476146A10D600E558EC /* AviarySDK-Plugins.bundle in Resources */,
 				649ED48F146A845F00E558EC /* JeanomeViewController.xib in Resources */,
 				649ED3DD146A0BBA00E558EC /* TakePhotoViewController.xib in Resources */,
-				64A5F183146B39610051C718 /* OverlayViewController.xib in Resources */,
 				64A5F187146B479D0051C718 /* logo.png in Resources */,
 				647DFFDF146B560600E25B9C /* TODO in Resources */,
 				64D65B9F146F2778007F4A49 /* SettingsViewController.xib in Resources */,
@@ -606,9 +592,6 @@
 				1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */,
 				1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */,
 				1AC08B12148596D70032D2E7 /* icon_happy_smiley_300.png in Resources */,
-				1ABA437A1485A13100D809D7 /* IMG_20111030_233250.jpg in Resources */,
-				1ABA437B1485A13100D809D7 /* IMG_20111030_232021.jpg in Resources */,
-				1ABA437C1485A13100D809D7 /* ColorTouch-1322004372315.jpeg in Resources */,
 				64F280BF14890E4C00490236 /* jeanome_logo_new_114.png in Resources */,
 				64F280C91489D1FC00490236 /* ClosetItemDetailsViewController.xib in Resources */,
 				1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */,
@@ -619,6 +602,10 @@
 				1A33313F148D96A5005E7B50 /* iphone_logo_toolbar@2x.png in Resources */,
 				1A97B5E51490D85F0046354D /* icon_profile.png in Resources */,
 				1A97B5E61490D85F0046354D /* icon_profile@2x.png in Resources */,
+				1A247EE8149169CE00EFDDC1 /* iphone_wallpaper_instruction.png in Resources */,
+				1A247EE9149169CE00EFDDC1 /* iphone_wallpaper_instruction@2x.png in Resources */,
+				1A247EEE1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png in Resources */,
+				1A247EEF1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,7 +644,6 @@
 				649ED3B9146A082A00E558EC /* AppDelegate.m in Sources */,
 				649ED3DC146A0BBA00E558EC /* TakePhotoViewController.m in Sources */,
 				649ED48E146A845F00E558EC /* JeanomeViewController.m in Sources */,
-				64A5F182146B39610051C718 /* OverlayViewController.m in Sources */,
 				64BF1DF7146D376E00640419 /* ASIAuthenticationDialog.m in Sources */,
 				64BF1DF8146D376E00640419 /* ASIDataCompressor.m in Sources */,
 				64BF1DF9146D376E00640419 /* ASIDataDecompressor.m in Sources */,

@@ -16,9 +16,8 @@
 
 @class JeanomeViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
     
-    UINavigationController *nav;
     Facebook *facebook;
 
     // Set in JeanomeViewController.m:257
@@ -28,10 +27,10 @@
     JeanomeViewController *jc;
 }
 
-@property(nonatomic,retain) Facebook *facebook;
 @property(strong,nonatomic) UIWindow *window;
-@property(strong,nonatomic) UINavigationController *nav;
+@property(strong,nonatomic) UINavigationController *navigationController;
 
+@property(nonatomic,retain) Facebook *facebook;
 @property(nonatomic,retain) NSString *facebookId;
 @property(nonatomic,retain) NSDictionary *facebookLoginDict;
 

@@ -10,8 +10,9 @@
 
 @implementation RootViewController
 
-@synthesize nav, rootTableView, jeanome;
+@synthesize rootTableView, jeanome;
 
+// old
 - (id)initWithJeanome:(Jeanome *)j
 {
     self = [super init];
@@ -21,22 +22,6 @@
     return self;
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-        /*
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 10, 320, 400) style:UITableViewStylePlain];
-        
-        tableView.delegate = self;
-        tableView.dataSource = self;
-         */
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -48,31 +33,100 @@
 
 #pragma mark - View lifecycle
 
+
 - (void)viewDidLoad
 {
+    CGRect wholeScreenRect  = [[UIScreen mainScreen] bounds];
+    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+    
+    CGRect frame = wholeScreenRect;
+    
+//    NSLog(@"RootViewController.m:37  viewDidLoad()  self.view.frame: %@   wholeScreenRect: %@   applicationFrameRect: %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(wholeScreenRect), NSStringFromCGRect(applicationFrame));
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    nav = [[UINavigationController alloc] init];
-    nav.navigationBar.tintColor = [Jeanome getJeanomeColor];
-    
-    UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(startTakingPhoto:)];    
-    
-    UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:self action:@selector(openCloset:)];
- 
-    self.navigationItem.leftBarButtonItem = cameraBarButton;
-    self.navigationItem.rightBarButtonItem = myClosetBarButton;
-    
-    rootTableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    rootTableView.dataSource = self;
-    rootTableView.delegate = self;
-    rootTableView.separatorColor = [UIColor blackColor];
-    
     self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
-
-    [self.view addSubview:rootTableView];
     
-    [cameraBarButton release]; [myClosetBarButton release];
+    //  12/8/2011  Show a static image mercedes made that fits the whole screen
+    //
+    UIImageView *staticImageView = [[UIImageView alloc] initWithFrame:frame];    
+    staticImageView.userInteractionEnabled = YES;  // disabled by default
+
+    if(!jeanome) {
+        // not logged in, so show the login page!
+        
+        NSLog(@"RootViewController.m:55   viewDidLoad()   not logged in, so show login page -_-");
+
+        staticImageView.image = [UIImage imageNamed:@"Default.png"];
+       
+        self.navigationController.navigationBarHidden = YES;
+        
+        UIImage *facebookLoginButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"LoginWithFacebookNormal" ofType:@"png"]]; 
+        
+        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width, facebookLoginButtonImage.size.height)];
+     
+        [facebookLoginButton setImage:facebookLoginButtonImage forState:UIControlStateNormal];
+        [facebookLoginButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];        
+        [facebookLoginButton sizeToFit];
+        [staticImageView addSubview:facebookLoginButton];
+        [facebookLoginButton release];
+        
+        // delete this later
+        /*
+        UIButton *tempLogoutButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 350, 300, 200)];
+        [tempLogoutButton setTitle:@"Logout" forState:UIControlStateNormal];
+        tempLogoutButton.titleLabel.textColor = [UIColor blackColor];
+        [tempLogoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];        
+        [staticImageView addSubview:tempLogoutButton];
+        [tempLogoutButton release];
+         */
+    }
+    else {        
+        NSLog(@"RootViewController.m:82   viewDidLoad()   Logged in! Show Mercedes splash page");
+        
+        // logged in, so show mercedes splash image to take a photo!
+        
+        staticImageView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"iphone_wallpaper_instruction" ofType:@"png"]];        
+        
+        UIBarButtonItem *cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(startTakingPhoto:)];    
+        
+        // UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:self action:@selector(openCloset:)];
+        
+        UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+     
+        self.navigationItem.leftBarButtonItem = cameraBarButton;
+        self.navigationItem.rightBarButtonItem = logoutButton;
+        self.navigationController.navigationBarHidden = NO;
+
+        // NSLog(@"SCREEN applicationFraome.size: %@    self.view.frame.size: %@    self.view.bounds.size: %@", NSStringFromCGSize([UIScreen mainScreen].applicationFrame.size),  NSStringFromCGSize(self.view.frame.size), NSStringFromCGSize(self.view.bounds.size));
+        /*
+        float bottomLX=CGRectGetMinX(self.view.frame);
+        float bottomLY=CGRectGetMaxY(self.view.frame);
+        NSLog(@"(%f,%f)",bottomLX,bottomLY);
+         */
+        
+        
+        //  Show who's logged in on the bottom left   (80.0 seems like a lot to subtract...)
+        CGFloat labelHeight = 20.0;
+        UILabel *whosLoggedInLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, frame.size.height - 80.0, frame.size.width, labelHeight)];    
+        NSString *loggedInName = [jeanome.facebookLoginDict objectForKey:@"name"];    
+        loggedInName = !loggedInName ? @"..." : loggedInName;
+        whosLoggedInLabel.text = [NSString stringWithFormat:@"Logged in as %@", loggedInName];    
+        whosLoggedInLabel.font = [UIFont systemFontOfSize:12.0];
+        whosLoggedInLabel.textColor = [UIColor whiteColor];
+        whosLoggedInLabel.backgroundColor = [UIColor clearColor];
+        whosLoggedInLabel.opaque = NO;
+
+        [staticImageView addSubview:whosLoggedInLabel];
+                
+        
+        [whosLoggedInLabel release];
+        [cameraBarButton release]; 
+        [logoutButton release]; 
+        //[myClosetBarButton release];
+    }
+    
+    [self.view addSubview:staticImageView];
+    [staticImageView release];
 }
 
 - (void)viewDidUnload
@@ -310,7 +364,152 @@
     return YES;
 }
 
+#pragma mark - <FBSessionDelegate>
 
 
+/**
+ * Called when the user has succesfully logged in.
+ */   
+- (void)fbDidLogin {    
+    NSLog(@"RootViewController.m:351   fbDidLogin()");
+    
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[[delegate facebook] accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[[delegate facebook] expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+    [self facebookLogin];
+
+//    [self viewDidLoad];
+}
+
+
+/**
+ * Called when the user dismissed the dialog without logging in.
+ */
+- (void)fbDidNotLogin:(BOOL)cancelled {
+    NSLog(@"AppDelegate.m:378   fbDidNotLogin()");
+}
+
+/**
+ * Called when the user logged out.
+ */
+- (void) fbDidLogout {    
+    NSLog(@"RootViewController.m:385   fbDidLogout()");
+    
+    // Remove saved authorization information if it exists
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+        [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults removeObjectForKey:@"FBExpirationDateKey"];
+        [defaults synchronize];
+    }
+    
+    // logged out now, so get rid of this since it stores the login info
+    jeanome = nil;
+    
+    [self viewDidLoad];
+}
+
+
+#pragma mark - <FBRequestDelegate>
+
+/**
+ * Called when the Facebook API request has returned a response. This callback
+ * gives you access to the raw response. It's called before
+ * (void)request:(FBRequest *)request didLoad:(id)result,
+ * which is passed the parsed response object.
+ */
+- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    //NSLog(@"received response");
+}
+
+/**
+ * Called when a request returns and its response has been parsed into
+ * an object. The resulting object may be a dictionary, an array, a string,
+ * or a number, depending on the format of the API response. If you need access
+ * to the raw response, use:
+ *
+ * (void)request:(FBRequest *)request
+ *      didReceiveResponse:(NSURLResponse *)response
+ */
+- (void)request:(FBRequest *)request didLoad:(id)result {
+    
+    NSDictionary *dict = result;
+    
+    NSString *facebookId = [dict objectForKey:@"id"];
+    //FBRequest *fbRequest = request;
+    id fbResult = result;
+    
+    NSLog(@"RootViewController.m:430  FBRequest didLoad()  facebookId: %@", facebookId);
+    
+    //  12/7/2011  Create a Jeanome object to hold facebook session info
+    jeanome = [[Jeanome alloc] initWithFacebook:facebookId andDict:fbResult];
+    
+    //  We've set the Jeanome model object finally, so viewDidLoad() will now load the front page.
+    [self viewDidLoad];
+}
+
+/**
+ * Called when an error prevents the Facebook API request from completing
+ * successfully.
+ */
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
+    NSLog(@"RootViewController.m:413  didFailWithError()");
+    NSLog(@"Err message: %@", [[error userInfo] objectForKey:@"error_msg"]);
+    NSLog(@"Err code: %d", [error code]);
+}
+
+#pragma mark - @selector's
+
+- (void)logout
+{
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [[delegate facebook] logout:self];    
+}
+
+- (void)facebookLogin
+{
+    NSLog(@"RootViewController.m:455    facebookLogin()");
+    
+    // NSLog(@"JeanomeViewController.m:83   facebookLogin()");
+    
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    // Check and retrieve authorization information
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+            && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        [delegate facebook].accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        [delegate facebook].expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    
+    
+    if (![[delegate facebook] isSessionValid]) {
+        
+        NSLog(@"RootViewController.m:480  facebookLogin()  not logged in yet.");
+        
+        // NOTE- this will perform a request which when done, will call 
+        // the facebook delegate method request:didLoad() which 
+        // pushes root view controller
+        
+        [[delegate facebook] authorize:nil];
+    }
+    else {
+        // Already logged into facebook, so get info 
+        // and load the view in facebook request:didLoad
+        
+        NSLog(@"RootViewController.m:471  facebookLogin()  already logged in from NSUserDefaults!");
+        
+        
+        NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id,name" forKey:@"fields"];
+        
+        // Get the users facebook id
+        [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self];
+        
+    }
+}
 
 @end

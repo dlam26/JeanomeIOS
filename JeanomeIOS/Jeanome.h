@@ -38,6 +38,7 @@
 
 +(UIColor *)getJeanomeColor;
 +(UIImageView *)getJeanomeLogoImageView;
++(CGRect)getNavigationBarFrame;
 
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate;
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;

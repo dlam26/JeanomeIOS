@@ -20,11 +20,14 @@
     
     UITableView *rootTableView;
     
+    UIImageView *staticImageView;
+    
     Jeanome *jeanome;
 }
 
 
-@property (strong, nonatomic) UITableView *rootTableView;
+@property (strong,nonatomic) UITableView *rootTableView;
+@property (nonatomic,retain) UIImageView *staticImageView;
 
 @property(nonatomic,retain) Jeanome *jeanome;
 

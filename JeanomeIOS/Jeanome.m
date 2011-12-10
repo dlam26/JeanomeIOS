@@ -174,8 +174,9 @@
     [request addData:UIImageJPEGRepresentation(img, 1.0) forKey:@"picture"];
     [request setUseCookiePersistence:NO];
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
+    [request setTimeOutSeconds:20];  //  12/9/2011  uploads timing out, but still work! :O
     
-    [request startSynchronous];
+    // [request startSynchronous];
     
     NSError *error = [request error];
     

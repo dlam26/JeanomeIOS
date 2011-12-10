@@ -10,7 +10,7 @@
 
 @implementation RootViewController
 
-@synthesize rootTableView, jeanome;
+@synthesize rootTableView, staticImageView, jeanome;
 
 // old
 - (id)initWithJeanome:(Jeanome *)j
@@ -48,7 +48,7 @@
     
     //  12/8/2011  Show a static image mercedes made that fits the whole screen
     //
-    UIImageView *staticImageView = [[UIImageView alloc] initWithFrame:frame];    
+    staticImageView = [[UIImageView alloc] initWithFrame:frame];    
     staticImageView.userInteractionEnabled = YES;  // disabled by default
     
     if(!jeanome) {
@@ -107,7 +107,8 @@
         
         //  Show who's logged in on the bottom left   (80.0 seems like a lot to subtract...)
         CGFloat labelHeight = 20.0;
-        UILabel *whosLoggedInLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, frame.size.height - 80.0, frame.size.width, labelHeight)];    
+        CGFloat bottomPadding = 90.0;
+        UILabel *whosLoggedInLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, frame.size.height - bottomPadding, frame.size.width, labelHeight)];    
         NSString *loggedInName = [jeanome.facebookLoginDict objectForKey:@"name"];    
         loggedInName = !loggedInName ? @"..." : loggedInName;
         whosLoggedInLabel.text = [NSString stringWithFormat:@"Logged in as %@", loggedInName];    
@@ -141,6 +142,18 @@
     
     [rootTableView release];
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"RootViewController.m:148   viewWillAppear()  animated: %d", animated);
+    
+    // if adding a closet item, animated will be YES
+    
+    if(animated) {     
+        staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
+    }    
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

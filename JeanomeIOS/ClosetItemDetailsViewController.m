@@ -13,6 +13,7 @@
 @synthesize delegate;
 @synthesize editDetailsTable;
 @synthesize closetItem;
+@synthesize jeanome;
 @synthesize categoryTextField, costTextField, brandTextField;
 @synthesize noteTextView;
 @synthesize categoryPicker;
@@ -30,11 +31,12 @@
 }
 
 // see TakePhotoViewController.m:446 in editDetails()
--(id)initWithClosetItem:(ClosetItem *)item
+-(id)initWithClosetItem:(ClosetItem *)item andJeanome:(Jeanome *)j
 {
     self = [super init];
     if (self) {
-        self.closetItem = item;        
+        self.closetItem = item;
+        self.jeanome = j;
     }
     return self;    
 }
@@ -117,15 +119,14 @@
                                                withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
         [self.delegate saveDetails:imageDict];
 
-        // NEW CODE 12/7/2011    (upload to facebook)
-        
         ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
         
         [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image];
         
         [newClosetItem release];
         
-        // END OF NEW CODE 12/7/2011    (upload to facebook)
+        // see RootViewController.m:533  itemWasAdded()
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];        
         
         // Now, with everthing saved, go back to the front and show Mercedes cute splash screen   
         [self.navigationController popToRootViewControllerAnimated:YES];

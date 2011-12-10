@@ -132,6 +132,11 @@
 - (void)viewDidLoad
 {
     NSLog(@"RootViewController.m:44   viewDidLoad()");
+    
+//  http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
+    
 }
 
 - (void)viewDidUnload
@@ -146,12 +151,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"RootViewController.m:148   viewWillAppear()  animated: %d", animated);
-    
-    // if adding a closet item, animated will be YES
-    
-    if(animated) {     
-        staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
-    }    
 }
 
 
@@ -526,6 +525,20 @@
         [[delegate facebook] requestWithGraphPath:@"me" andParams:paramDict andDelegate:self];
         
     }
+}
+
+/*
+    Used with NSNotificationCenter to change the background image to the dog
+    after the user adds an item.
+ 
+     http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
+ */
+- (void)closetItemWasAdded
+{
+    NSLog(@"RootViewController.m:538   itemWasAdded()");
+    
+    //  TODO change staticImageView here     
+    staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
 }
 
 @end

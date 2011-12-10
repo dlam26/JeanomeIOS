@@ -27,7 +27,8 @@
 {
     id <PhotoDetailsDelegate> delegate;
     ClosetItem *closetItem;
-    Category *category;   //  just here as a modal when you open the modal category select
+    Jeanome *jeanome;
+    Category *category;   //  just here as a model when you open the modal category select
     
     IBOutlet UITableView *editDetailsTable;
     CGFloat verticalOffset;
@@ -46,6 +47,7 @@
 
 @property(nonatomic,retain) id <PhotoDetailsDelegate> delegate;
 @property(nonatomic,retain) ClosetItem *closetItem;
+@property(nonatomic,retain) Jeanome *jeanome;
 
 @property(nonatomic,retain) IBOutlet UITableView *editDetailsTable;
 
@@ -58,7 +60,7 @@
 @property(nonatomic,retain) UIPickerView *categoryPicker;
 @property(nonatomic,retain) UIActionSheet *categoryActionSheet;
 
--(id)initWithClosetItem:(ClosetItem *)item;
+-(id)initWithClosetItem:(ClosetItem *)item andJeanome:(Jeanome *)j;
 
 -(void)_saveClosetItemDetails:(id)sender;
 -(void)_showCategoryPicker;

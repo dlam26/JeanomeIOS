@@ -31,5 +31,6 @@
 #define FACEBOOK_APP_ID_DAVID_DEV @"126387207470405"
 
 
-
 #define SETTING_JEANOME_URL @"jeanomeurl"
+
+#define NOTIFICATION_CLOSET_ITEM_ADDED @"NotificationClosetItemAdded"

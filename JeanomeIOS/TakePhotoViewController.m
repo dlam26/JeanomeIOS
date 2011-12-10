@@ -340,7 +340,7 @@
 
         closetItem.userId = jeanome.facebookId;
         
-        ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:closetItem];         
+        ClosetItemDetailsViewController *c = [[ClosetItemDetailsViewController alloc] initWithClosetItem:closetItem andJeanome:jeanome];
         c.title = @"Item Details";
         c.delegate = self;    
         [[self navigationController] pushViewController:c animated:YES];    

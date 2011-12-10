@@ -33,37 +33,37 @@
 
 #pragma mark - View lifecycle
 
-
-- (void)viewDidLoad
+- (void)loadView 
 {
+    NSLog(@"RootViewController.m:38   loadView()");
+ 
     CGRect wholeScreenRect  = [[UIScreen mainScreen] bounds];
-    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+//    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
     
     CGRect frame = wholeScreenRect;
     
 //    NSLog(@"RootViewController.m:37  viewDidLoad()  self.view.frame: %@   wholeScreenRect: %@   applicationFrameRect: %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(wholeScreenRect), NSStringFromCGRect(applicationFrame));
     
-    [super viewDidLoad];
     self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
     
     //  12/8/2011  Show a static image mercedes made that fits the whole screen
     //
     UIImageView *staticImageView = [[UIImageView alloc] initWithFrame:frame];    
     staticImageView.userInteractionEnabled = YES;  // disabled by default
-
+    
     if(!jeanome) {
         // not logged in, so show the login page!
         
-        NSLog(@"RootViewController.m:55   viewDidLoad()   not logged in, so show login page -_-");
-
+//        NSLog(@"RootViewController.m:55   viewDidLoad()   not logged in, so show login page -_-");
+        
         staticImageView.image = [UIImage imageNamed:@"Default.png"];
-       
+        
         self.navigationController.navigationBarHidden = YES;
         
         UIImage *facebookLoginButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"LoginWithFacebookNormal" ofType:@"png"]]; 
         
         UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width, facebookLoginButtonImage.size.height)];
-     
+        
         [facebookLoginButton setImage:facebookLoginButtonImage forState:UIControlStateNormal];
         [facebookLoginButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];        
         [facebookLoginButton sizeToFit];
@@ -72,16 +72,16 @@
         
         // delete this later
         /*
-        UIButton *tempLogoutButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 350, 300, 200)];
-        [tempLogoutButton setTitle:@"Logout" forState:UIControlStateNormal];
-        tempLogoutButton.titleLabel.textColor = [UIColor blackColor];
-        [tempLogoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];        
-        [staticImageView addSubview:tempLogoutButton];
-        [tempLogoutButton release];
+         UIButton *tempLogoutButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 350, 300, 200)];
+         [tempLogoutButton setTitle:@"Logout" forState:UIControlStateNormal];
+         tempLogoutButton.titleLabel.textColor = [UIColor blackColor];
+         [tempLogoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];        
+         [staticImageView addSubview:tempLogoutButton];
+         [tempLogoutButton release];
          */
     }
     else {        
-        NSLog(@"RootViewController.m:82   viewDidLoad()   Logged in! Show Mercedes splash page");
+//        NSLog(@"RootViewController.m:82   viewDidLoad()   Logged in! Show Mercedes splash page");
         
         // logged in, so show mercedes splash image to take a photo!
         
@@ -92,16 +92,16 @@
         // UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:self action:@selector(openCloset:)];
         
         UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
-     
+        
         self.navigationItem.leftBarButtonItem = cameraBarButton;
         self.navigationItem.rightBarButtonItem = logoutButton;
         self.navigationController.navigationBarHidden = NO;
-
+        
         // NSLog(@"SCREEN applicationFraome.size: %@    self.view.frame.size: %@    self.view.bounds.size: %@", NSStringFromCGSize([UIScreen mainScreen].applicationFrame.size),  NSStringFromCGSize(self.view.frame.size), NSStringFromCGSize(self.view.bounds.size));
         /*
-        float bottomLX=CGRectGetMinX(self.view.frame);
-        float bottomLY=CGRectGetMaxY(self.view.frame);
-        NSLog(@"(%f,%f)",bottomLX,bottomLY);
+         float bottomLX=CGRectGetMinX(self.view.frame);
+         float bottomLY=CGRectGetMaxY(self.view.frame);
+         NSLog(@"(%f,%f)",bottomLX,bottomLY);
          */
         
         
@@ -115,18 +115,22 @@
         whosLoggedInLabel.textColor = [UIColor whiteColor];
         whosLoggedInLabel.backgroundColor = [UIColor clearColor];
         whosLoggedInLabel.opaque = NO;
-
+        
         [staticImageView addSubview:whosLoggedInLabel];
-                
+        
         
         [whosLoggedInLabel release];
         [cameraBarButton release]; 
         [logoutButton release]; 
-        //[myClosetBarButton release];
     }
     
-    [self.view addSubview:staticImageView];
+    self.view = staticImageView;
     [staticImageView release];
+}
+
+- (void)viewDidLoad
+{
+    NSLog(@"RootViewController.m:44   viewDidLoad()");
 }
 
 - (void)viewDidUnload
@@ -382,7 +386,6 @@
     
     [self facebookLogin];
 
-//    [self viewDidLoad];
 }
 
 
@@ -410,7 +413,7 @@
     // logged out now, so get rid of this since it stores the login info
     jeanome = nil;
     
-    [self viewDidLoad];
+    [self loadView];
 }
 
 
@@ -449,7 +452,7 @@
     jeanome = [[Jeanome alloc] initWithFacebook:facebookId andDict:fbResult];
     
     //  We've set the Jeanome model object finally, so viewDidLoad() will now load the front page.
-    [self viewDidLoad];
+    [self loadView];
 }
 
 /**

@@ -227,4 +227,53 @@
 }
 
 
+/*
+    Pop's up an animate notiification box from the bottom!
+ 
+ */ 
++(void)notificationBox:(UIView *)view withMsg:(NSString *)msg
+{    
+    // Test animating a UILabel onto the screen
+    
+    CGFloat labelWidth = 200.0;
+    CGFloat labelHeight = 60.0;
+    CGFloat padding = 20.0;
+    
+    CGFloat x      = view.bounds.size.width - labelWidth - padding;
+    CGFloat startY = view.bounds.size.height + 30.0;
+    CGFloat endY   = view.bounds.size.height - 100.0;
+    
+    CGRect bottomRightCornerOffScreen = CGRectMake(x, startY, labelWidth, labelHeight);    
+    CGRect bottomRightCorner          = CGRectMake(x, endY, labelWidth, labelHeight);
+
+//    NSLog(@"bottomRightCornerOffScreen: %@", NSStringFromCGRect(bottomRightCornerOffScreen));
+//    NSLog(@"bottomRightCorner: %@", NSStringFromCGRect(bottomRightCorner));
+    
+    UILabel *lbl = [[UILabel alloc] initWithFrame:bottomRightCornerOffScreen];
+    lbl.textColor = [UIColor blackColor];
+    lbl.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:239.0f/255.0f blue:213.0f/255.0f alpha:1.0f];   // cream color
+    lbl.font = [UIFont systemFontOfSize:14.0];
+    lbl.text = msg;
+    lbl.textAlignment = UITextAlignmentLeft;
+    lbl.shadowColor = [UIColor colorWithWhite:0 alpha:0.75];
+    lbl.shadowOffset = CGSizeMake(0, -1);
+    lbl.numberOfLines = 0;   // Word wrap and use as many lines as needed
+    
+    
+    [UIView animateWithDuration:2.0 animations:^{ 
+        lbl.frame = bottomRightCorner;
+    } completion:^(BOOL finished) {     
+        
+        [NSThread sleepForTimeInterval:3.0];
+        
+        [UIView animateWithDuration:2.0 animations:^{
+            lbl.frame = bottomRightCornerOffScreen;
+        }];
+    }];
+    
+    [view addSubview:lbl];
+}
+
+
+
 @end

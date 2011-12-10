@@ -62,7 +62,7 @@
         
         UIImage *facebookLoginButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"LoginWithFacebookNormal" ofType:@"png"]]; 
         
-        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width, facebookLoginButtonImage.size.height)];
+        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width*2.0, facebookLoginButtonImage.size.height)];
         
         [facebookLoginButton setImage:facebookLoginButtonImage forState:UIControlStateNormal];
         [facebookLoginButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];        
@@ -78,6 +78,7 @@
          [tempLogoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];        
          [staticImageView addSubview:tempLogoutButton];
          [tempLogoutButton release];
+            
          */
     }
     else {        
@@ -131,12 +132,13 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"RootViewController.m:44   viewDidLoad()");
+    NSLog(@"RootViewController.m:135   viewDidLoad()");
     
 //  http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
-    
+        
+    // Change the background image
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
-    
+
 }
 
 - (void)viewDidUnload
@@ -150,7 +152,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"RootViewController.m:148   viewWillAppear()  animated: %d", animated);
+
 }
 
 
@@ -387,7 +389,7 @@
  * Called when the user has succesfully logged in.
  */   
 - (void)fbDidLogin {    
-    NSLog(@"RootViewController.m:351   fbDidLogin()");
+    NSLog(@"RootViewController.m:391   fbDidLogin()");
     
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
@@ -532,13 +534,17 @@
     after the user adds an item.
  
      http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
+ 
+    see ClosetItemDetailsViewController.m:129 in _saveClosetItemDetails()
  */
 - (void)closetItemWasAdded
 {
-    NSLog(@"RootViewController.m:538   itemWasAdded()");
+    NSLog(@"RootViewController.m:538   closetItemWasAdded()");
     
     //  TODO change staticImageView here     
     staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
+        
+    [Jeanome notificationBox:self.view withMsg:@"Booyah! You've just added a new item!  +10 points!"];    
 }
 
 @end

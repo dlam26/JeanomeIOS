@@ -49,4 +49,6 @@
 
 +(NSString *)getAccessToken;
 
++(void)notificationBox:(UIView *)view withMsg:(NSString *)msg;
+
 @end

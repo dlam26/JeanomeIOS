@@ -93,8 +93,6 @@
     }
     else {
         imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        NSLog(@"TakePhotoViewController.m:91   No camera available (probably on simulator, so picking from photo library");              
 
         //[self presentViewController:imgPicker animated:NO completion:NULL];
         
@@ -202,9 +200,10 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+#ifndef DEBUG
     NSLog(@"TakePhotoViewController.m:210  imagePickerControllerDidCancel()");
+#endif
 
-    
     [self dismissModalViewControllerAnimated:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
@@ -258,7 +257,9 @@
 // <UIScrollViewDelegate> 
 - (void)scrollViewDidScroll:(UIScrollView *)sv
 {
+#ifndef DEBUG
     NSLog(@"TakePhotoViewController.m:214   scrollViewDidScroll: %@", NSStringFromCGPoint(sv.contentOffset));
+#endif
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -287,9 +288,9 @@
 - (void)feather:(AFFeatherController *)featherController finishedWithImage:(UIImage *)image
 {
     // Handle the result image here
-    
+#ifndef DEBUG
     NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i ",[UIImagePNGRepresentation(image) length]);
-    
+#endif
     closetItem.image = image;
     closetItem.userId = jeanome.facebookId;
     
@@ -300,8 +301,10 @@
 
 - (void)featherCanceled:(AFFeatherController *)featherController
 {
-    // Handle cancelation here    
+    // Handle cancelation here
+#ifndef DEBUG
     NSLog(@"TakePhotoViewController.m:305   featherCancelled()");
+#endif
 }
 
 
@@ -355,7 +358,9 @@
  */ 
 -(void)saveDetails:(NSDictionary *)details
 {
+#ifndef DEBUG
     NSLog(@"TakePhotoViewController.m:359   saveDetails() <PhotoDetailsDelegate> method!" );
+#endif
     
     ClosetItem *c = [[ClosetItem alloc] initWithImageDict:details andId:nil];
     closetItem = c;

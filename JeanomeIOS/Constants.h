@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+// Whether or not to include NSLog's 
+#ifndef DEBUG
+#define DEBUG 1
+#endif
+
 //#define JEANOME_TITLE @"Jeanome™"
 #define JEANOME_TITLE @"Jeanome"
 

@@ -146,9 +146,12 @@
     
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:closetItem.userId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:[Jeanome getAccessToken]];
-    
+#ifndef DEBUG    
     NSLog(@"Jeanome.m:132  uploadToJeanome()  postURL: %@ ", postURL);
+    NSLog(@"Jeanome.m:151  facebookIdCookie()  %@", facebookIdCookie);
+    NSLog(@"Jeanome.m:152  accessTokenCookie()  %@", accessTokenCookie);
     
+#endif    
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     
     // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
@@ -176,7 +179,7 @@
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
     [request setTimeOutSeconds:20];  //  12/9/2011  uploads timing out, but still work! :O
     
-    // [request startSynchronous];
+    [request startSynchronous];
     
     NSError *error = [request error];
     
@@ -258,8 +261,7 @@
     lbl.shadowColor = [UIColor colorWithWhite:0 alpha:0.75];
     lbl.shadowOffset = CGSizeMake(0, -1);
     lbl.numberOfLines = 0;   // Word wrap and use as many lines as needed
-    
-    
+        
     [UIView animateWithDuration:2.0 animations:^{ 
         lbl.frame = bottomRightCorner;
     } completion:^(BOOL finished) {     
@@ -268,6 +270,8 @@
         
         [UIView animateWithDuration:2.0 animations:^{
             lbl.frame = bottomRightCornerOffScreen;
+        } completion:^(BOOL finished) {
+            [lbl removeFromSuperview]; 
         }];
     }];
     

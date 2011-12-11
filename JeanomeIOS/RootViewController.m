@@ -54,8 +54,6 @@
     if(!jeanome) {
         // not logged in, so show the login page!
         
-//        NSLog(@"RootViewController.m:55   viewDidLoad()   not logged in, so show login page -_-");
-        
         staticImageView.image = [UIImage imageNamed:@"Default.png"];
         
         self.navigationController.navigationBarHidden = YES;
@@ -77,13 +75,10 @@
          tempLogoutButton.titleLabel.textColor = [UIColor blackColor];
          [tempLogoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];        
          [staticImageView addSubview:tempLogoutButton];
-         [tempLogoutButton release];
-            
+         [tempLogoutButton release];            
          */
     }
     else {        
-//        NSLog(@"RootViewController.m:82   viewDidLoad()   Logged in! Show Mercedes splash page");
-        
         // logged in, so show mercedes splash image to take a photo!
         
         staticImageView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"iphone_wallpaper_instruction" ofType:@"png"]];        
@@ -132,13 +127,16 @@
 
 - (void)viewDidLoad
 {
+#ifndef DEBUG
     NSLog(@"RootViewController.m:135   viewDidLoad()");
-    
+#endif    
 //  http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
         
-    // Change the background image
+    // Change the background image if an item was added
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
 
+    
+    [Jeanome notificationBox:self.view withMsg:@"test test  RootViewController.m:143"];    
 }
 
 - (void)viewDidUnload
@@ -512,14 +510,20 @@
         // the facebook delegate method request:didLoad() which 
         // pushes root view controller
         
-        [[delegate facebook] authorize:nil];
+        //  Permissions granted in Jeanome Django code  templates/base.html:299
+        //       'email,offline_access,user_photos,friends_photos,publish_stream'
+        //
+        //     THIS IS IMPORTANT AS PHOTO ALBUM CREATION WILL NOT WORK WITHOUT THIS!!!1
+        //
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", @"offline_access", @"user_photos", @"friends_photos", @"publish_stream", nil];
+        
+        [[delegate facebook] authorize:permissions];
     }
     else {
-        // Already logged into facebook, so get info 
+        // Logged into facebook, so get info 
         // and load the view in facebook request:didLoad
         
-        NSLog(@"RootViewController.m:471  facebookLogin()  already logged in from NSUserDefaults!");
-        
+        NSLog(@"RootViewController.m:471  facebookLogin()  already logged in!");
         
         NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id,name" forKey:@"fields"];
         

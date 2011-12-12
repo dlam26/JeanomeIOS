@@ -146,12 +146,11 @@
     
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:closetItem.userId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:[Jeanome getAccessToken]];
-#ifndef DEBUG    
-    NSLog(@"Jeanome.m:132  uploadToJeanome()  postURL: %@ ", postURL);
-    NSLog(@"Jeanome.m:151  facebookIdCookie()  %@", facebookIdCookie);
-    NSLog(@"Jeanome.m:152  accessTokenCookie()  %@", accessTokenCookie);
-    
-#endif    
+
+    DebugLog(@" postURL: %@ ", postURL);
+//    DebugLog(@" facebookIdCookie  %@", facebookIdCookie);
+//    DebugLog(@" accessTokenCookie()  %@", accessTokenCookie);    
+
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     
     // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
@@ -161,8 +160,7 @@
     [twoDecimalDigitsFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [twoDecimalDigitsFormatter setMaximumFractionDigits:2];
     NSNumber *truncatedValue = [twoDecimalDigitsFormatter numberFromString:[twoDecimalDigitsFormatter stringFromNumber:closetItem.value]];
-    [twoDecimalDigitsFormatter release];
-    
+    [twoDecimalDigitsFormatter release];    
     
     [request setPostValue:closetItem.brand forKey:@"brand"];
     [request setPostValue:truncatedValue forKey:@"value"];
@@ -177,7 +175,7 @@
     [request addData:UIImageJPEGRepresentation(img, 1.0) forKey:@"picture"];
     [request setUseCookiePersistence:NO];
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
-    [request setTimeOutSeconds:20];  //  12/9/2011  uploads timing out, but still work! :O
+    [request setTimeOutSeconds:25];  //  12/9/2011  uploads timing out, but still work! :O
     
     [request startSynchronous];
     
@@ -187,7 +185,7 @@
         return [request responseString];
     }
     else {
-        NSLog(@"Jeanome.m:186   Error occurred while uploading pic!  %@", [error localizedDescription]);
+        DebugLog(@"  Error occurred while uploading pic!  %@", [error localizedDescription]);
         return nil;
     }
 }
@@ -214,7 +212,7 @@
     
     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
     
-    // NSLog(@"__createUploadCookie():  %@", cookie);
+    // DebugLog(@"__createUploadCookie():  %@", cookie);
     
     return cookie;
 }
@@ -249,9 +247,6 @@
     CGRect bottomRightCornerOffScreen = CGRectMake(x, startY, labelWidth, labelHeight);    
     CGRect bottomRightCorner          = CGRectMake(x, endY, labelWidth, labelHeight);
 
-//    NSLog(@"bottomRightCornerOffScreen: %@", NSStringFromCGRect(bottomRightCornerOffScreen));
-//    NSLog(@"bottomRightCorner: %@", NSStringFromCGRect(bottomRightCorner));
-    
     UILabel *lbl = [[UILabel alloc] initWithFrame:bottomRightCornerOffScreen];
     lbl.textColor = [UIColor blackColor];
     lbl.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:239.0f/255.0f blue:213.0f/255.0f alpha:1.0f];   // cream color
@@ -262,18 +257,26 @@
     lbl.shadowOffset = CGSizeMake(0, -1);
     lbl.numberOfLines = 0;   // Word wrap and use as many lines as needed
         
-    [UIView animateWithDuration:2.0 animations:^{ 
-        lbl.frame = bottomRightCorner;
-    } completion:^(BOOL finished) {     
+    [UIView animateWithDuration:2.0 
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{ 
+                         lbl.frame = bottomRightCorner;
+                     } completion:^(BOOL finished) {
         
-        [NSThread sleepForTimeInterval:3.0];
+                         [NSThread sleepForTimeInterval:2.0];
         
-        [UIView animateWithDuration:2.0 animations:^{
-            lbl.frame = bottomRightCornerOffScreen;
-        } completion:^(BOOL finished) {
-            [lbl removeFromSuperview]; 
-        }];
-    }];
+                         [UIView animateWithDuration:2.0 
+                                               delay:0
+                                             options:UIViewAnimationOptionAllowUserInteraction
+                                          animations:^{
+                                              lbl.frame = bottomRightCornerOffScreen;
+                                          } completion:^(BOOL finished) {
+                                              [lbl removeFromSuperview]; 
+                                          }
+                          ];
+                     }
+     ];
     
     [view addSubview:lbl];
 }

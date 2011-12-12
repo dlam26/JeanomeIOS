@@ -13,6 +13,7 @@
 #import "Jeanome.h"
 #import "AppDelegate.h"
 #import "TakePhotoViewController.h"
+#import "Constants.h"
 
 
 

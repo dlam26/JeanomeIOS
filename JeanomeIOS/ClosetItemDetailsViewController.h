@@ -19,7 +19,7 @@
 
 @required
 -(void)saveDetails:(NSDictionary *)details;
-
+-(void)openAviary;
 @end
 
 

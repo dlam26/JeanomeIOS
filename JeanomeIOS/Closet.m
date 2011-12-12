@@ -125,7 +125,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Closet.m:120   didSelectRowAtIndexPath()  %u", indexPath.row);
+    DebugLog(@"indexPath.row: %u", indexPath.row);
 }
 
 
@@ -145,7 +145,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Closet.m:108   cellForRowAtIndexPath()");
+    DebugLog();
     
     static NSString *CellIdentifier = @"Cell";
     

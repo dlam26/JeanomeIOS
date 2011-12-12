@@ -35,7 +35,7 @@
 
 - (void)loadView 
 {
-    NSLog(@"RootViewController.m:38   loadView()");
+    DebugLog();    
  
     CGRect wholeScreenRect  = [[UIScreen mainScreen] bounds];
 //    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
@@ -58,25 +58,17 @@
         
         self.navigationController.navigationBarHidden = YES;
         
-        UIImage *facebookLoginButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"LoginWithFacebookNormal" ofType:@"png"]]; 
+        UIImage *facebookLoginButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"LoginWithFacebookNormal" ofType:@"png"]];
         
-        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width*2.0, facebookLoginButtonImage.size.height)];
+//        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width*3.0, facebookLoginButtonImage.size.height*3.0)];
+  
+        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 323, facebookLoginButtonImage.size.width, facebookLoginButtonImage.size.height)];
         
         [facebookLoginButton setImage:facebookLoginButtonImage forState:UIControlStateNormal];
         [facebookLoginButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];        
         [facebookLoginButton sizeToFit];
         [staticImageView addSubview:facebookLoginButton];
         [facebookLoginButton release];
-        
-        // delete this later
-        /*
-         UIButton *tempLogoutButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 350, 300, 200)];
-         [tempLogoutButton setTitle:@"Logout" forState:UIControlStateNormal];
-         tempLogoutButton.titleLabel.textColor = [UIColor blackColor];
-         [tempLogoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];        
-         [staticImageView addSubview:tempLogoutButton];
-         [tempLogoutButton release];            
-         */
     }
     else {        
         // logged in, so show mercedes splash image to take a photo!
@@ -127,14 +119,12 @@
 
 - (void)viewDidLoad
 {
-#ifndef DEBUG
-    NSLog(@"RootViewController.m:135   viewDidLoad()");
-#endif    
+    DebugLog();
+
 //  http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
         
     // Change the background image if an item was added
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
-
     
     [Jeanome notificationBox:self.view withMsg:@"test test  RootViewController.m:143"];    
 }
@@ -163,7 +153,7 @@
 
 -(IBAction)startTakingPhoto:(id)sender
 {   
-    //NSLog(@"RootViewController.m:83   startTakingPhoto()");
+    DebugLog();
     
     UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	myIndicator.center = CGPointMake(160, 240);
@@ -183,7 +173,7 @@
 
 -(IBAction)openCloset:(id)sender
 {   
-    NSLog(@"RootViewController.m:99   openCloset()");
+    DebugLog();
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
@@ -387,17 +377,13 @@
  * Called when the user has succesfully logged in.
  */   
 - (void)fbDidLogin {    
-    NSLog(@"RootViewController.m:391   fbDidLogin()");
-    
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[[delegate facebook] accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[[delegate facebook] expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
-    
     [self facebookLogin];
-
 }
 
 
@@ -405,15 +391,13 @@
  * Called when the user dismissed the dialog without logging in.
  */
 - (void)fbDidNotLogin:(BOOL)cancelled {
-    NSLog(@"AppDelegate.m:378   fbDidNotLogin()");
+
 }
 
 /**
  * Called when the user logged out.
  */
-- (void) fbDidLogout {    
-    NSLog(@"RootViewController.m:385   fbDidLogout()");
-    
+- (void) fbDidLogout {
     // Remove saved authorization information if it exists
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"]) {

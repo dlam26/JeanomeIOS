@@ -57,12 +57,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+#ifndef DEBUG
+    NSLog(@"ClosetItemDetailsViewController.m:61   viewDidLoad()");
+#endif    
     // UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];    
     //self.navigationItem.rightBarButtonItem = doneButton;
 
     //  12/7/2011  After edit details of an image, it should upload the image.     
-    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(_saveClosetItemDetails:)];    
-    self.navigationItem.rightBarButtonItem = uploadButton;
+    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(_saveClosetItemDetails:)];
+    
+    UIBarButtonItem *goBackToAviaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToAviary)];
+
+    self.navigationItem.rightBarButtonItem = uploadButton;    
+    self.navigationItem.leftBarButtonItem = goBackToAviaryButton;
 
     //  12/7/2011  Hide keyboard if tapping off from textbox  
     //  http://stackoverflow.com/questions/2321038/dismiss-keyboard-by-touching-background-of-uitableview    
@@ -732,11 +739,11 @@
 }
 
 
+/*
+    see line 468 in cellForRowAtIndexPath()
+ */
 -(void)showCategorySelect
 {   
-    NSLog(@"ClosetItemDetailsViewController.m:735     showCategorySelect()");
-    
-  
     // Show a modal table view of all the categories to pick from
     UITableViewController *categorySelect = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
     //UITableView *ctv = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
@@ -783,6 +790,15 @@
     categoryTextField.text = category.selectedCategory;
     [self dismissModalViewControllerAnimated:YES];
 }
-                                             
+
+-(void)popToRootViewController
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)goBackToAviary
+{
+    [delegate openAviary];
+}
 
 @end

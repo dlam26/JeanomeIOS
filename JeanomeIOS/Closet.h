@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 #import "JSON.h"
 #import "ClosetItem.h"
 

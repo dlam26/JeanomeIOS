@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Jeanome.h"
+#import "Constants.h"
 #import "AFFeatherController.h"
 #import "ASIFormDataRequest.h"
 #import "FBRequest.h"
@@ -37,7 +38,6 @@
 
 @property(nonatomic, retain) IBOutlet UIImageView *imageView;
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
-@property(nonatomic, retain) IBOutlet UIToolbar *myToolbar;
 @property(nonatomic, retain) UIImagePickerController *imgPicker;
 @property(nonatomic, retain) UIImage *pickedImage;
 

@@ -22,7 +22,6 @@
 		1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EC148AEE460029BC43 /* Default@2x.png */; };
 		1A9FD4F2148B7A5B0029BC43 /* iphone_logo_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */; };
 		1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FD50B148B82910029BC43 /* RootViewController.m */; };
-		1A9FD50E148B82940029BC43 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD50C148B82930029BC43 /* RootViewController.xib */; };
 		1A9FD515148C9DD10029BC43 /* icon_camera_95.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD514148C9DD00029BC43 /* icon_camera_95.png */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
@@ -121,7 +120,6 @@
 		1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iphone_logo_57.png; path = ../iphone_logo_57.png; sourceTree = "<group>"; };
 		1A9FD50A148B82910029BC43 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1A9FD50B148B82910029BC43 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		1A9FD50C148B82930029BC43 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		1A9FD514148C9DD00029BC43 /* icon_camera_95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_camera_95.png; path = ../../../Dropbox/jeanome/html_css_mock_up/Jeanome_iPhone/icon_camera_95.png; sourceTree = "<group>"; };
 		1AA6D8071482DB6700525AB0 /* ClosetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetItem.h; sourceTree = "<group>"; };
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
@@ -330,7 +328,6 @@
 				1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */,
 				1A9FD50A148B82910029BC43 /* RootViewController.h */,
 				1A9FD50B148B82910029BC43 /* RootViewController.m */,
-				1A9FD50C148B82930029BC43 /* RootViewController.xib */,
 				64D65B9B146F2777007F4A49 /* SettingsViewController.h */,
 				64D65B9C146F2777007F4A49 /* SettingsViewController.m */,
 				64D65B9D146F2777007F4A49 /* SettingsViewController.xib */,
@@ -596,7 +593,6 @@
 				64F280C91489D1FC00490236 /* ClosetItemDetailsViewController.xib in Resources */,
 				1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */,
 				1A9FD4F2148B7A5B0029BC43 /* iphone_logo_57.png in Resources */,
-				1A9FD50E148B82940029BC43 /* RootViewController.xib in Resources */,
 				1A9FD515148C9DD10029BC43 /* icon_camera_95.png in Resources */,
 				1A33313D148D9253005E7B50 /* iphone_logo_toolbar.png in Resources */,
 				1A33313F148D96A5005E7B50 /* iphone_logo_toolbar@2x.png in Resources */,

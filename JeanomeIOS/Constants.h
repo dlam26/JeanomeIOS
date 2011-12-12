@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+// from http://blog.mbcharbonneau.com/2008/10/27/better-logging-in-objective-c/
+//
+//  maybe also see http://stackoverflow.com/questions/2207741/is-it-ok-to-submit-the-iphone-app-binary-with-nslog-statements  
+//
+#ifdef DEBUG
+//#define DebugLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#define DebugLog(__FORMAT__, ...) NSLog((@"%@:%d  %s " __FORMAT__), [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__)
+#else
+#define DebugLog(...) do {} while (0)
+#endif
+
+
 // Whether or not to include NSLog's 
 #ifndef DEBUG
 #define DEBUG 1

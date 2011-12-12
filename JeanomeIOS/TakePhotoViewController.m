@@ -28,7 +28,7 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, scrollView, myToolbar, imgPicker, pickedImage;
+@synthesize imageView, scrollView, imgPicker, pickedImage;
 
 @synthesize closetItem;
 @synthesize jeanome;
@@ -43,6 +43,7 @@
 - (id)initWithJeanome:(Jeanome *)j {
     self = [super init];
     if (self) {
+        DebugLog();	
         self.jeanome = j;
         self.closetItem = [[ClosetItem alloc] init];
     }
@@ -200,9 +201,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-#ifndef DEBUG
-    NSLog(@"TakePhotoViewController.m:210  imagePickerControllerDidCancel()");
-#endif
+    DebugLog();
 
     [self dismissModalViewControllerAnimated:YES];
     [[self navigationController] popViewControllerAnimated:NO];
@@ -257,9 +256,7 @@
 // <UIScrollViewDelegate> 
 - (void)scrollViewDidScroll:(UIScrollView *)sv
 {
-#ifndef DEBUG
-    NSLog(@"TakePhotoViewController.m:214   scrollViewDidScroll: %@", NSStringFromCGPoint(sv.contentOffset));
-#endif
+    DebugLog(@" sv.contentOffset: %@", NSStringFromCGPoint(sv.contentOffset));
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -288,9 +285,8 @@
 - (void)feather:(AFFeatherController *)featherController finishedWithImage:(UIImage *)image
 {
     // Handle the result image here
-#ifndef DEBUG
-    NSLog(@"TakePhotoViewController.m:304   feather:finishedWithImage()    image size in bytes:%i ",[UIImagePNGRepresentation(image) length]);
-#endif
+    DebugLog(@"image size in bytes:%i ",[UIImagePNGRepresentation(image) length]);
+
     closetItem.image = image;
     closetItem.userId = jeanome.facebookId;
     
@@ -301,10 +297,9 @@
 
 - (void)featherCanceled:(AFFeatherController *)featherController
 {
-    // Handle cancelation here
-#ifndef DEBUG
-    NSLog(@"TakePhotoViewController.m:305   featherCancelled()");
-#endif
+    DebugLog();
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
@@ -358,14 +353,21 @@
  */ 
 -(void)saveDetails:(NSDictionary *)details
 {
-#ifndef DEBUG
-    NSLog(@"TakePhotoViewController.m:359   saveDetails() <PhotoDetailsDelegate> method!" );
-#endif
+    DebugLog(@"In saveDetails() <PhotoDetailsDelegate> method!" );
     
     ClosetItem *c = [[ClosetItem alloc] initWithImageDict:details andId:nil];
     closetItem = c;
     
     // XXX    DONT RELEASE OR AUTORELEASE c HERE,  closetItem IS NOW POINTING TO IT!!!
+}
+
+/*
+    Used to show Aviary in case you hit back while editing item details!
+ */
+-(void)openAviary
+{
+    DebugLog();
+    [self showAviary:nil];
 }
 
 @end

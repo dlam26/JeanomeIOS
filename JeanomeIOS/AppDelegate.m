@@ -42,8 +42,7 @@
     self.navigationController = navController;
     [rootViewController release];
     [navController release];
-    
-    
+        
         
     // Initialize facebook
     facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID_DEV andDelegate:rootViewController];

@@ -79,10 +79,11 @@
         // UIBarButtonItem *myClosetBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icon_profile" ofType:@"png"]]  style:UIBarButtonItemStylePlain target:self action:@selector(openCloset:)];
         
         UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
-        
+
         self.navigationItem.leftBarButtonItem = cameraBarButton;
         self.navigationItem.rightBarButtonItem = logoutButton;
         self.navigationController.navigationBarHidden = NO;
+        [cameraBarButton release]; [logoutButton release]; 
         
         // NSLog(@"SCREEN applicationFraome.size: %@    self.view.frame.size: %@    self.view.bounds.size: %@", NSStringFromCGSize([UIScreen mainScreen].applicationFrame.size),  NSStringFromCGSize(self.view.frame.size), NSStringFromCGSize(self.view.bounds.size));
         /*
@@ -91,7 +92,7 @@
          NSLog(@"(%f,%f)",bottomLX,bottomLY);
          */
         
-        
+#ifdef DEBUG
         //  Show who's logged in on the bottom left   (80.0 seems like a lot to subtract...)
         CGFloat labelHeight = 20.0;
         CGFloat bottomPadding = 90.0;
@@ -102,13 +103,21 @@
         whosLoggedInLabel.font = [UIFont systemFontOfSize:12.0];
         whosLoggedInLabel.textColor = [UIColor whiteColor];
         whosLoggedInLabel.backgroundColor = [UIColor clearColor];
-        whosLoggedInLabel.opaque = NO;
-        
+        whosLoggedInLabel.opaque = NO;        
         [staticImageView addSubview:whosLoggedInLabel];
-                
+
+        
+        UILabel *jeanomeUrlLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, frame.size.height - bottomPadding - labelHeight, frame.size.width, labelHeight)]; 
+        jeanomeUrlLabel.text = [NSString stringWithFormat:@"JEANOME_URL: %@", JEANOME_URL];
+        jeanomeUrlLabel.font = whosLoggedInLabel.font;
+        jeanomeUrlLabel.textColor = whosLoggedInLabel.textColor;
+        jeanomeUrlLabel.backgroundColor = whosLoggedInLabel.backgroundColor;
+        jeanomeUrlLabel.opaque = whosLoggedInLabel.opaque;
+        [staticImageView addSubview:jeanomeUrlLabel];
+        [jeanomeUrlLabel release];
+        
         [whosLoggedInLabel release];
-        [cameraBarButton release]; 
-        [logoutButton release]; 
+#endif
     }
     
     self.view = staticImageView;

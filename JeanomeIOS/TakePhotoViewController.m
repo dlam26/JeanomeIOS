@@ -315,7 +315,7 @@
 -(IBAction)uploadPic:(id)sender
 {    
     closetItem.userId = jeanome.facebookId;
-    [Jeanome uploadToJeanome:closetItem withImage:imageView.image];
+    [Jeanome uploadToJeanome:closetItem withImage:imageView.image andDelegate:self];
 }
 
 

@@ -36,6 +36,7 @@
 
 // NOTE: dont put trailing slash kk
 #define JEANOME_URL @"http://localhost:8000"
+//#define JEANOME_URL @"http://staging.myjeanome.com"
 
 //  Important!  The id here needs to be concatenated with an fb 
 //  and put in the "URL types" -> "URL Schemes" in the info.plist file

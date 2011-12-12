@@ -124,9 +124,15 @@
 //  http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
         
     // Change the background image if an item was added
+    // ...see ClosetItemDetailsViewController.m:754 in _saveClosetItemDetails()
+    // 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
     
-    [Jeanome notificationBox:self.view withMsg:@"test test  RootViewController.m:143"];    
+    [Jeanome notificationBox:self.view withMsg:@"testing notification box...  RootViewController.m:143"];
+    
+//    UIView *loading = [Jeanome getLoadingBox:@"Uploading"];
+//    [self.view addSubview:loading];
+    
 }
 
 - (void)viewDidUnload
@@ -351,13 +357,13 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    NSLog(@"RootViewController.m:266  gestureRecognizer:shouldReceiveTouch()");
+    DebugLog();
     return YES;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"RootViewController.m:271  gestureRecognizerShouldBegin()");
+    DebugLog();
     return YES;
 }
 
@@ -442,7 +448,7 @@
     //FBRequest *fbRequest = request;
     id fbResult = result;
     
-    NSLog(@"RootViewController.m:430  FBRequest didLoad()  facebookId: %@", facebookId);
+    DebugLog(@"  facebookId: %@", facebookId);
     
     //  12/7/2011  Create a Jeanome object to hold facebook session info
     jeanome = [[Jeanome alloc] initWithFacebook:facebookId andDict:fbResult];
@@ -456,9 +462,8 @@
  * successfully.
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-    NSLog(@"RootViewController.m:413  didFailWithError()");
-    NSLog(@"Err message: %@", [[error userInfo] objectForKey:@"error_msg"]);
-    NSLog(@"Err code: %d", [error code]);
+    DebugLog(@"Err message: %@", [[error userInfo] objectForKey:@"error_msg"]);
+    DebugLog(@"Err code: %d", [error code]);
 }
 
 #pragma mark - @selector's
@@ -471,9 +476,7 @@
 
 - (void)facebookLogin
 {
-    NSLog(@"RootViewController.m:455    facebookLogin()");
-    
-    // NSLog(@"JeanomeViewController.m:83   facebookLogin()");
+    DebugLog();
     
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
@@ -484,11 +487,10 @@
         [delegate facebook].accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
         [delegate facebook].expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
     }
-    
-    
+        
     if (![[delegate facebook] isSessionValid]) {
         
-        NSLog(@"RootViewController.m:480  facebookLogin()  not logged in yet.");
+        DebugLog(@"not logged in yet!");
         
         // NOTE- this will perform a request which when done, will call 
         // the facebook delegate method request:didLoad() which 
@@ -507,7 +509,7 @@
         // Logged into facebook, so get info 
         // and load the view in facebook request:didLoad
         
-        NSLog(@"RootViewController.m:471  facebookLogin()  already logged in!");
+        DebugLog(@" already logged in!");
         
         NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithObject:@"id,name" forKey:@"fields"];
         
@@ -527,7 +529,7 @@
  */
 - (void)closetItemWasAdded
 {
-    NSLog(@"RootViewController.m:538   closetItemWasAdded()");
+    DebugLog(@"Closet item was added, so changing wallpaper and showing notificationBox!");
     
     //  TODO change staticImageView here     
     staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];

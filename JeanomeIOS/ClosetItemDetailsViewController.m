@@ -57,14 +57,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-#ifndef DEBUG
-    NSLog(@"ClosetItemDetailsViewController.m:61   viewDidLoad()");
-#endif    
+    DebugLog();
+
     // UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];    
     //self.navigationItem.rightBarButtonItem = doneButton;
 
     //  12/7/2011  After edit details of an image, it should upload the image.     
-    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(_saveClosetItemDetails:)];
+    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(_saveClosetItemDetails:)];
     
     UIBarButtonItem *goBackToAviaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToAviary)];
 
@@ -94,52 +93,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
-/*
-    12/6/2011   hmm don't think need to pass withImageURL anything because its set 
-                from the Python code after you upload
- 
-    12/7/2011  This now uploads the photo to Jeanome, so that it immediatley uploads
-    right after you enter in details.
-
- */
--(void)_saveClosetItemDetails:(id)sender
-{
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    
-    if ([self.categoryTextField.text length] == 0 || [self.brandTextField.text length] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Doh!" 
-                                                        message:@"Category and brand are required." 
-                                                       delegate:self cancelButtonTitle:@"Ok" 
-                                              otherButtonTitles:nil];
-        
-        [alert show];
-        [alert release];        
-    }
-    else {
-//        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-        
-        NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
-                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
-        [self.delegate saveDetails:imageDict];
-
-        ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
-        
-        [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image];
-        
-        [newClosetItem release];
-        
-        // see RootViewController.m:533  itemWasAdded()
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];        
-        
-        // Now, with everthing saved, go back to the front and show Mercedes cute splash screen   
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    
-    [df release]; [nf release];
 }
 
 #pragma mark - <UITextFieldDelegate>
@@ -665,6 +618,38 @@
     selectedField = field;
 }
 
+#pragma mark - <ASIHttpRequestDelegate>
+
+- (void)requestStarted:(ASIHTTPRequest *)request
+{
+    DebugLog();
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    DebugLog();
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+    // Show Mercedes cute splash screen after upload
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    DebugLog();
+    
+    if(loadingBox)
+        [loadingBox removeFromSuperview];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oh snap!" message:@"Sorry it didn't upload.  Please try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    
+    [alert show];
+    [alert release];
+}
 
 #pragma mark - OTHER
 
@@ -727,6 +712,72 @@
 }
 
 #pragma mark - methods used as @selector's
+
+
+/*
+ 12/6/2011   hmm don't think need to pass withImageURL anything because its set 
+ from the Python code after you upload
+ 
+ 12/7/2011  This now uploads the photo to Jeanome, so that it immediatley uploads
+ right after you enter in details.
+ 
+ */
+-(void)_saveClosetItemDetails:(id)sender
+{
+    [self hideInputs];  // Important!  need to hide or else activity indicator won't show!
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+    
+    if ([self.categoryTextField.text length] == 0 || [self.brandTextField.text length] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Doh!" 
+                                                        message:@"Category and brand are required." 
+                                                       delegate:self cancelButtonTitle:@"Ok" 
+                                              otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
+    else {
+        NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
+                                               withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
+        [self.delegate saveDetails:imageDict];
+        
+        loadingBox = [Jeanome getLoadingBox:@"Uploading"];
+        [self.view addSubview:loadingBox];
+        
+        ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
+        [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image andDelegate:self];
+        [newClosetItem release];
+                
+        // see RootViewController.m:533  itemWasAdded()
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
+
+        /*
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ 
+            
+            //Do some network stuff, possibly with a callback block, after which…
+            
+            ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
+            [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image andDelegate:self];
+            [newClosetItem release];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{ 
+                //Update the UI
+                UIView *loadingBox = [Jeanome getLoadingBox];
+                [self.view addSubview:loadingBox];
+            });
+        });
+         */
+        
+        // Now, with everthing saved, go back to the front and show Mercedes cute splash screen   
+        //     ...MOVED TO <ASIHttpRequest> requestFinished
+        //[self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
+    [df release]; [nf release];
+}
+
 
 /*
     see line 68
@@ -800,5 +851,6 @@
 {
     [delegate openAviary];
 }
+
 
 @end

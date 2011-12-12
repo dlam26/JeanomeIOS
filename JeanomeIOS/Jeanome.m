@@ -138,7 +138,7 @@
  
         closetItem.userId SET IN
  */
-+(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img
++(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img andDelegate:(id)delegate
 {
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
@@ -152,6 +152,8 @@
 //    DebugLog(@" accessTokenCookie()  %@", accessTokenCookie);    
 
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
+    [ASIFormDataRequest setShouldUpdateNetworkActivityIndicator:YES];
+    
     
     // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
     
@@ -176,8 +178,11 @@
     [request setUseCookiePersistence:NO];
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
     [request setTimeOutSeconds:25];  //  12/9/2011  uploads timing out, but still work! :O
+    [request setDelegate:delegate];
     
-    [request startSynchronous];
+//    [request startSynchronous];   // UIKit can't update screen with this!
+    [request startAsynchronous];
+    
     
     NSError *error = [request error];
     
@@ -279,6 +284,47 @@
      ];
     
     [view addSubview:lbl];
+}
+
++(UIView *)getLoadingBox
+{
+    return [Jeanome getLoadingBox:@"Loading"];
+}
+
+
+/*
+ http://stackoverflow.com/questions/3490991/big-activity-indicator-on-iphone
+ */
++(UIView *)getLoadingBox:(NSString *)loadingBoxText
+{
+    UIView *loading = [[UIView alloc] initWithFrame:CGRectMake(100, 200, 120, 120)]; 
+    
+    loading.layer.cornerRadius = 15;
+    loading.opaque = NO;
+    loading.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
+    
+//    UILabel *loadLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 81, 22)];
+    UILabel *loadLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, 110, 22)];
+    
+    loadLabel.text = loadingBoxText;
+    loadLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    loadLabel.textAlignment = UITextAlignmentCenter;
+    loadLabel.textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+    loadLabel.backgroundColor = [UIColor clearColor];
+    
+    [loading addSubview:loadLabel];
+    [loadLabel release];
+    
+    UIActivityIndicatorView *spinning = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinning.frame = CGRectMake(42, 54, 37, 37);
+    [spinning startAnimating];
+    
+    [loading addSubview:spinning];
+    [spinning release];
+    
+    loading.frame = CGRectMake(100, 200, 120, 120);
+
+    return loading;
 }
 
 

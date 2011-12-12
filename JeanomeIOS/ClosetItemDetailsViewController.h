@@ -23,7 +23,7 @@
 @end
 
 
-@interface ClosetItemDetailsViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate>
+@interface ClosetItemDetailsViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate, ASIHTTPRequestDelegate>
 {
     id <PhotoDetailsDelegate> delegate;
     ClosetItem *closetItem;
@@ -43,6 +43,8 @@
     
     UIPickerView *categoryPicker;
     UIActionSheet *categoryActionSheet;
+    
+    UIView *loadingBox;
 }
 
 @property(nonatomic,retain) id <PhotoDetailsDelegate> delegate;

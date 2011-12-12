@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "Constants.h"
 #import "ClosetItem.h"
@@ -44,11 +45,14 @@
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;
 +(UIView *)accessoryViewCreateDoneInput:(id)delegate;
 
-+(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img;
++(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img andDelegate:(id)delegate;
 +(NSHTTPCookie *)__createUploadCookie:(NSString *)name withValue:(NSString *)value;
 
 +(NSString *)getAccessToken;
 
 +(void)notificationBox:(UIView *)view withMsg:(NSString *)msg;
+
++(UIView *)getLoadingBox;
++(UIView *)getLoadingBox:(NSString *)loadingBoxText;
 
 @end

@@ -257,11 +257,12 @@
     lbl.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:239.0f/255.0f blue:213.0f/255.0f alpha:1.0f];   // cream color
     lbl.font = [UIFont systemFontOfSize:14.0];
     lbl.text = msg;
-    lbl.textAlignment = UITextAlignmentLeft;
+    lbl.textAlignment = UITextAlignmentCenter;
     lbl.shadowColor = [UIColor colorWithWhite:0 alpha:0.75];
     lbl.shadowOffset = CGSizeMake(0, -1);
     lbl.numberOfLines = 0;   // Word wrap and use as many lines as needed
-        
+    lbl.layer.cornerRadius = 15;    
+    
     [UIView animateWithDuration:2.0 
                           delay:0
                         options:UIViewAnimationOptionAllowUserInteraction
@@ -286,16 +287,16 @@
     [view addSubview:lbl];
 }
 
-+(UIView *)getLoadingBox
++(UIView *)newLoadingBox
 {
-    return [Jeanome getLoadingBox:@"Loading"];
+    return [Jeanome newLoadingBox:@"Loading"];
 }
 
 
 /*
  http://stackoverflow.com/questions/3490991/big-activity-indicator-on-iphone
  */
-+(UIView *)getLoadingBox:(NSString *)loadingBoxText
++(UIView *)newLoadingBox:(NSString *)loadingBoxText
 {
     UIView *loading = [[UIView alloc] initWithFrame:CGRectMake(100, 200, 120, 120)]; 
     
@@ -311,14 +312,12 @@
     loadLabel.textAlignment = UITextAlignmentCenter;
     loadLabel.textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     loadLabel.backgroundColor = [UIColor clearColor];
-    
     [loading addSubview:loadLabel];
     [loadLabel release];
     
     UIActivityIndicatorView *spinning = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     spinning.frame = CGRectMake(42, 54, 37, 37);
     [spinning startAnimating];
-    
     [loading addSubview:spinning];
     [spinning release];
     

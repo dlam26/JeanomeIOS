@@ -747,29 +747,13 @@
                                                withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
         [self.delegate saveDetails:imageDict];
         
-        loadingBox = [Jeanome getLoadingBox:@"Uploading"];
+        loadingBox = [Jeanome newLoadingBox:@"Uploading"];
         [self.view addSubview:loadingBox];
+        [loadingBox release];
         
         ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
         [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image andDelegate:self];
         [newClosetItem release];
-
-        /*
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ 
-            
-            //Do some network stuff, possibly with a callback block, after which…
-            
-            ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
-            [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image andDelegate:self];
-            [newClosetItem release];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{ 
-                //Update the UI
-                UIView *loadingBox = [Jeanome getLoadingBox];
-                [self.view addSubview:loadingBox];
-            });
-        });
-         */
         
         // Now, with everthing saved, go back to the front and show Mercedes cute splash screen   
         //     ...MOVED TO <ASIHttpRequest> requestFinished

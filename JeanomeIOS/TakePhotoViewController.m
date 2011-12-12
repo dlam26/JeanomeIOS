@@ -35,7 +35,6 @@
 
 
 - (void)dealloc {
-    [self.closetItem release];
     [imageView release];
     [super dealloc];
 }
@@ -61,6 +60,9 @@
 
 #pragma mark - View lifecycle
 
+/*
+    XXX  This mostly sets up a UI which is not used at all
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -84,11 +86,12 @@
     imgPicker = [[UIImagePickerController alloc] init];
     imgPicker.delegate = self;
     imgPicker.allowsEditing = NO;
-    //imgPicker.showsCameraControls = NO;
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) 
     {
-        imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;        
+        imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        //imgPicker.cameraOverlayView = SOME_OVERLAY_VIEW;
 
         [self presentViewController:imgPicker animated:NO completion:NULL];        
     }
@@ -177,7 +180,7 @@
 }
 
 
-#pragma mark - UIImagePickerControllerDelegate
+#pragma mark - <UIImagePickerControllerDelegate>
 
 /*
     Called after selecting a picture in the photo select page
@@ -233,14 +236,17 @@
     //NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()  closetItem retain count: %u", [closetItem retainCount]);
     
     if (image) {
-        //
         // Use the following two lines to include the meme tool if desired.
         //
         // NSArray *tools = [AFDefaultTools() arrayByAddingObject:kAFMeme];
         // AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image andTools:tools] autorelease];
-        //
+        
+        //  How to customize look?   http://developers.aviary.com/ios-sdk
         AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
         [featherController setDelegate:self];
+        [featherController.topBar setTintColor:[Jeanome getJeanomeColor]];
+//        [featherController.bottomBar setTintColor:[Jeanome getJeanomeColor]];
+//        [featherController.paramsBar setTintColor:[Jeanome getJeanomeColor]];
         
         //  11/29/2011   Set animated to null, since you see TakePhotoViewController.xlb for like 
         //               a half a second while its animating to Aviary
@@ -250,8 +256,17 @@
     }
 }
 
-#pragma mark -
-#pragma mark UIScrollView delegate methods
+- (UIButton *)feather:(AFFeatherController *)featherController buttonForPlugin:(id<AFFeatherPlugin>)plugin
+{
+    UIButton *button = [plugin button];
+    
+    button.tintColor = [Jeanome getJeanomeColor];
+    
+    return button;
+}
+
+
+#pragma mark - <UIScrollViewDelegate>
 
 // <UIScrollViewDelegate> 
 - (void)scrollViewDidScroll:(UIScrollView *)sv

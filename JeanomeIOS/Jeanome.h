@@ -52,7 +52,7 @@
 
 +(void)notificationBox:(UIView *)view withMsg:(NSString *)msg;
 
-+(UIView *)getLoadingBox;
-+(UIView *)getLoadingBox:(NSString *)loadingBoxText;
++(UIView *)newLoadingBox;
++(UIView *)newLoadingBox:(NSString *)loadingBoxText;
 
 @end

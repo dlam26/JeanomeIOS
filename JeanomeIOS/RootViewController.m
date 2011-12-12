@@ -10,7 +10,7 @@
 
 @implementation RootViewController
 
-@synthesize rootTableView, staticImageView, jeanome;
+@synthesize rootTableView, staticImageView, jeanome, facebookLoginButton;
 
 // old
 - (id)initWithJeanome:(Jeanome *)j
@@ -38,7 +38,8 @@
     DebugLog();    
  
     CGRect wholeScreenRect  = [[UIScreen mainScreen] bounds];
-//    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+//    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];    
+//    CGRect hardcodedWholeScreenRect = CGRectMake(0, 0, 320, 480);
     
     CGRect frame = wholeScreenRect;
     
@@ -60,13 +61,11 @@
         
         UIImage *facebookLoginButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"LoginWithFacebookNormal" ofType:@"png"]];
         
-//        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 323, facebookLoginButtonImage.size.width*3.0, facebookLoginButtonImage.size.height*3.0)];
-  
-        UIButton *facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 323, facebookLoginButtonImage.size.width, facebookLoginButtonImage.size.height)];
-        
+        facebookLoginButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 323, facebookLoginButtonImage.size.width, facebookLoginButtonImage.size.height)];
         [facebookLoginButton setImage:facebookLoginButtonImage forState:UIControlStateNormal];
         [facebookLoginButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];        
         [facebookLoginButton sizeToFit];
+        [facebookLoginButton setAlpha:0.0];                 // for fade in animation!  see viewDidLoad
         [staticImageView addSubview:facebookLoginButton];
         [facebookLoginButton release];
     }
@@ -106,8 +105,7 @@
         whosLoggedInLabel.opaque = NO;
         
         [staticImageView addSubview:whosLoggedInLabel];
-        
-        
+                
         [whosLoggedInLabel release];
         [cameraBarButton release]; 
         [logoutButton release]; 
@@ -128,11 +126,17 @@
     // 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
     
-    [Jeanome notificationBox:self.view withMsg:@"testing notification box...  RootViewController.m:143"];
-    
-//    UIView *loading = [Jeanome getLoadingBox:@"Uploading"];
-//    [self.view addSubview:loading];
-    
+//    [Jeanome notificationBox:self.view withMsg:@"testing notification box...  RootViewController.m:143"];
+        
+    // Should only run on app launch!
+    //    XXX  12/12/2011   Removing this if(!jeanome) block could cause a 'deallocated instance' 
+    //                      crash on facebookLoginButton if hitting cancel from Aviary
+    //  
+    if(!jeanome) {
+        [UIView animateWithDuration:1.0 animations:^{
+            facebookLoginButton.alpha = 1.0;
+        }];
+    }
 }
 
 - (void)viewDidUnload
@@ -146,9 +150,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-
+    DebugLog();
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -160,19 +163,16 @@
 -(IBAction)startTakingPhoto:(id)sender
 {   
     DebugLog();
-    
-    UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	myIndicator.center = CGPointMake(160, 240);
-	myIndicator.hidesWhenStopped = NO;
-    
-    [myIndicator startAnimating];
+
+    //dosen't work, needs to be async
+//    UIView *loadingBox = [Jeanome newLoadingBox];    
+//    [self.view addSubview:loadingBox];
     
     TakePhotoViewController *tpvc = [[TakePhotoViewController alloc] initWithJeanome:jeanome];
-    // tpvc.title = @"How's it look?";
-    
     [self.navigationController pushViewController:tpvc animated:YES];
-
-    [tpvc release]; [myIndicator release];
+    [tpvc release]; 
+    
+//    [loadingBox release];
 }
 
 
@@ -308,9 +308,6 @@
     return cell;
 }
 
-
-
-
 #pragma mark - <UITableViewDelegate>
 
 /*
@@ -404,6 +401,7 @@
  * Called when the user logged out.
  */
 - (void) fbDidLogout {
+    DebugLog();
     // Remove saved authorization information if it exists
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"]) {
@@ -416,6 +414,9 @@
     jeanome = nil;
     
     [self loadView];
+    [self viewDidLoad];
+    
+//    [Jeanome notificationBox:self.view withMsg:@"Thanks for using Jeanome!"];
 }
 
 
@@ -448,7 +449,7 @@
     //FBRequest *fbRequest = request;
     id fbResult = result;
     
-    DebugLog(@"  facebookId: %@", facebookId);
+//    DebugLog(@"  facebookId: %@", facebookId);
     
     //  12/7/2011  Create a Jeanome object to hold facebook session info
     jeanome = [[Jeanome alloc] initWithFacebook:facebookId andDict:fbResult];
@@ -467,6 +468,8 @@
 }
 
 #pragma mark - @selector's
+
+//  See viewDidLoad() on line 81ish
 
 - (void)logout
 {

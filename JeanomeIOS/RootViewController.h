@@ -19,9 +19,10 @@
 
 @interface RootViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, FBSessionDelegate, FBRequestDelegate> {
     
-    UITableView *rootTableView;
-    
+    UITableView *rootTableView;    
     UIImageView *staticImageView;
+    
+    UIButton *facebookLoginButton;
     
     Jeanome *jeanome;
 }
@@ -29,8 +30,8 @@
 
 @property (strong,nonatomic) UITableView *rootTableView;
 @property (nonatomic,retain) UIImageView *staticImageView;
-
-@property(nonatomic,retain) Jeanome *jeanome;
+@property (nonatomic,retain) UIButton *facebookLoginButton;
+@property (nonatomic,retain) Jeanome *jeanome;
 
 - (id)initWithJeanome:(Jeanome *)j;
 - (void)facebookLogin;

@@ -628,6 +628,7 @@
 }
 
 
+// Enter here if succssfully uploaded a new closet item!
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     DebugLog();
@@ -636,6 +637,9 @@
     
     // Show Mercedes cute splash screen after upload
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    // see RootViewController.m:533  itemWasAdded()
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -749,9 +753,6 @@
         ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
         [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image andDelegate:self];
         [newClosetItem release];
-                
-        // see RootViewController.m:533  itemWasAdded()
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
 
         /*
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ 

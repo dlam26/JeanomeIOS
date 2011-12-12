@@ -525,7 +525,7 @@
  
      http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
  
-    see ClosetItemDetailsViewController.m:129 in _saveClosetItemDetails()
+    see ClosetItemDetailsViewController.m:754 in _saveClosetItemDetails()
  */
 - (void)closetItemWasAdded
 {

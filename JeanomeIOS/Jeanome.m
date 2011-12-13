@@ -7,6 +7,7 @@
 //
 
 #import "Jeanome.h"
+#import "Reachability.h"
 
 @implementation Jeanome 
 
@@ -23,6 +24,13 @@
         self.facebookLoginDict = fbDict;
     }
     return self;
+}
+
++(BOOL)isConnectedToInternet
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];  
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return !(networkStatus == NotReachable);
 }
 
 + (UIColor *)getJeanomeColor
@@ -294,6 +302,9 @@
 
 
 /*
+    Returns a UIView showing a translucent gray box containing a spinning 
+    UIActivityIndcatorView in the middle of it
+ 
  http://stackoverflow.com/questions/3490991/big-activity-indicator-on-iphone
  */
 +(UIView *)newLoadingBox:(NSString *)loadingBoxText
@@ -326,6 +337,17 @@
     return loading;
 }
 
++(UIAlertView *)newNoInternetConnectionAlertView
+{    
+    return [Jeanome newNoInternetConnectionAlertView:@"Error loading, check if you have an internet connection."];
+}
+
++(UIAlertView *)newNoInternetConnectionAlertView:(NSString *)errorMessage
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oh snap!" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];        
+    
+    return alertView;
+}
 
 
 @end

@@ -37,6 +37,9 @@
 
 -(id)initWithFacebook:(NSString *)id andDict:(NSDictionary *)dict;
 
+// from 'cannyboy' at http://stackoverflow.com/questions/1083701/how-to-check-for-an-active-internet-connection-on-iphone-sdk
++(BOOL)isConnectedToInternet;
+
 +(UIColor *)getJeanomeColor;
 +(UIImageView *)getJeanomeLogoImageView;
 +(CGRect)getNavigationBarFrame;
@@ -54,5 +57,8 @@
 
 +(UIView *)newLoadingBox;
 +(UIView *)newLoadingBox:(NSString *)loadingBoxText;
+
++(UIAlertView *)newNoInternetConnectionAlertView;
++(UIAlertView *)newNoInternetConnectionAlertView:(NSString *)errorMessage;
 
 @end

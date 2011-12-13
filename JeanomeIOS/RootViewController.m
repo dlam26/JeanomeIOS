@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "Reachability.h"
 
 @implementation RootViewController
 
@@ -105,8 +106,8 @@
         whosLoggedInLabel.backgroundColor = [UIColor clearColor];
         whosLoggedInLabel.opaque = NO;        
         [staticImageView addSubview:whosLoggedInLabel];
-
         
+
         UILabel *jeanomeUrlLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, frame.size.height - bottomPadding - labelHeight, frame.size.width, labelHeight)]; 
         jeanomeUrlLabel.text = [NSString stringWithFormat:@"JEANOME_URL: %@", JEANOME_URL];
         jeanomeUrlLabel.font = whosLoggedInLabel.font;
@@ -425,7 +426,7 @@
     [self loadView];
     [self viewDidLoad];
     
-//    [Jeanome notificationBox:self.view withMsg:@"Thanks for using Jeanome!"];
+    [Jeanome notificationBox:self.view withMsg:@"Visit www.myjeanome.com to view your closet and other goodies!"];
 }
 
 
@@ -473,7 +474,14 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     DebugLog(@"Err message: %@", [[error userInfo] objectForKey:@"error_msg"]);
-    DebugLog(@"Err code: %d", [error code]);
+    DebugLog(@"Err code: %d   localized description: %@", [error code], [error localizedDescription]);
+    
+    if([error code] == NSURLErrorCannotConnectToHost) {
+        
+        UIAlertView *alert = [Jeanome newNoInternetConnectionAlertView];
+        [alert show];
+        [alert release];
+    }
 }
 
 #pragma mark - @selector's
@@ -500,7 +508,12 @@
         [delegate facebook].expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
     }
         
-    if (![[delegate facebook] isSessionValid]) {
+    if(![Jeanome isConnectedToInternet]) {
+        UIAlertView *av = [Jeanome newNoInternetConnectionAlertView:@"Couldn't login. Check your internet connection!"];
+        [av show];
+        [av release];        
+    }    
+    else if (![[delegate facebook] isSessionValid]) {
         
         DebugLog(@"not logged in yet!");
         
@@ -516,6 +529,8 @@
         NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", @"offline_access", @"user_photos", @"friends_photos", @"publish_stream", nil];
         
         [[delegate facebook] authorize:permissions];
+        
+        [permissions release];
     }
     else {
         // Logged into facebook, so get info 

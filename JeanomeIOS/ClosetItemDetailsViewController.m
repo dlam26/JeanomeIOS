@@ -63,7 +63,7 @@
     //self.navigationItem.rightBarButtonItem = doneButton;
 
     //  12/7/2011  After edit details of an image, it should upload the image.     
-    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(_saveClosetItemDetails:)];
+    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit!" style:UIBarButtonItemStylePlain target:self action:@selector(_saveClosetItemDetails:)];
     
     UIBarButtonItem *goBackToAviaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToAviary)];
 
@@ -79,7 +79,7 @@
         
     [self registerForKeyboardNotifications];
     
-    [uploadButton release]; [tapGr release];
+    [uploadButton release]; [goBackToAviaryButton release]; [tapGr release];
 }
 
 - (void)viewDidUnload
@@ -400,7 +400,8 @@
     if([indexPath section] == 0) {    // Just holds the ClosetItem image
         
         itemImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20.0, 0.0, 140.0, 140.0)];                
-        itemImageView.image = closetItem.image;                          
+        itemImageView.image = closetItem.image;  
+        itemImageView.contentMode = UIViewContentModeScaleAspectFit;
         [cell addSubview:itemImageView];
         
         // get rid of the cell borders
@@ -446,11 +447,11 @@
             tf.keyboardType  = UIKeyboardTypeDefault;
             tf.returnKeyType = UIReturnKeyNext;
             tf.text          = closetItem.brand;
+            tf.autocapitalizationType = UITextAutocapitalizationTypeWords;
             brandTextField   = tf;
         }
         
         tf.autocorrectionType = UITextAutocorrectionTypeNo;
-        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
         tf.textAlignment = UITextAlignmentLeft;
         tf.tag = 0;
         tf.clearButtonMode = UITextFieldViewModeNever;
@@ -642,14 +643,25 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
 }
 
+/*
+    [[request error] code]  
+ 
+        #1  "A Connection failure occurred"
+ 
+ 
+ */
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     DebugLog();
-    
+        
     if(loadingBox)
         [loadingBox removeFromSuperview];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oh snap!" message:@"Sorry it didn't upload.  Please try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+//    NSError *error = [request error];    
+//    NSInteger errorCode = [error code];
+//    NSString *localizedDescription = [error localizedDescription];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oh snap!" message:[NSString stringWithFormat:@"Sorry, but it didn't upload.  Check your internet connection and please try again."] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     
     [alert show];
     [alert release];

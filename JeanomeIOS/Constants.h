@@ -20,22 +20,26 @@
 #endif
 
 
-// Whether or not to include NSLog's 
-#ifndef DEBUG
-#define DEBUG 1
-#endif
 
 //#define JEANOME_TITLE @"Jeanome™"
 #define JEANOME_TITLE @"Jeanome"
 
+// NOTE: dont put trailing slash for these
 #define JEANOME_URL_LOCAL @"http://localhost:8000"
 #define JEANOME_URL_LOCAL2 @"http://10.0.1.23:8000"
 #define JEANOME_URL_MERCEDES @"http//192.168.1.119:8000"
 #define JEANOME_URL_STAGING @"http://staging.myjeanome.com"
 #define JEANOME_URL_PRODUCTION @"http://myjeanome.com"
 
-// NOTE: dont put trailing slash kk
-#define JEANOME_URL @"http://localhost:8000"
+
+#ifdef DEBUG
+#define JEANOME_URL JEANOME_URL_LOCAL2
+#else
+#define JEANOME_URL JEANOME_URL_PRODUCTION
+#endif
+
+
+
 //#define JEANOME_URL @"http://staging.myjeanome.com"
 
 //  Important!  The id here needs to be concatenated with an fb 

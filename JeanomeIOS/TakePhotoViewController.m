@@ -36,6 +36,7 @@
 
 - (void)dealloc {
     [imageView release];
+    [closetItem release];
     [super dealloc];
 }
 
@@ -44,7 +45,7 @@
     if (self) {
         DebugLog();	
         self.jeanome = j;
-        self.closetItem = [[ClosetItem alloc] init];
+        self.closetItem = [[[ClosetItem alloc] init] autorelease];
     }
     return self;
 }

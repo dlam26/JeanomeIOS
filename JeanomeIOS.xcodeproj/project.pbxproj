@@ -23,6 +23,7 @@
 		1A9FD4F2148B7A5B0029BC43 /* iphone_logo_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4F1148B7A5B0029BC43 /* iphone_logo_57.png */; };
 		1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FD50B148B82910029BC43 /* RootViewController.m */; };
 		1A9FD515148C9DD10029BC43 /* icon_camera_95.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD514148C9DD00029BC43 /* icon_camera_95.png */; };
+		1AA023EF14960F2800231D4F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EF148AEE4A0029BC43 /* Default.png */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
 		1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0F148596CE0032D2E7 /* newlogo.png */; };
@@ -602,6 +603,7 @@
 				1A247EE9149169CE00EFDDC1 /* iphone_wallpaper_instruction@2x.png in Resources */,
 				1A247EEE1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png in Resources */,
 				1A247EEF1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png in Resources */,
+				1AA023EF14960F2800231D4F /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

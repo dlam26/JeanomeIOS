@@ -34,27 +34,38 @@
 
 #pragma mark - View lifecycle
 
+/*
+    FIXME  Splash screen on staticImageView shifting down by a couple pixels on load
+ 
+    maybe a fix?
+    http://stackoverflow.com/questions/8030075/uiimageview-custom-splash-screen-frame-issue
+ 
+ */
 - (void)loadView 
 {
-    DebugLog();    
- 
+    DebugLog();   
+    self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
+
     CGRect wholeScreenRect  = [[UIScreen mainScreen] bounds];
 //    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];    
 //    CGRect hardcodedWholeScreenRect = CGRectMake(0, 0, 320, 480);
-    
+    CGRect wholeScreenMinusStatusBarRect = CGRectMake(wholeScreenRect.origin.x, wholeScreenRect.origin.y - 20.0, wholeScreenRect.size.width, wholeScreenRect.size.height);
+        
     CGRect frame = wholeScreenRect;
+
     
 //    NSLog(@"RootViewController.m:37  viewDidLoad()  self.view.frame: %@   wholeScreenRect: %@   applicationFrameRect: %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(wholeScreenRect), NSStringFromCGRect(applicationFrame));
-    
-    self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
-    
+        
     //  12/8/2011  Show a static image mercedes made that fits the whole screen
     //
-    staticImageView = [[UIImageView alloc] initWithFrame:frame];    
+    staticImageView = [[UIImageView alloc] init];
     staticImageView.userInteractionEnabled = YES;  // disabled by default
+
     
     if(!jeanome) {
         // not logged in, so show the login page!
+        
+        staticImageView.frame = wholeScreenMinusStatusBarRect;  // status bar messing up position
         
         staticImageView.image = [UIImage imageNamed:@"Default.png"];
         
@@ -72,6 +83,8 @@
     }
     else {        
         // logged in, so show mercedes splash image to take a photo!
+        
+        staticImageView.frame = wholeScreenRect;
         
         staticImageView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"iphone_wallpaper_instruction" ofType:@"png"]];        
         
@@ -121,14 +134,17 @@
 #endif
     }
     
-    self.view = staticImageView;
+    UIView *wrapper = [[UIView alloc] init];  // here so CGRect/frame's are obeyed
+    [wrapper addSubview:staticImageView];
+    
+    self.view = wrapper;  // WARNING don't add subView here, or else infinite loop!
     [staticImageView release];
 }
 
 - (void)viewDidLoad
 {
     DebugLog();
-
+    
 //  http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
         
     // Change the background image if an item was added

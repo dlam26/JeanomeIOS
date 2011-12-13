@@ -158,12 +158,18 @@
     DebugLog(@" postURL: %@ ", postURL);
 //    DebugLog(@" facebookIdCookie  %@", facebookIdCookie);
 //    DebugLog(@" accessTokenCookie()  %@", accessTokenCookie);    
-
+    
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     [ASIFormDataRequest setShouldUpdateNetworkActivityIndicator:YES];
-    
-    
+        
     // views.py:203   request.POST: {u'category': [u''], u'note': [u'22'], u'brand': [u'222'], u'do_add_item': [u'Submit'], u'value': [u'222']}
+        
+    // If the 'value' is empty or negative, just set it to 0.  Otherwise the python
+    // code will check closet_item_form.is_valid() and return false
+    if(closetItem.value == nil || closetItem.value < 0) {
+        DebugLog(@"  setting closet item to 0 since it was nil or negative!");
+        closetItem.value = [NSNumber numberWithInt:0];
+    }
     
     // Can only have 2 decimal digits!
     NSNumberFormatter *twoDecimalDigitsFormatter = [[NSNumberFormatter alloc] init];

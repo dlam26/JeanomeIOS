@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 
 @interface Category : NSObject <UITableViewDataSource, UITableViewDelegate> {
     

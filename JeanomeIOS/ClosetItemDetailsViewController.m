@@ -808,9 +808,9 @@
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"Category"];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(categorySelectCancel)];    
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(categorySelectDone)];    
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(categorySelectDone)];    
     navItem.leftBarButtonItem  = cancelButton;
-    navItem.rightBarButtonItem = doneButton;    
+//    navItem.rightBarButtonItem = doneButton;    
     [bar pushNavigationItem:navItem animated:NO];
     
     UIViewController *wrapperController = [[UIViewController alloc] init];
@@ -823,7 +823,11 @@
     
     [self presentModalViewController:wrapperController animated:YES];
     
-    [categorySelect release]; [cancelButton release]; [doneButton release]; 
+    // Close the modal category select as soon as one is selected  (see Category.m:54)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(categorySelectDone) name:NOTIFICATION_CATEGORY_SELECTED object:category];
+    
+    [categorySelect release]; [cancelButton release]; 
+//    [doneButton release]; 
     [bar release]; [navItem release]; 
     [wrapperController release]; [wrapper release];
 }

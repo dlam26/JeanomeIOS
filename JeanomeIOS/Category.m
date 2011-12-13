@@ -50,6 +50,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     selectedCategory = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    
+    // see ClosetItemDetailsViewController.m:827
+    [NSThread sleepForTimeInterval:0.5]; // slight pause, so modal view dosent suddenly dissappear    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CATEGORY_SELECTED object:self];
 }
 
 

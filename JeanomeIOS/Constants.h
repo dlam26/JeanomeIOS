@@ -56,3 +56,4 @@
 #define SETTING_JEANOME_URL @"jeanomeurl"
 
 #define NOTIFICATION_CLOSET_ITEM_ADDED @"NotificationClosetItemAdded"
+#define NOTIFICATION_CATEGORY_SELECTED @"NotificationCategorySelected"

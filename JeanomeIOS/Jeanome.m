@@ -146,7 +146,7 @@
  
         closetItem.userId SET IN
  */
-+(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img andDelegate:(id)delegate
++(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img withUploadProgressDelegate:(id)progressDelegate andDelegate:(id)delegate
 {
     // important!  needs to have trailing slash or Django complains about 
     // the APPEND_SLASH setting not being set...
@@ -155,9 +155,7 @@
     NSHTTPCookie *facebookIdCookie = [self __createUploadCookie:@"userID" withValue:closetItem.userId];    
     NSHTTPCookie *accessTokenCookie = [self __createUploadCookie:@"accessToken" withValue:[Jeanome getAccessToken]];
 
-    DebugLog(@" postURL: %@ ", postURL);
-//    DebugLog(@" facebookIdCookie  %@", facebookIdCookie);
-//    DebugLog(@" accessTokenCookie()  %@", accessTokenCookie);    
+    DebugLog(@" postURL: %@ ", postURL);   
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:postURL];
     [ASIFormDataRequest setShouldUpdateNetworkActivityIndicator:YES];
@@ -191,11 +189,21 @@
     [request addData:UIImageJPEGRepresentation(img, 1.0) forKey:@"picture"];
     [request setUseCookiePersistence:NO];
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
-    [request setTimeOutSeconds:25];  //  12/9/2011  uploads timing out, but still work! :O
+
+    //  12/9/2011  uploads timing out, but still work! :O
+    //     30 - uploads but still get timeout when Django POSTs to facebook
+    [request setTimeOutSeconds:30];
+
+    // http://allseeing-i.com/ASIHTTPRequest/How-to-use#progress
+    [request setUploadProgressDelegate:progressDelegate];
+    [request setShowAccurateProgress:YES];
+    
     [request setDelegate:delegate];
     
 //    [request startSynchronous];   // UIKit can't update screen with this!
     [request startAsynchronous];
+    
+    
     
     
     NSError *error = [request error];
@@ -284,7 +292,7 @@
                          lbl.frame = bottomRightCorner;
                      } completion:^(BOOL finished) {
         
-                         [NSThread sleepForTimeInterval:2.0];
+                         [NSThread sleepForTimeInterval:1.5];
         
                          [UIView animateWithDuration:2.0 
                                                delay:0
@@ -338,7 +346,6 @@
     [loading addSubview:spinning];
     [spinning release];
     
-    loading.frame = CGRectMake(100, 200, 120, 120);
 
     return loading;
 }

@@ -143,6 +143,9 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
 //    DebugLog();
+    
+    // started in RootViewController.m:657  imageTapped()
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView

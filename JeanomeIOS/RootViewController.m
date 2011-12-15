@@ -624,7 +624,7 @@
         
 //    [Jeanome notificationBox:self.view withMsg:@"Booyah! You've just added a new item!  +10 points!"];    
     
-    [Jeanome notificationBox:self.view withMsg:[NSString stringWithFormat:@"Booyah! You just added a new item! +10 points!  Total: %@.", newPointTotal]];
+    [Jeanome notificationBox:self.view withMsg:[NSString stringWithFormat:@"Booyah! You just added a new item for +10 points!  You got %@ now!", newPointTotal]];
     
     DebugLog(@"facebookuserId: %@   itemId: %@   newPointTotal: %@", facebookUserId, itemId, newPointTotal);
     
@@ -652,12 +652,24 @@
         NSString *itemId          = [theNewClosetItemDict objectForKey:@"itemid"];        
         NSString *urlString = [NSString stringWithFormat:@"%@/closet/%@/%@#my_closet_header", JEANOME_URL, facebookUserId, itemId];
 
+        
+        // http://stackoverflow.com/questions/5879582/activity-indicator-not-start-animating-when-the-view-controller-is-navigate-to-a
+        // ...turned off in ClosetWebViewController.m:157  webViewDidFinish()
+        //  
+        [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
         // XXX this is leaking, but without the retain it's crashing 
         // when going back and forth!
         ClosetWebViewController *c = [[[ClosetWebViewController alloc] initWithURL:urlString] retain];
         [self.navigationController pushViewController:c animated:YES];
         [c release];
     }
+}
+
+-(void)threadStartAnimating:(id)data
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 /*

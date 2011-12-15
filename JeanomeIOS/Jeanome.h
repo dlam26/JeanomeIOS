@@ -48,7 +48,8 @@
 +(UIView *)accessoryViewCreatePrevNextDoneInput:(id)delegate withFrame:(CGRect)frame;
 +(UIView *)accessoryViewCreateDoneInput:(id)delegate;
 
-+(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img andDelegate:(id)delegate;
++(NSString *)uploadToJeanome:(ClosetItem *)closetItem withImage:(UIImage *)img withUploadProgressDelegate:(id)progressDelegate andDelegate:(id)delegate;
+
 +(NSHTTPCookie *)__createUploadCookie:(NSString *)name withValue:(NSString *)value;
 
 +(NSString *)getAccessToken;

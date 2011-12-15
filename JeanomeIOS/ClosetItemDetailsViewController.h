@@ -46,6 +46,7 @@
     UIActionSheet *categoryActionSheet;
     
     UIView *loadingBox;
+    UIProgressView *progressView;
 }
 
 @property(nonatomic,retain) id <PhotoDetailsDelegate> delegate;

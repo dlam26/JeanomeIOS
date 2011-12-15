@@ -623,7 +623,7 @@
 
 - (void)requestStarted:(ASIHTTPRequest *)request
 {
-    DebugLog();
+    DebugLog(@"[progressView progress]: %f", [progressView progress]);
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
@@ -632,7 +632,6 @@
 // Enter here if succssfully uploaded a new closet item!
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    DebugLog();
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
@@ -671,10 +670,11 @@
  */
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    DebugLog();
-        
     if(loadingBox)
         [loadingBox removeFromSuperview];
+    
+    if(progressView)
+        [progressView removeFromSuperview];
     
 //    NSError *error = [request error];    
 //    NSInteger errorCode = [error code];
@@ -685,6 +685,17 @@
     [alert show];
     [alert release];
 }
+
+// Use this to debug ASIFormDataRequest by settings its progress delegate to self 
+// so it calls this function!
+//
+// From http://allseeing-i.com/ASIHTTPRequest/How-to-use#custom_progress_tracking
+//
+-(void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+{
+    DebugLog(@"bytes uploaded: %llu", bytes);
+}
+
 
 #pragma mark - OTHER
 
@@ -782,13 +793,22 @@
         [self.view addSubview:loadingBox];
         [loadingBox release];
         
+
+        CGPoint o = loadingBox.frame.origin;
+        CGFloat height = loadingBox.frame.size.height;
+        CGFloat width = loadingBox.frame.size.width;        
+        CGFloat pad = 15.0;
+        
+        // put the progress view near the bottom of the loading box centered...
+        progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+        progressView.frame = CGRectMake(o.x + pad, o.y + height - (1.5*pad), width - (2*pad), 10.0);
+        [self.view addSubview:progressView];  
+        [progressView release];
+        
         ClosetItem *newClosetItem = [[ClosetItem alloc]  initWithImageDict:imageDict andId:nil];
-        [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image andDelegate:self];
+        [Jeanome uploadToJeanome:newClosetItem withImage:itemImageView.image withUploadProgressDelegate:progressView andDelegate:self];
         [newClosetItem release];
         
-        // Now, with everthing saved, go back to the front and show Mercedes cute splash screen   
-        //     ...MOVED TO <ASIHttpRequest> requestFinished
-        //[self.navigationController popToRootViewControllerAnimated:YES];
     }
     
     [df release]; [nf release];

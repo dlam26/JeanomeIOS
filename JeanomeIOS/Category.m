@@ -39,10 +39,19 @@
 }
 
 
+/*
+ Hardcoded to return 3 since greyed out buttons are grounds for app rejection.
+ 
+ See "How To Avoid Having Your App Rejected for Core Functionality Issues and Crashing"
+ in https://developer.apple.com/appstore/resources/submission/tips.html
+ 
+ */  
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [ALL_CATEGORIES count];
+    //    return [ALL_CATEGORIES count];
+    return 3;    
 }
+
 
 
 #pragma mark - <UITableViewDelegate>

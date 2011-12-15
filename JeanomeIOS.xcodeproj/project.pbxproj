@@ -17,6 +17,7 @@
 		1A97B5E1149098A10046354D /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A97B5E0149098A00046354D /* Category.m */; };
 		1A97B5E51490D85F0046354D /* icon_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A97B5E31490D85F0046354D /* icon_profile.png */; };
 		1A97B5E61490D85F0046354D /* icon_profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A97B5E41490D85F0046354D /* icon_profile@2x.png */; };
+		1A99F691149953300089E32E /* ClosetWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A99F690149953300089E32E /* ClosetWebViewController.m */; };
 		1A9E62A8147CC595002566DA /* PictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E62A6147CC594002566DA /* PictureTableViewCell.m */; };
 		1A9E62A9147CC595002566DA /* PictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */; };
 		1A9FD4ED148AEE470029BC43 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EC148AEE460029BC43 /* Default@2x.png */; };
@@ -24,6 +25,7 @@
 		1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FD50B148B82910029BC43 /* RootViewController.m */; };
 		1A9FD515148C9DD10029BC43 /* icon_camera_95.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD514148C9DD00029BC43 /* icon_camera_95.png */; };
 		1AA023EF14960F2800231D4F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A9FD4EF148AEE4A0029BC43 /* Default.png */; };
+		1AA45F7C149976BB00C32530 /* ClosetWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA45F7B149976BB00C32530 /* ClosetWebViewController.xib */; };
 		1AA6D8091482DB6700525AB0 /* ClosetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D8081482DB6700525AB0 /* ClosetItem.m */; };
 		1AA6D80D148395B700525AB0 /* PictureDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6D80C148395B600525AB0 /* PictureDownloader.m */; };
 		1AC08B10148596CE0032D2E7 /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC08B0F148596CE0032D2E7 /* newlogo.png */; };
@@ -113,6 +115,8 @@
 		1A97B5E0149098A00046354D /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		1A97B5E31490D85F0046354D /* icon_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_profile.png; sourceTree = "<group>"; };
 		1A97B5E41490D85F0046354D /* icon_profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_profile@2x.png"; sourceTree = "<group>"; };
+		1A99F68F149953300089E32E /* ClosetWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetWebViewController.h; sourceTree = "<group>"; };
+		1A99F690149953300089E32E /* ClosetWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetWebViewController.m; sourceTree = "<group>"; };
 		1A9E62A5147CC593002566DA /* PictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureTableViewCell.h; sourceTree = "<group>"; };
 		1A9E62A6147CC594002566DA /* PictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureTableViewCell.m; sourceTree = "<group>"; };
 		1A9E62A7147CC594002566DA /* PictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureTableViewCell.xib; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		1A9FD50A148B82910029BC43 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1A9FD50B148B82910029BC43 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		1A9FD514148C9DD00029BC43 /* icon_camera_95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_camera_95.png; path = ../../../Dropbox/jeanome/html_css_mock_up/Jeanome_iPhone/icon_camera_95.png; sourceTree = "<group>"; };
+		1AA45F7B149976BB00C32530 /* ClosetWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClosetWebViewController.xib; sourceTree = "<group>"; };
 		1AA6D8071482DB6700525AB0 /* ClosetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClosetItem.h; sourceTree = "<group>"; };
 		1AA6D8081482DB6700525AB0 /* ClosetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClosetItem.m; sourceTree = "<group>"; };
 		1AA6D80B148395B600525AB0 /* PictureDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureDownloader.h; sourceTree = "<group>"; };
@@ -316,6 +321,9 @@
 				64F280C51489D1F900490236 /* ClosetItemDetailsViewController.h */,
 				64F280C61489D1FA00490236 /* ClosetItemDetailsViewController.m */,
 				64F280C71489D1FA00490236 /* ClosetItemDetailsViewController.xib */,
+				1A99F68F149953300089E32E /* ClosetWebViewController.h */,
+				1A99F690149953300089E32E /* ClosetWebViewController.m */,
+				1AA45F7B149976BB00C32530 /* ClosetWebViewController.xib */,
 				64A5F184146B43560051C718 /* Constants.h */,
 				1A333139148D7597005E7B50 /* Jeanome.h */,
 				1A33313A148D7598005E7B50 /* Jeanome.m */,
@@ -604,6 +612,7 @@
 				1A247EEE1491709800EFDDC1 /* iphone_wallpaper_tookphoto.png in Resources */,
 				1A247EEF1491709800EFDDC1 /* iphone_wallpaper_tookphoto@2x.png in Resources */,
 				1AA023EF14960F2800231D4F /* Default.png in Resources */,
+				1AA45F7C149976BB00C32530 /* ClosetWebViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +680,7 @@
 				1A9FD50D148B82940029BC43 /* RootViewController.m in Sources */,
 				1A33313B148D7599005E7B50 /* Jeanome.m in Sources */,
 				1A97B5E1149098A10046354D /* Category.m in Sources */,
+				1A99F691149953300089E32E /* ClosetWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

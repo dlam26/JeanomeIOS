@@ -636,11 +636,30 @@
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
+    // see ASIHttpRequest.h to see what you can get out of the request object
+    int responseStatusCode = [request responseStatusCode];
+    //NSString *responseStatusMessage = [request responseStatusMessage];
+    
     // Show Mercedes cute splash screen after upload
     [self.navigationController popToRootViewControllerAnimated:YES];
     
     // see RootViewController.m:533  itemWasAdded()
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
+    
+    if(responseStatusCode == 200) {
+        // see closet/views.py:563  in add()   look for if _from_iphone(req): block
+        NSString *json = [request responseString];
+        
+        NSDictionary *new_closet_dict = [json JSONValue];
+        
+        // see RootViewController.m:596  closetItemWasAdded()
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome userInfo:new_closet_dict];
+        
+    }
+    else {
+        DebugLog(@"Bad! Got response code %d when trying to add new closet item!", responseStatusCode);
+    }
+
 }
 
 /*

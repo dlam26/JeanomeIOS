@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "JSON.h"
 #import "Jeanome.h"
 #import "ClosetItem.h"
 #import "Category.h"

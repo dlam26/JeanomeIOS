@@ -13,6 +13,7 @@
 #import "Jeanome.h"
 #import "AppDelegate.h"
 #import "TakePhotoViewController.h"
+#import "ClosetWebViewController.h"
 #import "Constants.h"
 
 
@@ -24,6 +25,8 @@
     
     UIButton *facebookLoginButton;
     
+    NSDictionary *theNewClosetItemDict;
+    
     Jeanome *jeanome;
 }
 
@@ -31,9 +34,12 @@
 @property (strong,nonatomic) UITableView *rootTableView;
 @property (nonatomic,retain) UIImageView *staticImageView;
 @property (nonatomic,retain) UIButton *facebookLoginButton;
+@property (nonatomic,retain) NSDictionary *theNewClosetItemDict;
 @property (nonatomic,retain) Jeanome *jeanome;
+
 
 - (id)initWithJeanome:(Jeanome *)j;
 - (void)facebookLogin;
+- (void)logout;
 
 @end

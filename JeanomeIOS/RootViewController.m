@@ -11,7 +11,7 @@
 
 @implementation RootViewController
 
-@synthesize rootTableView, staticImageView, jeanome, facebookLoginButton;
+@synthesize rootTableView, staticImageView, jeanome, facebookLoginButton, theNewClosetItemDict;
 
 // old
 - (id)initWithJeanome:(Jeanome *)j
@@ -49,10 +49,10 @@
     CGRect wholeScreenRect  = [[UIScreen mainScreen] bounds];
 //    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];    
 //    CGRect hardcodedWholeScreenRect = CGRectMake(0, 0, 320, 480);
-    CGRect wholeScreenMinusStatusBarRect = CGRectMake(wholeScreenRect.origin.x, wholeScreenRect.origin.y - 20.0, wholeScreenRect.size.width, wholeScreenRect.size.height);
+    CGRect wholeScreenMinusStatusBarRect = CGRectMake(wholeScreenRect.origin.x, wholeScreenRect.origin.y-20.0, wholeScreenRect.size.width, wholeScreenRect.size.height);
         
-    CGRect frame = wholeScreenRect;
-
+    CGRect frame = wholeScreenMinusStatusBarRect;
+    
     
 //    NSLog(@"RootViewController.m:37  viewDidLoad()  self.view.frame: %@   wholeScreenRect: %@   applicationFrameRect: %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(wholeScreenRect), NSStringFromCGRect(applicationFrame));
         
@@ -131,14 +131,29 @@
         [jeanomeUrlLabel release];
         
         [whosLoggedInLabel release];
+        
+        // testing web view...
+        /*
+        UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(50, 50, 200, 200)];
+        [b addTarget:self action:@selector(showWebView) forControlEvents:UIControlEventTouchUpInside];
+        [b setTitle:@"gogogogo" forState:UIControlStateNormal];
+        [b setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];     
+        [staticImageView addSubview:b];
+        [b release];
+         */
 #endif
     }
     
-    UIView *wrapper = [[UIView alloc] init];  // here so CGRect/frame's are obeyed
+    // here so CGRect/frame's are obeyed
+    UIView *wrapper = [[UIView alloc] init];
     [wrapper addSubview:staticImageView];
+
     
     self.view = wrapper;  // WARNING don't add subView here, or else infinite loop!
+
     [staticImageView release];
+    [wrapper release];
+    
 }
 
 - (void)viewDidLoad
@@ -150,7 +165,7 @@
     // Change the background image if an item was added
     // ...see ClosetItemDetailsViewController.m:754 in _saveClosetItemDetails()
     // 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closetItemWasAdded:) name:NOTIFICATION_CLOSET_ITEM_ADDED object:jeanome];
     
 //    [Jeanome notificationBox:self.view withMsg:@"testing notification box...  RootViewController.m:143"];
         
@@ -436,11 +451,22 @@
         [defaults synchronize];
     }
     
+    // 12/13/2011   try to animate logout!
+    //   completeley copied from http://www.iphonedevsdk.com/forum/iphone-sdk-development/13427-uiview-slide-transition.html
+        
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:1.0];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.view cache:YES];
+
+    
     // logged out now, so get rid of this since it stores the login info
     jeanome = nil;
     
     [self loadView];
     [self viewDidLoad];
+    
+    [UIView commitAnimations];
     
     [Jeanome notificationBox:self.view withMsg:@"Visit www.myjeanome.com to view your closet and other goodies!"];
 }
@@ -490,7 +516,7 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     DebugLog(@"Err message: %@", [[error userInfo] objectForKey:@"error_msg"]);
-    DebugLog(@"Err code: %d   localized description: %@", [error code], [error localizedDescription]);
+    DebugLog(@"Err code: %d   localized description: %@   details: %@", [error code], [error localizedDescription], [error description]);
     
     if([error code] == NSURLErrorCannotConnectToHost) {
         
@@ -498,6 +524,17 @@
         [alert show];
         [alert release];
     }
+    else if([error code] == 10000) {
+        // [error localizedDescription] - The operation couldn’t be completed.
+        
+        // enter here if you get the WEIRD_CANT_LOGIN_TO_FACEBOOK error
+        // if this happens, just call logout
+        
+        DebugLog(@"Got weird facebook login thing, so logging out.");
+        
+        [self logout];
+    }
+
 }
 
 #pragma mark - @selector's
@@ -506,6 +543,7 @@
 
 - (void)logout
 {
+    DebugLog();
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [[delegate facebook] logout:self];    
 }
@@ -568,16 +606,72 @@
  
      http://www.iphonedevsdk.com/forum/iphone-sdk-development/10077-sending-messages-back-root-view-controller.html
  
-    see ClosetItemDetailsViewController.m:754 in _saveClosetItemDetails()
+    see ClosetItemDetailsViewController.m:652 in requestFinished:(ASIHttpRequest)
  */
-- (void)closetItemWasAdded
+- (void)closetItemWasAdded:(NSNotification *)notification
 {
     DebugLog(@"Closet item was added, so changing wallpaper and showing notificationBox!");
+    
+    theNewClosetItemDict = [[notification userInfo] retain];
+    
+    //    NSString *closetId      = [new_closet_dict objectForKey:@"closetid"];
+    NSString *facebookUserId  = [theNewClosetItemDict objectForKey:@"facebookid"];
+    NSString *itemId        = [theNewClosetItemDict objectForKey:@"itemid"];
+    NSString *newPointTotal = [theNewClosetItemDict objectForKey:@"newpointtotal"];
     
     //  TODO change staticImageView here     
     staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
         
-    [Jeanome notificationBox:self.view withMsg:@"Booyah! You've just added a new item!  +10 points!"];    
+//    [Jeanome notificationBox:self.view withMsg:@"Booyah! You've just added a new item!  +10 points!"];    
+    
+    [Jeanome notificationBox:self.view withMsg:[NSString stringWithFormat:@"Booyah! You just added a new item! +10 points!  Total: %@.", newPointTotal]];
+    
+    DebugLog(@"facebookuserId: %@   itemId: %@   newPointTotal: %@", facebookUserId, itemId, newPointTotal);
+    
+    [staticImageView setUserInteractionEnabled:YES];
+    
+    
+    // When you tap on it, show the ClosetWebViewController!    
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapped:)];
+    [staticImageView addGestureRecognizer:tgr];
+    [tgr release];
+
 }
+
+// from http://stackoverflow.com/questions/3160489/handle-tap-gesture-with-an-argument-iphone-ipad
+-(void)imageTapped:(UITapGestureRecognizer *)sender
+{
+    UIView *theSuperview = self.view; // whatever view contains your image views
+    CGPoint touchPointInSuperview = [sender locationInView:theSuperview];
+    UIView *touchedView = [theSuperview hitTest:touchPointInSuperview withEvent:nil];
+    if([touchedView isKindOfClass:[UIImageView class]])
+    {
+        // hooray, it's one of your image views! do something with it.
+        
+        NSString *facebookUserId  = [theNewClosetItemDict objectForKey:@"facebookid"];
+        NSString *itemId          = [theNewClosetItemDict objectForKey:@"itemid"];        
+        NSString *urlString = [NSString stringWithFormat:@"%@/closet/%@/%@#my_closet_header", JEANOME_URL, facebookUserId, itemId];
+
+        // XXX this is leaking, but without the retain it's crashing 
+        // when going back and forth!
+        ClosetWebViewController *c = [[[ClosetWebViewController alloc] initWithURL:urlString] retain];
+        [self.navigationController pushViewController:c animated:YES];
+        [c release];
+    }
+}
+
+/*
+// just testing ClosetWebViewController.m
+-(void)showWebView
+{
+    DebugLog();
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/closet/100003115255847/197#my_closet_header", JEANOME_URL];
+    
+    ClosetWebViewController *c = [[[ClosetWebViewController alloc] initWithURL:urlString] retain];
+    [self.navigationController pushViewController:c animated:YES];
+    [c release];
+}
+*/
 
 @end

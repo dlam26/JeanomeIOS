@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "Jeanome.h"
 #import "Constants.h"
 #import "AFFeatherController.h"
@@ -23,8 +25,8 @@
     UIImageView *imageView;
     UIScrollView *scrollView;
 
-    UIToolbar *myToolbar;
-    UIImagePickerController *imgPicker;    
+    UIImagePickerController *imgPicker;
+    UIButton *openPhotoLibraryButton;
     
     // Used to pass a UIImage to Aviary
     UIImage *pickedImage;
@@ -39,22 +41,19 @@
 @property(nonatomic, retain) IBOutlet UIImageView *imageView;
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, retain) UIImagePickerController *imgPicker;
+@property(nonatomic, retain) UIButton *openPhotoLibraryButton;
 @property(nonatomic, retain) UIImage *pickedImage;
-
 @property(nonatomic, retain) Jeanome *jeanome;
-
-
 @property(nonatomic, retain) ClosetItem *closetItem;
 
 - (id)initWithJeanome:(Jeanome *)j;
 
 - (void)displayFeatherWithImage:(UIImage *)image;
 
-
 -(IBAction)showAviary:(id)sender;
 -(IBAction)uploadPic:(id)sender;
 -(IBAction)editDetails:(id)sender;
 
-
+-(void)openPhotoLibrary:(id)sender;
 
 @end

@@ -59,3 +59,5 @@
 
 #define NOTIFICATION_CLOSET_ITEM_ADDED @"NotificationClosetItemAdded"
 #define NOTIFICATION_CATEGORY_SELECTED @"NotificationCategorySelected"
+
+#define SKU_NUMBER 20111215

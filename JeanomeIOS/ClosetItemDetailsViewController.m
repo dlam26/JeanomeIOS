@@ -361,7 +361,7 @@
         return nil;
     }
     if(section == 1) {        
-        return @"Item Details";
+        return @"Details";
     }
     else {
         return nil;

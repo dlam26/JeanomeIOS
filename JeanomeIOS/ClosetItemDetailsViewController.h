@@ -13,7 +13,7 @@
 #import "ClosetItem.h"
 #import "Category.h"
 
-#define DEFAULT_NOTE_PLACEHOLDER @"Say something"
+#define DEFAULT_NOTE_PLACEHOLDER @"Say something!"
 
 
 @protocol PhotoDetailsDelegate <NSObject>

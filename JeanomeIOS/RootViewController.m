@@ -623,8 +623,10 @@
     
     //  TODO change staticImageView here     
     staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
-        
-    [Jeanome notificationBox:self.view withMsg:[NSString stringWithFormat:@"Booyah! You just added a new item for +10 points!  You got %@ now!", newPointTotal]];
+    
+    if(newPointTotal) {    
+        [Jeanome notificationBox:self.view withMsg:[NSString stringWithFormat:@"Booyah! You just added a new item for +10 points!  You got %@ now!", newPointTotal]];
+    }
         
     // When you tap on Mercedes cool background picture,
     // ClosetWebViewController which shows the closet item at myjeanome.com!
@@ -644,24 +646,24 @@
     UIView *touchedView = [theSuperview hitTest:touchPointInSuperview withEvent:nil];
     if([touchedView isKindOfClass:[UIImageView class]])
     {
-        // hooray, it's one of your image views! do something with it.
-        
         NSString *facebookUserId  = [theNewClosetItemDict objectForKey:@"facebookid"];
         NSString *itemId          = [theNewClosetItemDict objectForKey:@"itemid"];        
         NSString *urlString = [NSString stringWithFormat:@"%@/closet/%@/%@#my_closet_header", JEANOME_URL, facebookUserId, itemId];
-
         
-        // http://stackoverflow.com/questions/5879582/activity-indicator-not-start-animating-when-the-view-controller-is-navigate-to-a
-        // ...turned off in ClosetWebViewController.m:157  webViewDidFinish()
-        //  
-        [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        if(facebookUserId && itemId) {
+        
+            // http://stackoverflow.com/questions/5879582/activity-indicator-not-start-animating-when-the-view-controller-is-navigate-to-a
+            // ...turned off in ClosetWebViewController.m:157  webViewDidFinish()
+            //  
+            [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-        // XXX this is leaking, but without the retain it's crashing 
-        // when going back and forth!
-        ClosetWebViewController *c = [[[ClosetWebViewController alloc] initWithURL:urlString] retain];
-        [self.navigationController pushViewController:c animated:YES];
-        [c release];
+            // XXX this is leaking, but without the retain it's crashing 
+            // when going back and forth!
+            ClosetWebViewController *c = [[[ClosetWebViewController alloc] initWithURL:urlString] retain];
+            [self.navigationController pushViewController:c animated:YES];
+            [c release];
+        }
     }
 }
 

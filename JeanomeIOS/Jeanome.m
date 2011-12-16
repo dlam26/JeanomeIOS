@@ -43,14 +43,9 @@
  */
 +(UIImageView *)getJeanomeLogoImageView
 {
-    UIImage *logo = [UIImage imageNamed:@"iphone_logo_toolbar"];
-//    UIImage *logo = [UIImage imageNamed:@"iphone_logo_toolbar-smaller"];
-    
+    UIImage *logo = [UIImage imageNamed:@"iphone_logo_toolbar"];    
     UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, logo.size.width, logo.size.height)] autorelease];    
     imageView.image = logo;
-    
-    //    UIImageView *imageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iphone_logo_toolbar"]] autorelease];
-    
     
     return imageView;
 }
@@ -191,7 +186,10 @@
     [request setRequestCookies:[NSMutableArray arrayWithObjects:facebookIdCookie, accessTokenCookie, nil]];    
 
     //  12/9/2011  uploads timing out, but still work! :O
+    //  wait, its because 3g upload speed is 0.01 at home right now X___X
+    //
     //     30 - uploads but still get timeout when Django POSTs to facebook
+    //          ...but it still can get 3G timeout =(
     [request setTimeOutSeconds:30];
 
     // http://allseeing-i.com/ASIHTTPRequest/How-to-use#progress
@@ -203,9 +201,7 @@
 //    [request startSynchronous];   // UIKit can't update screen with this!
     [request startAsynchronous];
     
-    
-    
-    
+
     NSError *error = [request error];
     
     if(!error) {    
@@ -249,8 +245,7 @@
  */
 +(NSString *)getAccessToken
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
- 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults]; 
     return [defaults objectForKey:@"FBAccessTokenKey"];
 }
 
@@ -323,15 +318,12 @@
  */
 +(UIView *)newLoadingBox:(NSString *)loadingBoxText
 {
-    UIView *loading = [[UIView alloc] initWithFrame:CGRectMake(100, 200, 120, 120)]; 
-    
+    UIView *loading = [[UIView alloc] initWithFrame:CGRectMake(100, 200, 120, 120)];     
     loading.layer.cornerRadius = 15;
     loading.opaque = NO;
     loading.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
     
-//    UILabel *loadLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 81, 22)];
-    UILabel *loadLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, 110, 22)];
-    
+    UILabel *loadLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, 110, 22)];    
     loadLabel.text = loadingBoxText;
     loadLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     loadLabel.textAlignment = UITextAlignmentCenter;
@@ -346,7 +338,6 @@
     [loading addSubview:spinning];
     [spinning release];
     
-
     return loading;
 }
 

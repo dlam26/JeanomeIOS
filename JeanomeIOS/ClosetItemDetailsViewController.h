@@ -45,6 +45,9 @@
     UIPickerView *categoryPicker;
     UIActionSheet *categoryActionSheet;
     
+    // Editing closet item details stuff
+    UIBarButtonItem *uploadButton;
+    UIBarButtonItem *goBackToAviaryButton;
     UIView *loadingBox;
     UIProgressView *progressView;
 }
@@ -66,7 +69,7 @@
 
 -(id)initWithClosetItem:(ClosetItem *)item andJeanome:(Jeanome *)j;
 
--(void)_saveClosetItemDetails:(id)sender;
+-(void)upload:(id)sender;
 -(void)_showCategoryPicker;
 -(void)_accessoryActivate:(id)field;
 -(void)accessoryDone;

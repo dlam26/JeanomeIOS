@@ -59,27 +59,20 @@
 
     DebugLog();
 
-    // UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_saveClosetItemDetails:)];    
-    //self.navigationItem.rightBarButtonItem = doneButton;
-
-    //  12/7/2011  After edit details of an image, it should upload the image.     
-    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit!" style:UIBarButtonItemStylePlain target:self action:@selector(_saveClosetItemDetails:)];
+    // 12/7/2011  After edit details of an image, it should upload the image.     
+    uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit!" style:UIBarButtonItemStylePlain target:self action:@selector(upload:)];
     
-    UIBarButtonItem *goBackToAviaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToAviary)];
+    goBackToAviaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToAviary)];
 
     self.navigationItem.rightBarButtonItem = uploadButton;    
     self.navigationItem.leftBarButtonItem = goBackToAviaryButton;
 
-    //  12/7/2011  Hide keyboard if tapping off from textbox  
-    //  http://stackoverflow.com/questions/2321038/dismiss-keyboard-by-touching-background-of-uitableview    
-    //
+    // 12/7/2011  Hide keyboard if tapping off from textbox.  See http://stackoverflow.com/questions/2321038/dismiss-keyboard-by-touching-background-of-uitableview    
     UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputs)];
     tapGr.cancelsTouchesInView = NO;
     [self.editDetailsTable addGestureRecognizer:tapGr];
-        
+    [tapGr release];        
     [self registerForKeyboardNotifications];
-    
-    [uploadButton release]; [goBackToAviaryButton release]; [tapGr release];
 }
 
 - (void)viewDidUnload
@@ -87,6 +80,9 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
+    [uploadButton release];
+    [goBackToAviaryButton release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -623,7 +619,7 @@
 
 - (void)requestStarted:(ASIHTTPRequest *)request
 {
-    DebugLog(@"[progressView progress]: %f", [progressView progress]);
+//    DebugLog(@"[progressView progress]: %f", [progressView progress]);
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
@@ -631,8 +627,7 @@
 
 // Enter here if succssfully uploaded a new closet item!
 - (void)requestFinished:(ASIHTTPRequest *)request
-{
-    
+{    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     // see ASIHttpRequest.h to see what you can get out of the request object
@@ -670,6 +665,9 @@
  */
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
+    uploadButton.enabled = YES;
+    goBackToAviaryButton.enabled = YES;
+    
     if(loadingBox)
         [loadingBox removeFromSuperview];
     
@@ -686,8 +684,8 @@
     [alert release];
 }
 
-// Use this to debug ASIFormDataRequest by settings its progress delegate to self 
-// so it calls this function!
+// Use this to debug ASIFormDataRequest by settings its' progress delegate to 
+// 'self' (instead of say, a UIProgressView) so it calls this function!
 //
 // From http://allseeing-i.com/ASIHTTPRequest/How-to-use#custom_progress_tracking
 //
@@ -768,10 +766,10 @@
  right after you enter in details.
  
  */
--(void)_saveClosetItemDetails:(id)sender
+-(void)upload:(id)sender
 {
-    [self hideInputs];  // Important!  need to hide or else activity indicator won't show!
-    
+    [self hideInputs];  // Important!  need to hide or else activity indicator won't show!    
+
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     
@@ -785,6 +783,11 @@
         [alert release];
     }
     else {
+        // User filled out everything that was needed... so now upload it!
+                
+        uploadButton.enabled = NO;           // Don't allow submitting it twice!
+        goBackToAviaryButton.enabled = NO;   // Don't allowing going back until done!
+        
         NSDictionary *imageDict = [ClosetItem makeImageDict:nil withNote:self.noteTextView.text
                                                withCategory:self.categoryTextField.text withImageURL:nil withBrand:self.brandTextField.text withValue:[nf numberFromString:self.costTextField.text] withTime:[df stringFromDate:[NSDate date]] withImage:itemImageView.image forUserId:closetItem.userId];
         [self.delegate saveDetails:imageDict];

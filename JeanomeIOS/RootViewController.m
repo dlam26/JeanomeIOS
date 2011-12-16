@@ -50,11 +50,8 @@
 //    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];    
 //    CGRect hardcodedWholeScreenRect = CGRectMake(0, 0, 320, 480);
     CGRect wholeScreenMinusStatusBarRect = CGRectMake(wholeScreenRect.origin.x, wholeScreenRect.origin.y-20.0, wholeScreenRect.size.width, wholeScreenRect.size.height);
-        
-    CGRect frame = wholeScreenMinusStatusBarRect;
     
     
-//    NSLog(@"RootViewController.m:37  viewDidLoad()  self.view.frame: %@   wholeScreenRect: %@   applicationFrameRect: %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(wholeScreenRect), NSStringFromCGRect(applicationFrame));
         
     //  12/8/2011  Show a static image mercedes made that fits the whole screen
     //
@@ -106,7 +103,8 @@
          NSLog(@"(%f,%f)",bottomLX,bottomLY);
          */
         
-#ifdef DEBUG
+        CGRect frame = wholeScreenMinusStatusBarRect;
+        
         //  Show who's logged in on the bottom left   (80.0 seems like a lot to subtract...)
         CGFloat labelHeight = 20.0;
         CGFloat bottomPadding = 90.0;
@@ -117,10 +115,13 @@
         whosLoggedInLabel.font = [UIFont systemFontOfSize:12.0];
         whosLoggedInLabel.textColor = [UIColor whiteColor];
         whosLoggedInLabel.backgroundColor = [UIColor clearColor];
-        whosLoggedInLabel.opaque = NO;        
+        whosLoggedInLabel.opaque = NO;
         [staticImageView addSubview:whosLoggedInLabel];
+        [whosLoggedInLabel release];
         
-
+#ifdef DEBUG        
+//        NSLog(@"RootViewController.m:37  viewDidLoad()  self.view.frame: %@   wholeScreenRect: %@   applicationFrameRect: %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(wholeScreenRect), NSStringFromCGRect(applicationFrame));    
+        
         UILabel *jeanomeUrlLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, frame.size.height - bottomPadding - labelHeight, frame.size.width, labelHeight)]; 
         jeanomeUrlLabel.text = [NSString stringWithFormat:@"JEANOME_URL: %@", JEANOME_URL];
         jeanomeUrlLabel.font = whosLoggedInLabel.font;
@@ -130,7 +131,8 @@
         [staticImageView addSubview:jeanomeUrlLabel];
         [jeanomeUrlLabel release];
         
-        [whosLoggedInLabel release];
+//        [whosLoggedInLabel release];
+
         
         // testing web view...
         /*
@@ -614,24 +616,20 @@
     
     theNewClosetItemDict = [[notification userInfo] retain];
     
-    //    NSString *closetId      = [new_closet_dict objectForKey:@"closetid"];
-    NSString *facebookUserId  = [theNewClosetItemDict objectForKey:@"facebookid"];
-    NSString *itemId        = [theNewClosetItemDict objectForKey:@"itemid"];
+//    NSString *closetId      = [new_closet_dict objectForKey:@"closetid"];
+//    NSString *facebookUserId  = [theNewClosetItemDict objectForKey:@"facebookid"];
+//    NSString *itemId        = [theNewClosetItemDict objectForKey:@"itemid"];
     NSString *newPointTotal = [theNewClosetItemDict objectForKey:@"newpointtotal"];
     
     //  TODO change staticImageView here     
     staticImageView.image = [UIImage imageNamed:@"iphone_wallpaper_tookphoto.png"];
         
-//    [Jeanome notificationBox:self.view withMsg:@"Booyah! You've just added a new item!  +10 points!"];    
-    
     [Jeanome notificationBox:self.view withMsg:[NSString stringWithFormat:@"Booyah! You just added a new item for +10 points!  You got %@ now!", newPointTotal]];
-    
-    DebugLog(@"facebookuserId: %@   itemId: %@   newPointTotal: %@", facebookUserId, itemId, newPointTotal);
-    
-    [staticImageView setUserInteractionEnabled:YES];
-    
-    
-    // When you tap on it, show the ClosetWebViewController!    
+        
+    // When you tap on Mercedes cool background picture,
+    // ClosetWebViewController which shows the closet item at myjeanome.com!
+    [staticImageView setUserInteractionEnabled:YES];    
+
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapped:)];
     [staticImageView addGestureRecognizer:tgr];
     [tgr release];

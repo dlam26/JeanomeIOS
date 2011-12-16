@@ -28,7 +28,7 @@
 
 @implementation TakePhotoViewController
 
-@synthesize imageView, scrollView, imgPicker, pickedImage;
+@synthesize imageView, scrollView, imgPicker, pickedImage, openPhotoLibraryButton;
 
 @synthesize closetItem;
 @synthesize jeanome;
@@ -92,8 +92,17 @@
     {
         imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
-        //imgPicker.cameraOverlayView = SOME_OVERLAY_VIEW;
-
+        // Put a button in the bottom right that lets you pick from the camera roll
+        CGRect f = [[UIScreen mainScreen] bounds];        
+        openPhotoLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];  // e.g. transparent
+        openPhotoLibraryButton.frame = CGRectMake(f.size.width-75, f.size.height-90, 65, 35);
+        [openPhotoLibraryButton setTitle:@"Library" forState:UIControlStateNormal];
+        [openPhotoLibraryButton addTarget:self action:@selector(openPhotoLibrary:) forControlEvents:UIControlEventTouchUpInside];
+        openPhotoLibraryButton.titleLabel.shadowOffset = CGSizeMake(1.0, 0.0);
+        openPhotoLibraryButton.backgroundColor = [UIColor clearColor];
+                
+        [imgPicker.view addSubview:openPhotoLibraryButton];
+        
         [self presentViewController:imgPicker animated:NO completion:NULL];        
     }
     else {
@@ -187,15 +196,12 @@
     Called after selecting a picture in the photo select page
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    // NSLog(@"TakePhotoViewController.m:192  didFinishPickingMediaWithInfo()");
+{  
+    DebugLog();
     
-    // NSParameterAssert(image);
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
-    // NSLog(@"didFinishPickingMediaWithInfo() PICKED image size in bytes:%i",[UIImagePNGRepresentation(image) length]);
-    
     [self setPickedImage:image]; // used for aviary 
     [self dismissModalViewControllerAnimated:NO];
     closetItem.image = image;
@@ -206,9 +212,16 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     DebugLog();
-
-    [self dismissModalViewControllerAnimated:YES];
-    [[self navigationController] popViewControllerAnimated:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    if(imgPicker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        openPhotoLibraryButton.hidden = NO;
+    }
+    else {
+        [self dismissModalViewControllerAnimated:YES];
+        [[self navigationController] popViewControllerAnimated:NO];
+    }
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
@@ -234,20 +247,12 @@
 
 - (void)displayFeatherWithImage:(UIImage *)image
 {
-    //NSLog(@"TakePhotoViewController.m:238   displayFeatherWithImage()  closetItem retain count: %u", [closetItem retainCount]);
-    
     if (image) {
-        // Use the following two lines to include the meme tool if desired.
-        //
-        // NSArray *tools = [AFDefaultTools() arrayByAddingObject:kAFMeme];
-        // AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image andTools:tools] autorelease];
-        
         //  How to customize look?   http://developers.aviary.com/ios-sdk
         AFFeatherController *featherController = [[[AFFeatherController alloc] initWithImage:image] autorelease];
         [featherController setDelegate:self];
         [featherController.topBar setTintColor:[Jeanome getJeanomeColor]];
-//        [featherController.bottomBar setTintColor:[Jeanome getJeanomeColor]];
-//        [featherController.paramsBar setTintColor:[Jeanome getJeanomeColor]];
+
         
         //  11/29/2011   Set animated to null, since you see TakePhotoViewController.xlb for like 
         //               a half a second while its animating to Aviary
@@ -260,9 +265,7 @@
 - (UIButton *)feather:(AFFeatherController *)featherController buttonForPlugin:(id<AFFeatherPlugin>)plugin
 {
     UIButton *button = [plugin button];
-    
     button.tintColor = [Jeanome getJeanomeColor];
-    
     return button;
 }
 
@@ -305,16 +308,12 @@
 
     closetItem.image = image;
     closetItem.userId = jeanome.facebookId;
-    
     imageView.image = image;
-    
     [self editDetails:nil];
 }
 
 - (void)featherCanceled:(AFFeatherController *)featherController
 {
-    DebugLog();
-    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -364,9 +363,7 @@
 
 #pragma mark - <PhotoDetailsDelegate>
 
-/*
-    see ClosetItemDetailsViewController.m:93
- */ 
+// see ClosetItemDetailsViewController.m:93
 -(void)saveDetails:(NSDictionary *)details
 {
     DebugLog(@"In saveDetails() <PhotoDetailsDelegate> method!" );
@@ -385,5 +382,18 @@
     DebugLog();
     [self showAviary:nil];
 }
+
+
+#pragma mark - selector's
+
+// see line 103 in loadView()
+-(void)openPhotoLibrary:(id)sender
+{
+    DebugLog();
+    openPhotoLibraryButton.hidden = YES;
+    imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;    
+
+}
+
 
 @end

@@ -24,7 +24,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
+//        self.navigationItem.titleView = [Jeanome getJeanomeLogoImageView];
 
     }
     return self;
@@ -60,7 +60,7 @@
     DebugLog();
 
     // 12/7/2011  After edit details of an image, it should upload the image.     
-    uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit!" style:UIBarButtonItemStylePlain target:self action:@selector(upload:)];
+    uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Post to Jeanome & Facebook" style:UIBarButtonItemStylePlain target:self action:@selector(upload:)];
     
     goBackToAviaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToAviary)];
 

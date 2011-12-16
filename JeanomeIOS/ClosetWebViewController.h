@@ -12,8 +12,7 @@
 
 @interface ClosetWebViewController : UIViewController <UIWebViewDelegate, UITextFieldDelegate>
 {
-    IBOutlet UIWebView *webView;
-    
+    IBOutlet UIWebView *theWebView;    
     IBOutlet UIButton *backButton;
     IBOutlet UIButton *forwardButton;
     IBOutlet UITextField *addressBar;
@@ -21,7 +20,7 @@
     NSURL *url;
 }
 
-@property(nonatomic,retain) UIWebView *webView;
+@property(nonatomic,retain) UIWebView *theWebView;
 @property(nonatomic,retain) NSURL *url;
 
 - (id)initWithURL:(NSString *)urlString;

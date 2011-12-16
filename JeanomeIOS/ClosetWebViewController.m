@@ -10,7 +10,7 @@
 
 @implementation ClosetWebViewController
 
-@synthesize webView;
+@synthesize theWebView;
 @synthesize url;
 
 - (void)didReceiveMemoryWarning
@@ -47,23 +47,23 @@
 - (void)loadView
 {
     // test test
-    webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-    [webView setScalesPageToFit:YES];
-    [webView setDelegate:self];
+    theWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    [theWebView setScalesPageToFit:YES];
+    [theWebView setDelegate:self];
  
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://10.0.1.23:8000/closet/100003115255847/197#my_closet_header"]];
     
-    [webView loadRequest:urlRequest];
+    [theWebView loadRequest:urlRequest];
     
     UIView *addressBar = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, 50)];
     
     UITextField *urlTextField = [[UITextField alloc] initWithFrame:CGRectMake(120, 0, 200, 50)];                          
-    urlTextField.text = webView.request.URL.absoluteString;
+    urlTextField.text = theWebView.request.URL.absoluteString;
     [addressBar addSubview:urlTextField];
 
-    [webView addSubview:addressBar];
+    [theWebView addSubview:addressBar];
         
-    self.view = webView;
+    self.view = theWebView;
 }
  */
 
@@ -77,15 +77,18 @@
     
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     
-    [webView loadRequest:urlRequest];
-    webView.scalesPageToFit = YES;       // enable pinch zoom
-    webView.delegate = self;
+    [theWebView loadRequest:urlRequest];
+    theWebView.scalesPageToFit = YES;       // enable pinch zoom
+    theWebView.delegate = self;
     addressBar.text = url.absoluteString;
-    addressBar.clearButtonMode = UITextFieldViewModeWhileEditing;
-//    addressBar.userInteractionEnabled = NO;   // e.g. read only text field
+//    addressBar.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-//    backButton.enabled    = webView.canGoBack ? YES : NO;
-//    forwardButton.enabled = webView.canGoForward ? YES : NO;
+    // e.g. read only text field   
+    // Don't allow unrestricted web access in UIWebView as that means automatic 17+ rating
+    addressBar.userInteractionEnabled = NO; 
+    
+//    backButton.enabled    = theWebView.canGoBack ? YES : NO;
+//    forwardButton.enabled = theWebView.canGoForward ? YES : NO;
     
 }
 
@@ -100,7 +103,7 @@
     //                    from the web view via the navigation controller
     //                    e.g. [ClosetWebViewController respondsToSelector:]: 
     //                         message sent to deallocated instance 
-//    [webView release];
+//    [theWebView release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -115,15 +118,15 @@
 -(IBAction)back:(id)sender;
 {
 //    DebugLog();
-    [webView goBack];
-    [addressBar setText:webView.request.URL.absoluteString];
+    [theWebView goBack];
+    [addressBar setText:theWebView.request.URL.absoluteString];
 }
 
 -(IBAction)forward:(id)sender;
 {
 //    DebugLog();
-    [webView goForward];
-    [addressBar setText:webView.request.URL.absoluteString];
+    [theWebView goForward];
+    [addressBar setText:theWebView.request.URL.absoluteString];
 }
 
 #pragma mark - <UIWebViewDelegate>
@@ -151,6 +154,9 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
 //    DebugLog();
+    
+    //  Update address bar with new URL     
+    addressBar.text = [webView request].URL.absoluteString;
 }
 
 
@@ -166,12 +172,10 @@
     }   
     
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:addressBar.text]];    
-    [webView loadRequest:urlRequest];    
+    [theWebView loadRequest:urlRequest];    
     [addressBar resignFirstResponder];    
 
     return YES;
 }
-
-
 
 @end

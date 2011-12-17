@@ -143,6 +143,7 @@
         [staticImageView addSubview:b];
         [b release];
          */
+
 #endif
     }
     
@@ -672,7 +673,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
-/*
+
 // just testing ClosetWebViewController.m
 -(void)showWebView
 {
@@ -684,6 +685,6 @@
     [self.navigationController pushViewController:c animated:YES];
     [c release];
 }
-*/
+
 
 @end

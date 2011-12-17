@@ -21,12 +21,23 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+
+-(void)threadStartAnimating:(id)data
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+
 #pragma mark - View lifecycle
 
 - (id)initWithURL:(NSString *)urlString {
     self = [super init];
     if (self) {
         url = [NSURL URLWithString:urlString];
+        
+        addressBar.text = url.absoluteString;
+        
+        [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
     }
     return self;
 }
@@ -119,14 +130,16 @@
 {
 //    DebugLog();
     [theWebView goBack];
-    [addressBar setText:theWebView.request.URL.absoluteString];
+//    [addressBar setText:theWebView.request.URL.absoluteString];
 }
 
 -(IBAction)forward:(id)sender;
 {
+//    [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+    
 //    DebugLog();
     [theWebView goForward];
-    [addressBar setText:theWebView.request.URL.absoluteString];
+//    [addressBar setText:theWebView.request.URL.absoluteString];
 }
 
 #pragma mark - <UIWebViewDelegate>
@@ -138,14 +151,16 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-//      UIWebViewNavigationType
+    DebugLog();
+    
+//    [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
     
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-//    DebugLog();
+    DebugLog();
     
     // started in RootViewController.m:657  imageTapped()
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -153,7 +168,9 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-//    DebugLog();
+    DebugLog();
+    
+
     
     //  Update address bar with new URL     
     addressBar.text = [webView request].URL.absoluteString;
